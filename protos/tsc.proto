@@ -1,0 +1,40 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "io.grpc.examples.routeguide";
+option java_outer_classname = "RouteGuideProto";
+option objc_class_prefix = "RTG";
+
+package tsc;
+
+// Interface exported by the server.
+service RouteGuide {
+  
+  rpc AddToUsersDB(FollowRequest) returns (FollowReply) {}
+  rpc RemoveFromUsersDB(UnfollowRequest) return (FollowReply){}
+  rpc GetAllFollowers(User) return (ListReply){}
+}
+
+message User {
+  string name = 1;
+}
+
+message FollowRequest{
+  User user1 = 1;
+  User user2 = 2;
+}
+
+message UnfollowRequest{
+  User user1 = 1;
+  User user2 = 2;
+}
+
+message FollowReply{
+  string message = 1;
+}
+
+message ListReply{
+  repeated User users = 1;
+}
+
+
