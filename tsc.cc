@@ -15,7 +15,7 @@ using grpc::ClientReader;
 using grpc::ClientReaderWriter;
 using grpc::ClientWriter;
 using grpc::Status;
-
+using tsc::TscService;
 using tsc::User;
 using tsc::FollowRequest;
 using tsc::UnfollowRequest;
@@ -70,6 +70,9 @@ int main(int argc, char** argv) {
     // You MUST invoke "run_client" function to start business logic
     myc.run_client();
 
+
+
+
     return 0;
 }
 
@@ -85,9 +88,11 @@ int Client::connectTo()
     // Please refer to gRpc tutorial how to create a stub.
     // ------------------------------------------------------------
     // create a channel
+    std::string channelName = this.hostname + ":" + this.port;
     Client c1(
-        grpc::CreateChannel("localhost:50051",
+        grpc::CreateChannel(channelName,
                             grpc::InsecureChannelCredentials()));
+    std::cout<<"Connected!";
     return 1; // return 1 if success, otherwise return -1
 }
 

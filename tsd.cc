@@ -13,11 +13,6 @@
 #include <grpc++/grpc++.h>
 #include "tsc.grpc.pb.h"
 #include <grpc/grpc.h>
-#include <grpcpp/server.h>
-#include <grpcpp/server_builder.h>
-#include <grpcpp/server_context.h>
-#include <grpcpp/security/server_credentials.h>
-
 
 using grpc::Server;
 using grpc::ServerBuilder;
@@ -38,6 +33,13 @@ class TscImpl final : public TscService::Service {
 	// explicit TscImpl() {
 	//     // tsc::ParseDb(db, &feature_list_);
 	// }
+
+	Status SayHello(ServerContext* context, const User* u1,
+                  FollowReply* reply) override {
+	    std::string prefix("Hello ");
+	    reply->set_message(prefix + "hi");
+	    return Status::OK;
+  	}
 
 	Status AddToUsersDB(ServerContext* context, const FollowRequest* fRequest,
 	                  FollowReply* fReply) override {
@@ -61,7 +63,7 @@ class TscImpl final : public TscService::Service {
 
 void RunServer() {
   std::string server_address("0.0.0.0:50051");
-  // TscImpl service(db_path);
+  TscImpl service;
 
   ServerBuilder builder;
   builder.AddListeningPort(server_address, grpc::InsecureServerCredentials());
