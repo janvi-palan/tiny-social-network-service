@@ -70,6 +70,9 @@ int main(int argc, char** argv) {
     // You MUST invoke "run_client" function to start business logic
     myc.run_client();
 
+
+
+
     return 0;
 }
 
@@ -85,11 +88,14 @@ int Client::connectTo()
     // Please refer to gRpc tutorial how to create a stub.
     // ------------------------------------------------------------
     // create a channel
+    std::string channelName = this.hostname + ":" + this.port;
     Client c1(
-        grpc::CreateChannel("localhost:50051",
+        grpc::CreateChannel(channelName,
                             grpc::InsecureChannelCredentials()));
-   	std::cout<<"Connected to the client!";
-	 return 1; // return 1 if success, otherwise return -1
+
+    std::cout<<"Connected!";
+    return 1; // return 1 if success, otherwise return -1
+
 }
 
 IReply Client::processCommand(std::string& input)
