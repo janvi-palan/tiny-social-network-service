@@ -15,7 +15,7 @@ using grpc::ClientReader;
 using grpc::ClientReaderWriter;
 using grpc::ClientWriter;
 using grpc::Status;
-
+using tsc::TscService;
 using tsc::User;
 using tsc::FollowRequest;
 using tsc::UnfollowRequest;
@@ -88,7 +88,8 @@ int Client::connectTo()
     Client c1(
         grpc::CreateChannel("localhost:50051",
                             grpc::InsecureChannelCredentials()));
-    return 1; // return 1 if success, otherwise return -1
+   	std::cout<<"Connected to the client!";
+	 return 1; // return 1 if success, otherwise return -1
 }
 
 IReply Client::processCommand(std::string& input)
