@@ -30,8 +30,7 @@ class Client : public IClient
                const std::string& p)
             :hostname(hname), username(uname), port(p)
             {}
-        Client(std::shared_ptr<Channel> channel)
-        : stub_(TscService::NewStub(channel)) {}
+        
 
     protected:
         virtual int connectTo();
@@ -88,10 +87,10 @@ int Client::connectTo()
     // Please refer to gRpc tutorial how to create a stub.
     // ------------------------------------------------------------
     // create a channel
-    std::string channelName = this.hostname + ":" + this.port;
-    Client c1(
-        grpc::CreateChannel(channelName,
+    std::string channelName = this->hostname + ":" + this->port;
+    stub_ = TscService::NewStub(grpc::CreateChannel(channelName,
                             grpc::InsecureChannelCredentials()));
+        
     std::cout<<"Connected!";
     return 1; // return 1 if success, otherwise return -1
 }
