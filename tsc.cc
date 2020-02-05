@@ -7,6 +7,8 @@
 #include <grpc++/grpc++.h>
 #include "client.h"
 
+#include "tsc.grpc.pb.h"
+#include "tsc.pb.h"
 using grpc::Channel;
 using grpc::ClientContext;
 using grpc::ClientReader;
