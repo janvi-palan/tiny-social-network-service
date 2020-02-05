@@ -11,8 +11,8 @@ package tsc;
 service RouteGuide {
   
   rpc AddToUsersDB(FollowRequest) returns (FollowReply) {}
-  rpc RemoveFromUsersDB(UnfollowRequest) return (FollowReply){}
-  rpc GetAllFollowers(User) return (ListReply){}
+  rpc RemoveFromUsersDB(UnfollowRequest) returns (FollowReply){}
+  rpc GetAllFollowers(User) returns (ListReply){}
 }
 
 message User {
