@@ -35,9 +35,9 @@ using tsc::ListReply;
 
 class TscImpl final : public TscService::Service {
 	public:
-	explicit TscImpl(const std::string& db) {
-	    tsc::ParseDb(db, &feature_list_);
-	}
+	// explicit TscImpl() {
+	//     // tsc::ParseDb(db, &feature_list_);
+	// }
 
 	Status AddToUsersDB(ServerContext* context, const FollowRequest* fRequest,
 	                  FollowReply* fReply) override {
@@ -57,7 +57,7 @@ class TscImpl final : public TscService::Service {
 		return Status::OK;
 	}
 
-}
+};
 
 void RunServer() {
   std::string server_address("0.0.0.0:50051");
@@ -69,6 +69,7 @@ void RunServer() {
   std::unique_ptr<Server> server(builder.BuildAndStart());
   std::cout << "Server listening on " << server_address << std::endl;
   server->Wait();
+
 }
 
 int main(int argc, char** argv) {
