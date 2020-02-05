@@ -1,14 +1,14 @@
 syntax = "proto3";
 
 option java_multiple_files = true;
-option java_package = "io.grpc.examples.routeguide";
-option java_outer_classname = "RouteGuideProto";
-option objc_class_prefix = "RTG";
+option java_package = "tsc";
+option java_outer_classname = "TscService";
+option objc_class_prefix = "TP";
 
 package tsc;
 
 // Interface exported by the server.
-service RouteGuide {
+service TscService {
   
   rpc AddToUsersDB(FollowRequest) returns (FollowReply) {}
   rpc RemoveFromUsersDB(UnfollowRequest) returns (FollowReply){}
