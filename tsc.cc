@@ -88,19 +88,19 @@ int Client::connectTo()
     // ------------------------------------------------------------
     // create a channel
     std::string channelName = this->hostname + ":" + this->port;
-    cout<<"connecting to : "<<channelName;
+    std::cout<<"connecting to : "<<channelName;
     stub_ = TscService::NewStub(grpc::CreateChannel(channelName,
                             grpc::InsecureChannelCredentials()));
     User u1, u2;
     u1.set_name("User1");
     u2.set_name("User2");
     FollowRequest f1;
-    f1.set_allocated_user1(u1);
-    f1.set_allocated_user2(u2);
+    f1.set_allocated_user1(&u1);
+    f1.set_allocated_user2(&u2);
 
     ClientContext context;
     FollowReply r1;
-    Status status = stub_->AddToUsersDB(context, f1, &r1);
+    Status status = stub_->AddToUsersDB(&context, f1, &r1);
     if (!status.ok())
         {
             std::cout<<"connection failed.";
