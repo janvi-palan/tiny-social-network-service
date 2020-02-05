@@ -33,13 +33,8 @@ class TscImpl final : public TscService::Service {
 	// explicit TscImpl() {
 	//     // tsc::ParseDb(db, &feature_list_);
 	// }
-
-	Status SayHello(ServerContext* context, const User* u1,
-                  FollowReply* reply) override {
-	    std::string prefix("Hello ");
-	    reply->set_message(prefix + "hi");
-	    return Status::OK;
-  	}
+//create user function
+		
 
 	Status AddToUsersDB(ServerContext* context, const FollowRequest* fRequest,
 	                  FollowReply* fReply) override {
