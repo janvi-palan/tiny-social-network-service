@@ -7,6 +7,19 @@
 #include <grpc++/grpc++.h>
 #include "client.h"
 
+using grpc::Channel;
+using grpc::ClientContext;
+using grpc::ClientReader;
+using grpc::ClientReaderWriter;
+using grpc::ClientWriter;
+using grpc::Status;
+
+using tsc::User;
+using tsc::FollowRequest;
+using tsc::UnfollowRequest;
+using tsc::FollowReply;
+using tsc::ListReply;
+
 class Client : public IClient
 {
     public:
@@ -15,6 +28,9 @@ class Client : public IClient
                const std::string& p)
             :hostname(hname), username(uname), port(p)
             {}
+        Client(std::shared_ptr<Channel> channel)
+        : stub_(TscService::NewStub(channel)) {}
+
     protected:
         virtual int connectTo();
         virtual IReply processCommand(std::string& input);
@@ -23,10 +39,10 @@ class Client : public IClient
         std::string hostname;
         std::string username;
         std::string port;
-        
+        std::unique_ptr<TscService::Stub> stub_;
         // You can have an instance of the client stub
         // as a member variable.
-        //std::unique_ptr<NameOfYourStubClass::Stub> stub_;
+        // std::unique_ptr<NameOfYourStubClass::Stub> stub_;
 };
 
 int main(int argc, char** argv) {
@@ -57,7 +73,7 @@ int main(int argc, char** argv) {
 
 int Client::connectTo()
 {
-	// ------------------------------------------------------------
+    // ------------------------------------------------------------
     // In this function, you are supposed to create a stub so that
     // you call service methods in the processCommand/porcessTimeline
     // functions. That is, the stub should be accessible when you want
@@ -65,37 +81,40 @@ int Client::connectTo()
     // I recommend you to have the stub as
     // a member variable in your own Client class.
     // Please refer to gRpc tutorial how to create a stub.
-	// ------------------------------------------------------------
-
+    // ------------------------------------------------------------
+    // create a channel
+    Client c1(
+        grpc::CreateChannel("localhost:50051",
+                            grpc::InsecureChannelCredentials()));
     return 1; // return 1 if success, otherwise return -1
 }
 
 IReply Client::processCommand(std::string& input)
 {
-	// ------------------------------------------------------------
-	// GUIDE 1:
-	// In this function, you are supposed to parse the given input
+    // ------------------------------------------------------------
+    // GUIDE 1:
+    // In this function, you are supposed to parse the given input
     // command and create your own message so that you call an 
     // appropriate service method. The input command will be one
     // of the followings:
-	//
-	// FOLLOW <username>
-	// UNFOLLOW <username>
-	// LIST
+    //
+    // FOLLOW <username>
+    // UNFOLLOW <username>
+    // LIST
     // TIMELINE
-	//
-	// - JOIN/LEAVE and "<username>" are separated by one space.
-	// ------------------------------------------------------------
-	
+    //
+    // - JOIN/LEAVE and "<username>" are separated by one space.
     // ------------------------------------------------------------
-	// GUIDE 2:
-	// Then, you should create a variable of IReply structure
-	// provided by the client.h and initialize it according to
-	// the result. Finally you can finish this function by returning
-    // the IReply.
-	// ------------------------------------------------------------
     
-	// ------------------------------------------------------------
+    // ------------------------------------------------------------
+    // GUIDE 2:
+    // Then, you should create a variable of IReply structure
+    // provided by the client.h and initialize it according to
+    // the result. Finally you can finish this function by returning
+    // the IReply.
+    // ------------------------------------------------------------
+    
+    // ------------------------------------------------------------
     // HINT: How to set the IReply?
     // Suppose you have "Join" service method for JOIN command,
     // IReply can be set as follow:
@@ -116,7 +135,7 @@ IReply Client::processCommand(std::string& input)
     // IMPORTANT: 
     // For the command "LIST", you should set both "all_users" and 
     // "following_users" member variable of IReply.
-	// ------------------------------------------------------------
+    // ------------------------------------------------------------
     
     IReply ire;
     return ire;
@@ -124,13 +143,13 @@ IReply Client::processCommand(std::string& input)
 
 void Client::processTimeline()
 {
-	// ------------------------------------------------------------
+    // ------------------------------------------------------------
     // In this function, you are supposed to get into timeline mode.
     // You may need to call a service method to communicate with
     // the server. Use getPostMessage/displayPostMessage functions
     // for both getting and displaying messages in timeline mode.
     // You should use them as you did in hw1.
-	// ------------------------------------------------------------
+    // ------------------------------------------------------------
 
     // ------------------------------------------------------------
     // IMPORTANT NOTICE:
@@ -139,5 +158,5 @@ void Client::processTimeline()
     // to command mode. You don't have to worry about this situation,
     // and you can terminate the client program by pressing
     // CTRL-C (SIGINT)
-	// ------------------------------------------------------------
+    // ------------------------------------------------------------
 }

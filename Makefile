@@ -36,12 +36,12 @@ PROTOS_PATH = ./protos
 
 vpath %.proto $(PROTOS_PATH)
 
-all: system-check tsc_client tsc_server
+all: system-check tsc tsd
 
-tsc_client: tsc.pb.o tsc.grpc.pb.o tsc_client.o
+tsc: tsc.pb.o tsc.grpc.pb.o tsc.o
 	$(CXX) $^ $(LDFLAGS) -o $@
 
-tsc_server: tsd.pb.o tsd.grpc.pb.o tsd_server.o
+tsd: tsc.pb.o tsc.grpc.pb.o tsd.o
 	$(CXX) $^ $(LDFLAGS) -o $@
 
 %.grpc.pb.cc: %.proto
@@ -51,7 +51,7 @@ tsc_server: tsd.pb.o tsd.grpc.pb.o tsd_server.o
 	$(PROTOC) -I $(PROTOS_PATH) --cpp_out=. $<
 
 clean:
-	rm -f *.o *.pb.cc *.pb.h tsc_client tsc_server
+	rm -f *.o *.pb.cc *.pb.h tsc tsd
 
 
 # The following is to test your system and ensure a smoother experience.
