@@ -50,7 +50,7 @@ int main(int argc, char** argv) {
 
     std::string hostname = "localhost";
     std::string username = "default";
-    std::string port = "3010";
+    std::string port = "50051";
     int opt = 0;
     while ((opt = getopt(argc, argv, "h:u:p:")) != -1){
         switch(opt) {
@@ -88,11 +88,33 @@ int Client::connectTo()
     // ------------------------------------------------------------
     // create a channel
     std::string channelName = this->hostname + ":" + this->port;
+    cout<<"connecting to : "<<channelName;
     stub_ = TscService::NewStub(grpc::CreateChannel(channelName,
                             grpc::InsecureChannelCredentials()));
 
 
-    std::cout<<"Connected!";
+    User u1, u2;
+    u1.set_name("User1");
+    u2.set_name("User2");
+    FollowRequest f1;
+    f1.set_allocated_user1(u1);
+    f1.set_allocated_user2(u2);
+
+    ClientContext context;
+    FollowReply r1;
+    Status status = stub_->AddToUsersDB(context, f1, &r1);
+    if (!status.ok())
+        {
+            std::cout<<"connection failed.";
+            //return false;
+        }
+        else
+        { 
+            std::cout << "connection worked! ";
+        //return true;
+        }
+    std::cout<<"finished connect method!";
+>>>>>>> e814d4b28856fd3a3d84ce02608d9991cfea905c
     return 1; // return 1 if success, otherwise return -1
 
 }
