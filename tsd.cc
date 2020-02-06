@@ -49,23 +49,23 @@ class TscImpl final : public TscService::Service {
 		// user["Name"] = 
 		user["Followers"] = Json::Value(Json::arrayValue);
 		user["Following"] = Json::Value(Json::arrayValue);
-
+std::cout<<"outside!"<<std::endl;
 		std::fstream fs;
 		std::string filename = "db.json";
 		fs.open(filename, std::fstream::in | std::fstream::out | std::fstream::app);
-		if(!fs){
-			std::cout<<"Creating a new json file";
+		if(fs){
+			std::cout<<"Creating a new json file"<<std::endl;
 			fs.open(filename,  std::fstream::in | std::fstream::out | std::fstream::trunc);
-			std::cout<<"Creating db as first time used. ";
+			std::cout<<"Creating db as first time used. "<<std::endl;
 			Json::Value users;
 			users[cRequest->user1().name()] = user;
-			// Json::StyledWriter styledWriter;
-			// fs<<styledWriter.write(users);
-			// fs.close();
+			Json::StyledWriter styledWriter;
+			fs<<styledWriter.write(users);
+			fs.close();
 			
 
 		}
-
+	return Status::OK;
 
 	}
 
