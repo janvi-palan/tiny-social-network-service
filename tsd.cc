@@ -55,13 +55,13 @@ class TscImpl final : public TscService::Service {
 		fs.open(filename, std::fstream::in | std::fstream::out | std::fstream::app);
 		if(!fs){
 			std::cout<<"Creating a new json file";
-			std::fs.open(filename,  fstream::in | fstream::out | fstream::trunc);
+			fs.open(filename,  fstream::in | fstream::out | fstream::trunc);
 			std::cout<<"Creating db as first time used. ";
 			Json::Value users;
 			users[cRequest->user1().name()] = user;
 			Json::StyledWriter styledWriter;
-			std::fs<<styledWriter.write(users);
-			std::fs.close();
+			fs<<styledWriter.write(users);
+			fs.close();
 			fReply->set_message("Success");
 
 		}
@@ -106,7 +106,7 @@ void RunServer() {
 
 int main(int argc, char** argv) {
   std::fstream fs;
-  std::string filename = "db.json"
+  std::string filename = "db.json";
 
   // fs.open(filename, std::fstream::in | std::fstream::out | std::fstream::app);
   // if(!fs){
