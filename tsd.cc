@@ -36,14 +36,14 @@ using tsc::FollowReply;
 using tsc::ListReply;
 using tsc::ConnectRequest;
 
-bool isUserExists(string curr_user, Json::Value users){
-	if(users::isMember(curr_user)){
-		std::cout<<"This user already exists. Connection done!"<<std::endl;
-		return true;
-	} 
-	return false;
+// bool isUserExists(std::string curr_user, Json::Value users){
+// 	if(users::isMember(curr_user)){
+// 		std::cout<<"This user already exists. Connection done!"<<std::endl;
+// 		return true;
+// 	} 
+// 	return false;
 
-}
+// }
 class TscImpl final : public TscService::Service {
 	public:
 	// explicit TscImpl() {
@@ -69,12 +69,15 @@ class TscImpl final : public TscService::Service {
 		               << reader.getFormattedErrorMessages();
 		}
 		// user["Name"] = 
-		if(isUserExists(curr_user, users)) {
-			return Status::OK;
-		}
+		if(users::isMember(curr_user)){
+			std::cout<<"This user already exists. Connection done!"<<std::endl;
+			return Status::OK;		
+		} 
+		
 		Json::Value user; 
 		user["Followers"] = Json::Value(Json::arrayValue);
 		user["Following"] = Json::Value(Json::arrayValue);
+
 		std::cout<<"Adding new user to the database."<<std::endl;
 		
 		Json::Value users;
