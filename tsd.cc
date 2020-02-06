@@ -33,6 +33,7 @@ using tsc::FollowRequest;
 using tsc::UnfollowRequest;
 using tsc::FollowReply;
 using tsc::ListReply;
+using tsc::ConnectRequest;
 
 class TscImpl final : public TscService::Service {
 	public:
@@ -49,18 +50,18 @@ class TscImpl final : public TscService::Service {
 		user["Followers"] = Json::Value(Json::arrayValue);
 		user["Following"] = Json::Value(Json::arrayValue);
 
-		fstream fs;
-		string filename = "db.json";
+		std::fstream fs;
+		std::string filename = "db.json";
 		fs.open(filename, std::fstream::in | std::fstream::out | std::fstream::app);
 		if(!fs){
 			std::cout<<"Creating a new json file";
-			fs.open(filename,  fstream::in | fstream::out | fstream::trunc);
+			std::fs.open(filename,  fstream::in | fstream::out | fstream::trunc);
 			std::cout<<"Creating db as first time used. ";
 			Json::Value users;
 			users[cRequest->user1().name()] = user;
 			Json::StyledWriter styledWriter;
-			fs<<styledWriter.write(users);
-			fs.close();
+			std::fs<<styledWriter.write(users);
+			std::fs.close();
 			fReply->set_message("Success");
 
 		}
@@ -105,7 +106,7 @@ void RunServer() {
 
 int main(int argc, char** argv) {
   std::fstream fs;
-  string filename = "db.json"
+  std::string filename = "db.json"
 
   // fs.open(filename, std::fstream::in | std::fstream::out | std::fstream::app);
   // if(!fs){
