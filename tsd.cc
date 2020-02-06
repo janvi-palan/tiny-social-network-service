@@ -69,7 +69,7 @@ class TscImpl final : public TscService::Service {
 		               << reader.getFormattedErrorMessages();
 		}
 		// user["Name"] = 
-		if(users::isMember(curr_user)){
+		if(users.isMember(curr_user)){
 			std::cout<<"This user already exists. Connection done!"<<std::endl;
 			return Status::OK;		
 		} 
@@ -89,6 +89,7 @@ class TscImpl final : public TscService::Service {
 	Status AddToUsersDB(ServerContext* context, const FollowRequest* fRequest,
 	                  FollowReply* fReply) override {
 		fReply->set_message("Success");
+		std::string filename = "db.json";
 		std::string user1 = fRequest->user1().name();
 		std::string user2 = fRequest->user2().name();
 
@@ -104,7 +105,7 @@ class TscImpl final : public TscService::Service {
 		}
 		// user["Name"] = 
 
-		if(!(users::isMember(user1) && users::isMember(user2))){
+		if(!(users.isMember(user1) && users.isMember(user2))){
 			std::cout<<"Both the users don't exist."<<std::endl;
 			return Status::OK;		
 		} 
