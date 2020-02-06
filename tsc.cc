@@ -101,18 +101,18 @@ int Client::connectTo()
 
     ClientContext context;
     FollowReply r1;
-    Status status = stub_->AddNewUser(&context, c1, &r1);
-    if (!status.ok())
-        {
-            std::cout<<"connection failed."<<std::endl;
-            //return false;
-        }
-        else
-        { 
-            std::cout << "Connection worked! "<<std::endl;
-        //return true;
-        }
-    std::cout<<r1.message()<<std::endl;
+    // Status status = stub_->AddNewUser(&context, c1, &r1);
+    // if (!status.ok())
+    //     {
+    //         std::cout<<"connection failed."<<std::endl;
+    //         //return false;
+    //     }
+    //     else
+    //     { 
+    //         std::cout << "Connection worked! "<<std::endl;
+    //     //return true;
+    //     }
+    // std::cout<<r1.message()<<std::endl;
     std::cout<<"Finished connect method!"<<std::endl;
     return 1; // return 1 if success, otherwise return -1
 }
