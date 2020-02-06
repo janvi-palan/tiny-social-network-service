@@ -15,8 +15,8 @@
 #include <grpc/grpc.h>
 // #include <iostream>
 #include <fstream>
-#include <jsoncpp/json/json.h>
-#include<jsoncpp/json/writer.h>
+#include "/home/csce438/grpc/third_party/protobuf/conformance/third_party/jsoncpp/jsoncpp.cpp"
+#include "/home/csce438/grpc/third_party/protobuf/conformance/third_party/jsoncpp/json.h"
 
 
 
@@ -44,7 +44,7 @@ class TscImpl final : public TscService::Service {
 
 	Status AddNewUser(ServerContext* context, const ConnectRequest* cRequest,
 	                  FollowReply* fReply) override {
-		
+		fReply->set_message("Success");
 		Json::Value user; 
 		// user["Name"] = 
 		user["Followers"] = Json::Value(Json::arrayValue);
@@ -59,10 +59,10 @@ class TscImpl final : public TscService::Service {
 			std::cout<<"Creating db as first time used. ";
 			Json::Value users;
 			users[cRequest->user1().name()] = user;
-			Json::StyledWriter styledWriter;
-			fs<<styledWriter.write(users);
-			fs.close();
-			fReply->set_message("Success");
+			// Json::StyledWriter styledWriter;
+			// fs<<styledWriter.write(users);
+			// fs.close();
+			
 
 		}
 
