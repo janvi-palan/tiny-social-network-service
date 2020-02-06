@@ -141,9 +141,10 @@ IReply Client::processCommand(std::string& input)
         std::cout<<user2<<std::endl;
         std::cout<<"Follow request!"<<std::endl;
         User u1, u2;
-        std::string user1 = "User2";
-        u1.set_name(&user1);
-        u2.set_name(&user2);
+        std::string&& user1 = "User2";
+        std::string&& user2 = "User3";
+        u1.set_name(user1);
+        u2.set_name(user2);
         FollowRequest f1;
         f1.set_allocated_user1(&u1);
         f1.set_allocated_user2(&u2);
