@@ -36,6 +36,14 @@ using tsc::FollowReply;
 using tsc::ListReply;
 using tsc::ConnectRequest;
 
+bool isUserExists(string curr_user, Json::Value users){
+	if(users::isMember(curr_user)){
+		std::cout<<"This user already exists. Connection done!"<<std::endl;
+		return true;
+	} 
+	return false;
+
+}
 class TscImpl final : public TscService::Service {
 	public:
 	// explicit TscImpl() {
@@ -45,32 +53,35 @@ class TscImpl final : public TscService::Service {
 
 	Status AddNewUser(ServerContext* context, const ConnectRequest* cRequest,
 	                  FollowReply* fReply) override {
-		fReply->set_message("Success");
+		fReply->set_message("Connection to server is successful.");
+		std::string filename = "db.json";
 		std::cout<<cRequest->user1().name()<<std::endl;
-		Json::Value user; 
+		std::string curr_user = cRequest->user1().name();
+		
+		Json::Value users;
+		Json::Reader reader;
+		std::ifstream ip_users(filename);
+		ip_users >> users;
+
+		if(!reader.parse(ip_users, users, true)){
+		        //for some reason it always fails to parse
+			std::cout  << "Failed to parse configuration\n"
+		               << reader.getFormattedErrorMessages();
+		}
 		// user["Name"] = 
+		if(isUserExists(curr_user, users)) {
+			return Status::OK;
+		}
+		Json::Value user; 
 		user["Followers"] = Json::Value(Json::arrayValue);
 		user["Following"] = Json::Value(Json::arrayValue);
-		std::cout<<"outside!"<<std::endl;
-		std::fstream fs;
-		std::string filename = "db.json";
-		fs.open(filename, std::fstream::in | std::fstream::out | std::fstream::app);
-		if(fs){
-			std::cout<<"Creating a new json file"<<std::endl;
-			// fs.open(filename,  std::fstream::in | std::fstream::out | std::fstream::trunc);
-			std::cout<<"Creating db as first time used. "<<std::endl;
-			Json::Value users;
-			users[cRequest->user1().name()] = user;
-			std::ofstream of_obj("db.json");
-			of_obj<<std::setw(4)<<users<<std::endl;
-			// Json::StyledWriter styledWriter;
-			// fs<<styledWriter.write(users);
-			// fs.close();
-			
-
-		}
-	return Status::OK;
-
+		std::cout<<"Adding new user to the database."<<std::endl;
+		
+		Json::Value users;
+		users[curr_user] = user;
+		std::ofstream of_obj(filename);
+		of_obj<<std::setw(4)<<users<<std::endl;
+		return Status::OK;
 	}
 
 	Status AddToUsersDB(ServerContext* context, const FollowRequest* fRequest,
