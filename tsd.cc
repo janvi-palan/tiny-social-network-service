@@ -15,6 +15,7 @@
 #include <grpc/grpc.h>
 // #include <iostream>
 #include <fstream>
+
 #include "/home/csce438/grpc/third_party/protobuf/conformance/third_party/jsoncpp/jsoncpp.cpp"
 #include "/home/csce438/grpc/third_party/protobuf/conformance/third_party/jsoncpp/json.h"
 
@@ -56,13 +57,15 @@ class TscImpl final : public TscService::Service {
 		fs.open(filename, std::fstream::in | std::fstream::out | std::fstream::app);
 		if(fs){
 			std::cout<<"Creating a new json file"<<std::endl;
-			fs.open(filename,  std::fstream::in | std::fstream::out | std::fstream::trunc);
+			// fs.open(filename,  std::fstream::in | std::fstream::out | std::fstream::trunc);
 			std::cout<<"Creating db as first time used. "<<std::endl;
 			Json::Value users;
 			users[cRequest->user1().name()] = user;
-			Json::StyledWriter styledWriter;
-			fs<<styledWriter.write(users);
-			fs.close();
+			std::ofstream of_obj("db.json");
+			of_obj<<std::setw(4)<<users<<std::endl;
+			// Json::StyledWriter styledWriter;
+			// fs<<styledWriter.write(users);
+			// fs.close();
 			
 
 		}
