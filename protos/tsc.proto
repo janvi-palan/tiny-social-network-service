@@ -9,7 +9,7 @@ package tsc;
 
 // Interface exported by the server.
 service TscService {
-  
+  rpc AddNewUser(ConnectRequest) returns (FollowReply){}
   rpc AddToUsersDB(FollowRequest) returns (FollowReply) {}
   rpc RemoveFromUsersDB(UnfollowRequest) returns (FollowReply){}
   rpc GetAllFollowers(User) returns (ListReply){}
@@ -29,6 +29,10 @@ message UnfollowRequest{
   User user2 = 2;
 }
 
+message ConnectRequest{
+  User user1 = 1;
+}
+
 message FollowReply{
   string message = 1;
 }
@@ -36,5 +40,7 @@ message FollowReply{
 message ListReply{
   repeated User users = 1;
 }
+
+
 
 

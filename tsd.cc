@@ -13,6 +13,11 @@
 #include <grpc++/grpc++.h>
 #include "tsc.grpc.pb.h"
 #include <grpc/grpc.h>
+// #include <iostream>
+#include <fstream>
+#include <jsoncpp/json/json.h>
+#include<json/writer.h>
+
 
 using grpc::Server;
 using grpc::ServerBuilder;
@@ -34,7 +39,33 @@ class TscImpl final : public TscService::Service {
 	//     // tsc::ParseDb(db, &feature_list_);
 	// }
 //create user function
+
+	Status AddNewUser(ServerContext* context, const ConnectRequest* cRequest,
+	                  FollowReply* fReply) override {
 		
+		Json::Value user; 
+		// user["Name"] = 
+		user["Followers"] = Json::Value(Json::arrayValue);
+		user["Following"] = Json::Value(Json::arrayValue);
+
+		fstream fs;
+		string filename = "db.json";
+		fs.open(filename, std::fstream::in | std::fstream::out | std::fstream::app);
+		if(!fs){
+			std::cout<<"Creating a new json file";
+			fs.open(filename,  fstream::in | fstream::out | fstream::trunc);
+			std::cout<<"Creating db as first time used. ";
+			Json::Value users;
+			users[cRequest->user1().name()] = user;
+			Json::StyledWriter styledWriter;
+			fs<<styledWriter.write(users);
+			fs.close();
+			fReply->set_message("Success");
+
+		}
+
+
+	}
 
 	Status AddToUsersDB(ServerContext* context, const FollowRequest* fRequest,
 	                  FollowReply* fReply) override {
@@ -70,6 +101,14 @@ void RunServer() {
 }
 
 int main(int argc, char** argv) {
+  std::fstream fs;
+  string filename = "db.json"
+
+  // fs.open(filename, std::fstream::in | std::fstream::out | std::fstream::app);
+  // if(!fs){
+  // 	std::cout<<"Creating db as first time used. ";
+  // 	fs.open(filename,  fstream::in | fstream::out | fstream::trunc);
+  // }
   // Expect only arg: --db_path=path/to/route_guide_db.json.
   // std::string db = tsc::GetDbFileContent(argc, argv);
   RunServer();

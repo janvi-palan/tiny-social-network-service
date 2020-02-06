@@ -111,6 +111,7 @@ int Client::connectTo()
             std::cout << "connection worked! ";
         //return true;
         }
+    std::cout<<r1.message();
     std::cout<<"finished connect method!";
     return 1; // return 1 if success, otherwise return -1
 }
