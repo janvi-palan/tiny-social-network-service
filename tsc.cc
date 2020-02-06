@@ -134,8 +134,9 @@ IReply Client::processCommand(std::string& input)
     // - JOIN/LEAVE and "<username>" are separated by one space.
     // ------------------------------------------------------------
     FollowReply r1;
+    IReply ire;
     ClientContext context;
-    if(input.substr(0,6).compare("FOLLOW")){
+    if(input.substr(0,6).compare("FOLLOW")==0){
         std::string user2 = input.substr(8,input.length());
         std::cout<<user2<<std::endl;
         std::cout<<"Follow request!"<<std::endl;
@@ -152,7 +153,12 @@ IReply Client::processCommand(std::string& input)
             std::cout<<"Something went wrong!"<<std::endl;
         }
         std::cout<<"Finished Follow!"<<std::endl;
-
+        ire.grpc_status = status;
+        if (status.ok()) {
+            ire.comm_status = SUCCESS;
+        } else {
+            ire.comm_status = FAILURE_NOT_EXISTS;
+        }
 
     }
     // ------------------------------------------------------------
@@ -187,7 +193,7 @@ IReply Client::processCommand(std::string& input)
     // ------------------------------------------------------------
     
 
-    IReply ire;
+    
     return ire;
 }
 
