@@ -72,10 +72,12 @@ class IClient
 void IClient::run()
 {
     int ret = connectTo();
+    std::cout<<"Here!"<<std::endl;
     if (ret < 0) {
         std::cout << "connection failed: " << ret << std::endl;
         exit(1);
     }
+
     displayTitle();
     while (1) {
         std::string cmd = getCommand();
