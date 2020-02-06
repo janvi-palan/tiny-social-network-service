@@ -19,6 +19,7 @@
 #include<json/writer.h>
 
 
+
 using grpc::Server;
 using grpc::ServerBuilder;
 using grpc::ServerContext;
@@ -89,7 +90,9 @@ class TscImpl final : public TscService::Service {
 
 void RunServer() {
   std::string server_address("0.0.0.0:50051");
+
   TscImpl service;
+
 
   ServerBuilder builder;
   builder.AddListeningPort(server_address, grpc::InsecureServerCredentials());

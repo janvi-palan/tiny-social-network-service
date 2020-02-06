@@ -91,6 +91,8 @@ int Client::connectTo()
     std::cout<<"connecting to : "<<channelName;
     stub_ = TscService::NewStub(grpc::CreateChannel(channelName,
                             grpc::InsecureChannelCredentials()));
+
+
     User u1, u2;
     u1.set_name("User1");
     u2.set_name("User2");
@@ -113,7 +115,9 @@ int Client::connectTo()
         }
     std::cout<<r1.message();
     std::cout<<"finished connect method!";
+
     return 1; // return 1 if success, otherwise return -1
+
 }
 
 IReply Client::processCommand(std::string& input)
