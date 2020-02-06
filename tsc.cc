@@ -21,6 +21,7 @@ using tsc::FollowRequest;
 using tsc::UnfollowRequest;
 using tsc::FollowReply;
 using tsc::ListReply;
+using tsc::ConnectRequest;
 
 class Client : public IClient
 {
