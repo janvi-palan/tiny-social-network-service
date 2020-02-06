@@ -135,14 +135,16 @@ IReply Client::processCommand(std::string& input)
     // ------------------------------------------------------------
     FollowReply r1;
     ClientContext context;
-    if(strncmp(input, "FOLLOW", 6) == 0){
-        std::string user2 = input.substr(7,input.length() - 1);
+    if(input.substr(0,6).compare("FOLLOW")){
+        std::string user2 = input.substr(8,input.length());
         std::cout<<user2<<std::endl;
         std::cout<<"Follow request!"<<std::endl;
         User u1, u2;
+        u1.set_name("User2");
+        u2.set_name(user2);
         FollowRequest f1;
-        f1.set_allocated_user1(this->username);
-        f1.set_allocated_user2(user2);
+        f1.set_allocated_user1(u1);
+        f1.set_allocated_user2(u2);
 
         Status status = stub_->AddToUsersDB(&context, f1, &r1);
 
@@ -150,7 +152,7 @@ IReply Client::processCommand(std::string& input)
             std::cout<<"Something went wrong!"<<std::endl;
         }
         std::cout<<"Finished Follow!"<<std::endl;
-        
+
 
     }
     // ------------------------------------------------------------
