@@ -36,7 +36,7 @@ namespace protobuf_tsc_2eproto {
 struct TableStruct {
   static const ::google::protobuf::internal::ParseTableField entries[];
   static const ::google::protobuf::internal::AuxillaryParseTableField aux[];
-  static const ::google::protobuf::internal::ParseTable schema[5];
+  static const ::google::protobuf::internal::ParseTable schema[6];
   static const ::google::protobuf::internal::FieldMetadata field_metadata[];
   static const ::google::protobuf::internal::SerializationTable serialization_table[];
   static const ::google::protobuf::uint32 offsets[];
@@ -48,6 +48,8 @@ void InitDefaultsFollowRequestImpl();
 void InitDefaultsFollowRequest();
 void InitDefaultsUnfollowRequestImpl();
 void InitDefaultsUnfollowRequest();
+void InitDefaultsConnectRequestImpl();
+void InitDefaultsConnectRequest();
 void InitDefaultsFollowReplyImpl();
 void InitDefaultsFollowReply();
 void InitDefaultsListReplyImpl();
@@ -56,11 +58,15 @@ inline void InitDefaults() {
   InitDefaultsUser();
   InitDefaultsFollowRequest();
   InitDefaultsUnfollowRequest();
+  InitDefaultsConnectRequest();
   InitDefaultsFollowReply();
   InitDefaultsListReply();
 }
 }  // namespace protobuf_tsc_2eproto
 namespace tsc {
+class ConnectRequest;
+class ConnectRequestDefaultTypeInternal;
+extern ConnectRequestDefaultTypeInternal _ConnectRequest_default_instance_;
 class FollowReply;
 class FollowReplyDefaultTypeInternal;
 extern FollowReplyDefaultTypeInternal _FollowReply_default_instance_;
@@ -412,6 +418,108 @@ class UnfollowRequest : public ::google::protobuf::Message /* @@protoc_insertion
 };
 // -------------------------------------------------------------------
 
+class ConnectRequest : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:tsc.ConnectRequest) */ {
+ public:
+  ConnectRequest();
+  virtual ~ConnectRequest();
+
+  ConnectRequest(const ConnectRequest& from);
+
+  inline ConnectRequest& operator=(const ConnectRequest& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  ConnectRequest(ConnectRequest&& from) noexcept
+    : ConnectRequest() {
+    *this = ::std::move(from);
+  }
+
+  inline ConnectRequest& operator=(ConnectRequest&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const ConnectRequest& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const ConnectRequest* internal_default_instance() {
+    return reinterpret_cast<const ConnectRequest*>(
+               &_ConnectRequest_default_instance_);
+  }
+  static PROTOBUF_CONSTEXPR int const kIndexInFileMessages =
+    3;
+
+  void Swap(ConnectRequest* other);
+  friend void swap(ConnectRequest& a, ConnectRequest& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline ConnectRequest* New() const PROTOBUF_FINAL { return New(NULL); }
+
+  ConnectRequest* New(::google::protobuf::Arena* arena) const PROTOBUF_FINAL;
+  void CopyFrom(const ::google::protobuf::Message& from) PROTOBUF_FINAL;
+  void MergeFrom(const ::google::protobuf::Message& from) PROTOBUF_FINAL;
+  void CopyFrom(const ConnectRequest& from);
+  void MergeFrom(const ConnectRequest& from);
+  void Clear() PROTOBUF_FINAL;
+  bool IsInitialized() const PROTOBUF_FINAL;
+
+  size_t ByteSizeLong() const PROTOBUF_FINAL;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) PROTOBUF_FINAL;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const PROTOBUF_FINAL;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const PROTOBUF_FINAL;
+  int GetCachedSize() const PROTOBUF_FINAL { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const PROTOBUF_FINAL;
+  void InternalSwap(ConnectRequest* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const PROTOBUF_FINAL;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // .tsc.User user1 = 1;
+  bool has_user1() const;
+  void clear_user1();
+  static const int kUser1FieldNumber = 1;
+  const ::tsc::User& user1() const;
+  ::tsc::User* release_user1();
+  ::tsc::User* mutable_user1();
+  void set_allocated_user1(::tsc::User* user1);
+
+  // @@protoc_insertion_point(class_scope:tsc.ConnectRequest)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::tsc::User* user1_;
+  mutable int _cached_size_;
+  friend struct ::protobuf_tsc_2eproto::TableStruct;
+  friend void ::protobuf_tsc_2eproto::InitDefaultsConnectRequestImpl();
+};
+// -------------------------------------------------------------------
+
 class FollowReply : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:tsc.FollowReply) */ {
  public:
   FollowReply();
@@ -447,7 +555,7 @@ class FollowReply : public ::google::protobuf::Message /* @@protoc_insertion_poi
                &_FollowReply_default_instance_);
   }
   static PROTOBUF_CONSTEXPR int const kIndexInFileMessages =
-    3;
+    4;
 
   void Swap(FollowReply* other);
   friend void swap(FollowReply& a, FollowReply& b) {
@@ -554,7 +662,7 @@ class ListReply : public ::google::protobuf::Message /* @@protoc_insertion_point
                &_ListReply_default_instance_);
   }
   static PROTOBUF_CONSTEXPR int const kIndexInFileMessages =
-    4;
+    5;
 
   void Swap(ListReply* other);
   friend void swap(ListReply& a, ListReply& b) {
@@ -896,6 +1004,60 @@ inline void UnfollowRequest::set_allocated_user2(::tsc::User* user2) {
 
 // -------------------------------------------------------------------
 
+// ConnectRequest
+
+// .tsc.User user1 = 1;
+inline bool ConnectRequest::has_user1() const {
+  return this != internal_default_instance() && user1_ != NULL;
+}
+inline void ConnectRequest::clear_user1() {
+  if (GetArenaNoVirtual() == NULL && user1_ != NULL) {
+    delete user1_;
+  }
+  user1_ = NULL;
+}
+inline const ::tsc::User& ConnectRequest::user1() const {
+  const ::tsc::User* p = user1_;
+  // @@protoc_insertion_point(field_get:tsc.ConnectRequest.user1)
+  return p != NULL ? *p : *reinterpret_cast<const ::tsc::User*>(
+      &::tsc::_User_default_instance_);
+}
+inline ::tsc::User* ConnectRequest::release_user1() {
+  // @@protoc_insertion_point(field_release:tsc.ConnectRequest.user1)
+  
+  ::tsc::User* temp = user1_;
+  user1_ = NULL;
+  return temp;
+}
+inline ::tsc::User* ConnectRequest::mutable_user1() {
+  
+  if (user1_ == NULL) {
+    user1_ = new ::tsc::User;
+  }
+  // @@protoc_insertion_point(field_mutable:tsc.ConnectRequest.user1)
+  return user1_;
+}
+inline void ConnectRequest::set_allocated_user1(::tsc::User* user1) {
+  ::google::protobuf::Arena* message_arena = GetArenaNoVirtual();
+  if (message_arena == NULL) {
+    delete user1_;
+  }
+  if (user1) {
+    ::google::protobuf::Arena* submessage_arena = NULL;
+    if (message_arena != submessage_arena) {
+      user1 = ::google::protobuf::internal::GetOwnedMessage(
+          message_arena, user1, submessage_arena);
+    }
+    
+  } else {
+    
+  }
+  user1_ = user1;
+  // @@protoc_insertion_point(field_set_allocated:tsc.ConnectRequest.user1)
+}
+
+// -------------------------------------------------------------------
+
 // FollowReply
 
 // string message = 1;
@@ -988,6 +1150,8 @@ ListReply::users() const {
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

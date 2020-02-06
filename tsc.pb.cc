@@ -35,6 +35,11 @@ class UnfollowRequestDefaultTypeInternal {
   ::google::protobuf::internal::ExplicitlyConstructed<UnfollowRequest>
       _instance;
 } _UnfollowRequest_default_instance_;
+class ConnectRequestDefaultTypeInternal {
+ public:
+  ::google::protobuf::internal::ExplicitlyConstructed<ConnectRequest>
+      _instance;
+} _ConnectRequest_default_instance_;
 class FollowReplyDefaultTypeInternal {
  public:
   ::google::protobuf::internal::ExplicitlyConstructed<FollowReply>
@@ -112,6 +117,28 @@ void InitDefaultsUnfollowRequest() {
   ::google::protobuf::GoogleOnceInit(&once, &InitDefaultsUnfollowRequestImpl);
 }
 
+void InitDefaultsConnectRequestImpl() {
+  GOOGLE_PROTOBUF_VERIFY_VERSION;
+
+#ifdef GOOGLE_PROTOBUF_ENFORCE_UNIQUENESS
+  ::google::protobuf::internal::InitProtobufDefaultsForceUnique();
+#else
+  ::google::protobuf::internal::InitProtobufDefaults();
+#endif  // GOOGLE_PROTOBUF_ENFORCE_UNIQUENESS
+  protobuf_tsc_2eproto::InitDefaultsUser();
+  {
+    void* ptr = &::tsc::_ConnectRequest_default_instance_;
+    new (ptr) ::tsc::ConnectRequest();
+    ::google::protobuf::internal::OnShutdownDestroyMessage(ptr);
+  }
+  ::tsc::ConnectRequest::InitAsDefaultInstance();
+}
+
+void InitDefaultsConnectRequest() {
+  static GOOGLE_PROTOBUF_DECLARE_ONCE(once);
+  ::google::protobuf::GoogleOnceInit(&once, &InitDefaultsConnectRequestImpl);
+}
+
 void InitDefaultsFollowReplyImpl() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
@@ -155,7 +182,7 @@ void InitDefaultsListReply() {
   ::google::protobuf::GoogleOnceInit(&once, &InitDefaultsListReplyImpl);
 }
 
-::google::protobuf::Metadata file_level_metadata[5];
+::google::protobuf::Metadata file_level_metadata[6];
 
 const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
   ~0u,  // no _has_bits_
@@ -179,6 +206,12 @@ const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUT
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::tsc::UnfollowRequest, user1_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::tsc::UnfollowRequest, user2_),
   ~0u,  // no _has_bits_
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::tsc::ConnectRequest, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::tsc::ConnectRequest, user1_),
+  ~0u,  // no _has_bits_
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::tsc::FollowReply, _internal_metadata_),
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
@@ -195,14 +228,16 @@ static const ::google::protobuf::internal::MigrationSchema schemas[] GOOGLE_PROT
   { 0, -1, sizeof(::tsc::User)},
   { 6, -1, sizeof(::tsc::FollowRequest)},
   { 13, -1, sizeof(::tsc::UnfollowRequest)},
-  { 20, -1, sizeof(::tsc::FollowReply)},
-  { 26, -1, sizeof(::tsc::ListReply)},
+  { 20, -1, sizeof(::tsc::ConnectRequest)},
+  { 26, -1, sizeof(::tsc::FollowReply)},
+  { 32, -1, sizeof(::tsc::ListReply)},
 };
 
 static ::google::protobuf::Message const * const file_default_instances[] = {
   reinterpret_cast<const ::google::protobuf::Message*>(&::tsc::_User_default_instance_),
   reinterpret_cast<const ::google::protobuf::Message*>(&::tsc::_FollowRequest_default_instance_),
   reinterpret_cast<const ::google::protobuf::Message*>(&::tsc::_UnfollowRequest_default_instance_),
+  reinterpret_cast<const ::google::protobuf::Message*>(&::tsc::_ConnectRequest_default_instance_),
   reinterpret_cast<const ::google::protobuf::Message*>(&::tsc::_FollowReply_default_instance_),
   reinterpret_cast<const ::google::protobuf::Message*>(&::tsc::_ListReply_default_instance_),
 };
@@ -223,7 +258,7 @@ void protobuf_AssignDescriptorsOnce() {
 void protobuf_RegisterTypes(const ::std::string&) GOOGLE_PROTOBUF_ATTRIBUTE_COLD;
 void protobuf_RegisterTypes(const ::std::string&) {
   protobuf_AssignDescriptorsOnce();
-  ::google::protobuf::internal::RegisterAllTypes(file_level_metadata, 5);
+  ::google::protobuf::internal::RegisterAllTypes(file_level_metadata, 6);
 }
 
 void AddDescriptorsImpl() {
@@ -233,17 +268,20 @@ void AddDescriptorsImpl() {
       "\n\rFollowRequest\022\030\n\005user1\030\001 \001(\0132\t.tsc.Use"
       "r\022\030\n\005user2\030\002 \001(\0132\t.tsc.User\"E\n\017UnfollowR"
       "equest\022\030\n\005user1\030\001 \001(\0132\t.tsc.User\022\030\n\005user"
-      "2\030\002 \001(\0132\t.tsc.User\"\036\n\013FollowReply\022\017\n\007mes"
-      "sage\030\001 \001(\t\"%\n\tListReply\022\030\n\005users\030\001 \003(\0132\t"
-      ".tsc.User2\263\001\n\nTscService\0226\n\014AddToUsersDB"
-      "\022\022.tsc.FollowRequest\032\020.tsc.FollowReply\"\000"
-      "\022=\n\021RemoveFromUsersDB\022\024.tsc.UnfollowRequ"
-      "est\032\020.tsc.FollowReply\"\000\022.\n\017GetAllFollowe"
-      "rs\022\t.tsc.User\032\016.tsc.ListReply\"\000B\030\n\003tscB\n"
-      "TscServiceP\001\242\002\002TPb\006proto3"
+      "2\030\002 \001(\0132\t.tsc.User\"*\n\016ConnectRequest\022\030\n\005"
+      "user1\030\001 \001(\0132\t.tsc.User\"\036\n\013FollowReply\022\017\n"
+      "\007message\030\001 \001(\t\"%\n\tListReply\022\030\n\005users\030\001 \003"
+      "(\0132\t.tsc.User2\352\001\n\nTscService\0225\n\nAddNewUs"
+      "er\022\023.tsc.ConnectRequest\032\020.tsc.FollowRepl"
+      "y\"\000\0226\n\014AddToUsersDB\022\022.tsc.FollowRequest\032"
+      "\020.tsc.FollowReply\"\000\022=\n\021RemoveFromUsersDB"
+      "\022\024.tsc.UnfollowRequest\032\020.tsc.FollowReply"
+      "\"\000\022.\n\017GetAllFollowers\022\t.tsc.User\032\016.tsc.L"
+      "istReply\"\000B\030\n\003tscB\nTscServiceP\001\242\002\002TPb\006pr"
+      "oto3"
   };
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-      descriptor, 465);
+      descriptor, 564);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "tsc.proto", &protobuf_RegisterTypes);
 }
@@ -1112,6 +1150,255 @@ void UnfollowRequest::InternalSwap(UnfollowRequest* other) {
 }
 
 ::google::protobuf::Metadata UnfollowRequest::GetMetadata() const {
+  protobuf_tsc_2eproto::protobuf_AssignDescriptorsOnce();
+  return ::protobuf_tsc_2eproto::file_level_metadata[kIndexInFileMessages];
+}
+
+
+// ===================================================================
+
+void ConnectRequest::InitAsDefaultInstance() {
+  ::tsc::_ConnectRequest_default_instance_._instance.get_mutable()->user1_ = const_cast< ::tsc::User*>(
+      ::tsc::User::internal_default_instance());
+}
+#if !defined(_MSC_VER) || _MSC_VER >= 1900
+const int ConnectRequest::kUser1FieldNumber;
+#endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
+
+ConnectRequest::ConnectRequest()
+  : ::google::protobuf::Message(), _internal_metadata_(NULL) {
+  if (GOOGLE_PREDICT_TRUE(this != internal_default_instance())) {
+    ::protobuf_tsc_2eproto::InitDefaultsConnectRequest();
+  }
+  SharedCtor();
+  // @@protoc_insertion_point(constructor:tsc.ConnectRequest)
+}
+ConnectRequest::ConnectRequest(const ConnectRequest& from)
+  : ::google::protobuf::Message(),
+      _internal_metadata_(NULL),
+      _cached_size_(0) {
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  if (from.has_user1()) {
+    user1_ = new ::tsc::User(*from.user1_);
+  } else {
+    user1_ = NULL;
+  }
+  // @@protoc_insertion_point(copy_constructor:tsc.ConnectRequest)
+}
+
+void ConnectRequest::SharedCtor() {
+  user1_ = NULL;
+  _cached_size_ = 0;
+}
+
+ConnectRequest::~ConnectRequest() {
+  // @@protoc_insertion_point(destructor:tsc.ConnectRequest)
+  SharedDtor();
+}
+
+void ConnectRequest::SharedDtor() {
+  if (this != internal_default_instance()) delete user1_;
+}
+
+void ConnectRequest::SetCachedSize(int size) const {
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+}
+const ::google::protobuf::Descriptor* ConnectRequest::descriptor() {
+  ::protobuf_tsc_2eproto::protobuf_AssignDescriptorsOnce();
+  return ::protobuf_tsc_2eproto::file_level_metadata[kIndexInFileMessages].descriptor;
+}
+
+const ConnectRequest& ConnectRequest::default_instance() {
+  ::protobuf_tsc_2eproto::InitDefaultsConnectRequest();
+  return *internal_default_instance();
+}
+
+ConnectRequest* ConnectRequest::New(::google::protobuf::Arena* arena) const {
+  ConnectRequest* n = new ConnectRequest;
+  if (arena != NULL) {
+    arena->Own(n);
+  }
+  return n;
+}
+
+void ConnectRequest::Clear() {
+// @@protoc_insertion_point(message_clear_start:tsc.ConnectRequest)
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  if (GetArenaNoVirtual() == NULL && user1_ != NULL) {
+    delete user1_;
+  }
+  user1_ = NULL;
+  _internal_metadata_.Clear();
+}
+
+bool ConnectRequest::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
+  ::google::protobuf::uint32 tag;
+  // @@protoc_insertion_point(parse_start:tsc.ConnectRequest)
+  for (;;) {
+    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(127u);
+    tag = p.first;
+    if (!p.second) goto handle_unusual;
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // .tsc.User user1 = 1;
+      case 1: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(10u /* 10 & 0xFF */)) {
+          DO_(::google::protobuf::internal::WireFormatLite::ReadMessage(
+               input, mutable_user1()));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      default: {
+      handle_unusual:
+        if (tag == 0) {
+          goto success;
+        }
+        DO_(::google::protobuf::internal::WireFormat::SkipField(
+              input, tag, _internal_metadata_.mutable_unknown_fields()));
+        break;
+      }
+    }
+  }
+success:
+  // @@protoc_insertion_point(parse_success:tsc.ConnectRequest)
+  return true;
+failure:
+  // @@protoc_insertion_point(parse_failure:tsc.ConnectRequest)
+  return false;
+#undef DO_
+}
+
+void ConnectRequest::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // @@protoc_insertion_point(serialize_start:tsc.ConnectRequest)
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // .tsc.User user1 = 1;
+  if (this->has_user1()) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+      1, *this->user1_, output);
+  }
+
+  if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
+    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
+        (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()), output);
+  }
+  // @@protoc_insertion_point(serialize_end:tsc.ConnectRequest)
+}
+
+::google::protobuf::uint8* ConnectRequest::InternalSerializeWithCachedSizesToArray(
+    bool deterministic, ::google::protobuf::uint8* target) const {
+  (void)deterministic; // Unused
+  // @@protoc_insertion_point(serialize_to_array_start:tsc.ConnectRequest)
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // .tsc.User user1 = 1;
+  if (this->has_user1()) {
+    target = ::google::protobuf::internal::WireFormatLite::
+      InternalWriteMessageToArray(
+        1, *this->user1_, deterministic, target);
+  }
+
+  if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
+    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
+        (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()), target);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:tsc.ConnectRequest)
+  return target;
+}
+
+size_t ConnectRequest::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:tsc.ConnectRequest)
+  size_t total_size = 0;
+
+  if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
+    total_size +=
+      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
+        (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()));
+  }
+  // .tsc.User user1 = 1;
+  if (this->has_user1()) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::MessageSize(
+        *this->user1_);
+  }
+
+  int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = cached_size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+  return total_size;
+}
+
+void ConnectRequest::MergeFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:tsc.ConnectRequest)
+  GOOGLE_DCHECK_NE(&from, this);
+  const ConnectRequest* source =
+      ::google::protobuf::internal::DynamicCastToGenerated<const ConnectRequest>(
+          &from);
+  if (source == NULL) {
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:tsc.ConnectRequest)
+    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
+  } else {
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:tsc.ConnectRequest)
+    MergeFrom(*source);
+  }
+}
+
+void ConnectRequest::MergeFrom(const ConnectRequest& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:tsc.ConnectRequest)
+  GOOGLE_DCHECK_NE(&from, this);
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if (from.has_user1()) {
+    mutable_user1()->::tsc::User::MergeFrom(from.user1());
+  }
+}
+
+void ConnectRequest::CopyFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:tsc.ConnectRequest)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void ConnectRequest::CopyFrom(const ConnectRequest& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:tsc.ConnectRequest)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool ConnectRequest::IsInitialized() const {
+  return true;
+}
+
+void ConnectRequest::Swap(ConnectRequest* other) {
+  if (other == this) return;
+  InternalSwap(other);
+}
+void ConnectRequest::InternalSwap(ConnectRequest* other) {
+  using std::swap;
+  swap(user1_, other->user1_);
+  _internal_metadata_.Swap(&other->_internal_metadata_);
+  swap(_cached_size_, other->_cached_size_);
+}
+
+::google::protobuf::Metadata ConnectRequest::GetMetadata() const {
   protobuf_tsc_2eproto::protobuf_AssignDescriptorsOnce();
   return ::protobuf_tsc_2eproto::file_level_metadata[kIndexInFileMessages];
 }

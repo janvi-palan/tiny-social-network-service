@@ -34,6 +34,13 @@ class TscService final {
   class StubInterface {
    public:
     virtual ~StubInterface() {}
+    virtual ::grpc::Status AddNewUser(::grpc::ClientContext* context, const ::tsc::ConnectRequest& request, ::tsc::FollowReply* response) = 0;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tsc::FollowReply>> AsyncAddNewUser(::grpc::ClientContext* context, const ::tsc::ConnectRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tsc::FollowReply>>(AsyncAddNewUserRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tsc::FollowReply>> PrepareAsyncAddNewUser(::grpc::ClientContext* context, const ::tsc::ConnectRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tsc::FollowReply>>(PrepareAsyncAddNewUserRaw(context, request, cq));
+    }
     virtual ::grpc::Status AddToUsersDB(::grpc::ClientContext* context, const ::tsc::FollowRequest& request, ::tsc::FollowReply* response) = 0;
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tsc::FollowReply>> AsyncAddToUsersDB(::grpc::ClientContext* context, const ::tsc::FollowRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tsc::FollowReply>>(AsyncAddToUsersDBRaw(context, request, cq));
@@ -56,6 +63,8 @@ class TscService final {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tsc::ListReply>>(PrepareAsyncGetAllFollowersRaw(context, request, cq));
     }
   private:
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::tsc::FollowReply>* AsyncAddNewUserRaw(::grpc::ClientContext* context, const ::tsc::ConnectRequest& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::tsc::FollowReply>* PrepareAsyncAddNewUserRaw(::grpc::ClientContext* context, const ::tsc::ConnectRequest& request, ::grpc::CompletionQueue* cq) = 0;
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::tsc::FollowReply>* AsyncAddToUsersDBRaw(::grpc::ClientContext* context, const ::tsc::FollowRequest& request, ::grpc::CompletionQueue* cq) = 0;
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::tsc::FollowReply>* PrepareAsyncAddToUsersDBRaw(::grpc::ClientContext* context, const ::tsc::FollowRequest& request, ::grpc::CompletionQueue* cq) = 0;
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::tsc::FollowReply>* AsyncRemoveFromUsersDBRaw(::grpc::ClientContext* context, const ::tsc::UnfollowRequest& request, ::grpc::CompletionQueue* cq) = 0;
@@ -66,6 +75,13 @@ class TscService final {
   class Stub final : public StubInterface {
    public:
     Stub(const std::shared_ptr< ::grpc::ChannelInterface>& channel);
+    ::grpc::Status AddNewUser(::grpc::ClientContext* context, const ::tsc::ConnectRequest& request, ::tsc::FollowReply* response) override;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::tsc::FollowReply>> AsyncAddNewUser(::grpc::ClientContext* context, const ::tsc::ConnectRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::tsc::FollowReply>>(AsyncAddNewUserRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::tsc::FollowReply>> PrepareAsyncAddNewUser(::grpc::ClientContext* context, const ::tsc::ConnectRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::tsc::FollowReply>>(PrepareAsyncAddNewUserRaw(context, request, cq));
+    }
     ::grpc::Status AddToUsersDB(::grpc::ClientContext* context, const ::tsc::FollowRequest& request, ::tsc::FollowReply* response) override;
     std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::tsc::FollowReply>> AsyncAddToUsersDB(::grpc::ClientContext* context, const ::tsc::FollowRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::tsc::FollowReply>>(AsyncAddToUsersDBRaw(context, request, cq));
@@ -90,12 +106,15 @@ class TscService final {
 
    private:
     std::shared_ptr< ::grpc::ChannelInterface> channel_;
+    ::grpc::ClientAsyncResponseReader< ::tsc::FollowReply>* AsyncAddNewUserRaw(::grpc::ClientContext* context, const ::tsc::ConnectRequest& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::tsc::FollowReply>* PrepareAsyncAddNewUserRaw(::grpc::ClientContext* context, const ::tsc::ConnectRequest& request, ::grpc::CompletionQueue* cq) override;
     ::grpc::ClientAsyncResponseReader< ::tsc::FollowReply>* AsyncAddToUsersDBRaw(::grpc::ClientContext* context, const ::tsc::FollowRequest& request, ::grpc::CompletionQueue* cq) override;
     ::grpc::ClientAsyncResponseReader< ::tsc::FollowReply>* PrepareAsyncAddToUsersDBRaw(::grpc::ClientContext* context, const ::tsc::FollowRequest& request, ::grpc::CompletionQueue* cq) override;
     ::grpc::ClientAsyncResponseReader< ::tsc::FollowReply>* AsyncRemoveFromUsersDBRaw(::grpc::ClientContext* context, const ::tsc::UnfollowRequest& request, ::grpc::CompletionQueue* cq) override;
     ::grpc::ClientAsyncResponseReader< ::tsc::FollowReply>* PrepareAsyncRemoveFromUsersDBRaw(::grpc::ClientContext* context, const ::tsc::UnfollowRequest& request, ::grpc::CompletionQueue* cq) override;
     ::grpc::ClientAsyncResponseReader< ::tsc::ListReply>* AsyncGetAllFollowersRaw(::grpc::ClientContext* context, const ::tsc::User& request, ::grpc::CompletionQueue* cq) override;
     ::grpc::ClientAsyncResponseReader< ::tsc::ListReply>* PrepareAsyncGetAllFollowersRaw(::grpc::ClientContext* context, const ::tsc::User& request, ::grpc::CompletionQueue* cq) override;
+    const ::grpc::internal::RpcMethod rpcmethod_AddNewUser_;
     const ::grpc::internal::RpcMethod rpcmethod_AddToUsersDB_;
     const ::grpc::internal::RpcMethod rpcmethod_RemoveFromUsersDB_;
     const ::grpc::internal::RpcMethod rpcmethod_GetAllFollowers_;
@@ -106,9 +125,30 @@ class TscService final {
    public:
     Service();
     virtual ~Service();
+    virtual ::grpc::Status AddNewUser(::grpc::ServerContext* context, const ::tsc::ConnectRequest* request, ::tsc::FollowReply* response);
     virtual ::grpc::Status AddToUsersDB(::grpc::ServerContext* context, const ::tsc::FollowRequest* request, ::tsc::FollowReply* response);
     virtual ::grpc::Status RemoveFromUsersDB(::grpc::ServerContext* context, const ::tsc::UnfollowRequest* request, ::tsc::FollowReply* response);
     virtual ::grpc::Status GetAllFollowers(::grpc::ServerContext* context, const ::tsc::User* request, ::tsc::ListReply* response);
+  };
+  template <class BaseClass>
+  class WithAsyncMethod_AddNewUser : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service *service) {}
+   public:
+    WithAsyncMethod_AddNewUser() {
+      ::grpc::Service::MarkMethodAsync(0);
+    }
+    ~WithAsyncMethod_AddNewUser() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status AddNewUser(::grpc::ServerContext* context, const ::tsc::ConnectRequest* request, ::tsc::FollowReply* response) final override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestAddNewUser(::grpc::ServerContext* context, ::tsc::ConnectRequest* request, ::grpc::ServerAsyncResponseWriter< ::tsc::FollowReply>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(0, context, request, response, new_call_cq, notification_cq, tag);
+    }
   };
   template <class BaseClass>
   class WithAsyncMethod_AddToUsersDB : public BaseClass {
@@ -116,7 +156,7 @@ class TscService final {
     void BaseClassMustBeDerivedFromService(const Service *service) {}
    public:
     WithAsyncMethod_AddToUsersDB() {
-      ::grpc::Service::MarkMethodAsync(0);
+      ::grpc::Service::MarkMethodAsync(1);
     }
     ~WithAsyncMethod_AddToUsersDB() override {
       BaseClassMustBeDerivedFromService(this);
@@ -127,7 +167,7 @@ class TscService final {
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     void RequestAddToUsersDB(::grpc::ServerContext* context, ::tsc::FollowRequest* request, ::grpc::ServerAsyncResponseWriter< ::tsc::FollowReply>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
-      ::grpc::Service::RequestAsyncUnary(0, context, request, response, new_call_cq, notification_cq, tag);
+      ::grpc::Service::RequestAsyncUnary(1, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
   template <class BaseClass>
@@ -136,7 +176,7 @@ class TscService final {
     void BaseClassMustBeDerivedFromService(const Service *service) {}
    public:
     WithAsyncMethod_RemoveFromUsersDB() {
-      ::grpc::Service::MarkMethodAsync(1);
+      ::grpc::Service::MarkMethodAsync(2);
     }
     ~WithAsyncMethod_RemoveFromUsersDB() override {
       BaseClassMustBeDerivedFromService(this);
@@ -147,7 +187,7 @@ class TscService final {
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     void RequestRemoveFromUsersDB(::grpc::ServerContext* context, ::tsc::UnfollowRequest* request, ::grpc::ServerAsyncResponseWriter< ::tsc::FollowReply>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
-      ::grpc::Service::RequestAsyncUnary(1, context, request, response, new_call_cq, notification_cq, tag);
+      ::grpc::Service::RequestAsyncUnary(2, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
   template <class BaseClass>
@@ -156,7 +196,7 @@ class TscService final {
     void BaseClassMustBeDerivedFromService(const Service *service) {}
    public:
     WithAsyncMethod_GetAllFollowers() {
-      ::grpc::Service::MarkMethodAsync(2);
+      ::grpc::Service::MarkMethodAsync(3);
     }
     ~WithAsyncMethod_GetAllFollowers() override {
       BaseClassMustBeDerivedFromService(this);
@@ -167,17 +207,34 @@ class TscService final {
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     void RequestGetAllFollowers(::grpc::ServerContext* context, ::tsc::User* request, ::grpc::ServerAsyncResponseWriter< ::tsc::ListReply>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
-      ::grpc::Service::RequestAsyncUnary(2, context, request, response, new_call_cq, notification_cq, tag);
+      ::grpc::Service::RequestAsyncUnary(3, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
-  typedef WithAsyncMethod_AddToUsersDB<WithAsyncMethod_RemoveFromUsersDB<WithAsyncMethod_GetAllFollowers<Service > > > AsyncService;
+  typedef WithAsyncMethod_AddNewUser<WithAsyncMethod_AddToUsersDB<WithAsyncMethod_RemoveFromUsersDB<WithAsyncMethod_GetAllFollowers<Service > > > > AsyncService;
+  template <class BaseClass>
+  class WithGenericMethod_AddNewUser : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service *service) {}
+   public:
+    WithGenericMethod_AddNewUser() {
+      ::grpc::Service::MarkMethodGeneric(0);
+    }
+    ~WithGenericMethod_AddNewUser() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status AddNewUser(::grpc::ServerContext* context, const ::tsc::ConnectRequest* request, ::tsc::FollowReply* response) final override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+  };
   template <class BaseClass>
   class WithGenericMethod_AddToUsersDB : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service *service) {}
    public:
     WithGenericMethod_AddToUsersDB() {
-      ::grpc::Service::MarkMethodGeneric(0);
+      ::grpc::Service::MarkMethodGeneric(1);
     }
     ~WithGenericMethod_AddToUsersDB() override {
       BaseClassMustBeDerivedFromService(this);
@@ -194,7 +251,7 @@ class TscService final {
     void BaseClassMustBeDerivedFromService(const Service *service) {}
    public:
     WithGenericMethod_RemoveFromUsersDB() {
-      ::grpc::Service::MarkMethodGeneric(1);
+      ::grpc::Service::MarkMethodGeneric(2);
     }
     ~WithGenericMethod_RemoveFromUsersDB() override {
       BaseClassMustBeDerivedFromService(this);
@@ -211,7 +268,7 @@ class TscService final {
     void BaseClassMustBeDerivedFromService(const Service *service) {}
    public:
     WithGenericMethod_GetAllFollowers() {
-      ::grpc::Service::MarkMethodGeneric(2);
+      ::grpc::Service::MarkMethodGeneric(3);
     }
     ~WithGenericMethod_GetAllFollowers() override {
       BaseClassMustBeDerivedFromService(this);
@@ -223,12 +280,32 @@ class TscService final {
     }
   };
   template <class BaseClass>
+  class WithStreamedUnaryMethod_AddNewUser : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service *service) {}
+   public:
+    WithStreamedUnaryMethod_AddNewUser() {
+      ::grpc::Service::MarkMethodStreamed(0,
+        new ::grpc::internal::StreamedUnaryHandler< ::tsc::ConnectRequest, ::tsc::FollowReply>(std::bind(&WithStreamedUnaryMethod_AddNewUser<BaseClass>::StreamedAddNewUser, this, std::placeholders::_1, std::placeholders::_2)));
+    }
+    ~WithStreamedUnaryMethod_AddNewUser() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable regular version of this method
+    ::grpc::Status AddNewUser(::grpc::ServerContext* context, const ::tsc::ConnectRequest* request, ::tsc::FollowReply* response) final override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    // replace default version of method with streamed unary
+    virtual ::grpc::Status StreamedAddNewUser(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::tsc::ConnectRequest,::tsc::FollowReply>* server_unary_streamer) = 0;
+  };
+  template <class BaseClass>
   class WithStreamedUnaryMethod_AddToUsersDB : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service *service) {}
    public:
     WithStreamedUnaryMethod_AddToUsersDB() {
-      ::grpc::Service::MarkMethodStreamed(0,
+      ::grpc::Service::MarkMethodStreamed(1,
         new ::grpc::internal::StreamedUnaryHandler< ::tsc::FollowRequest, ::tsc::FollowReply>(std::bind(&WithStreamedUnaryMethod_AddToUsersDB<BaseClass>::StreamedAddToUsersDB, this, std::placeholders::_1, std::placeholders::_2)));
     }
     ~WithStreamedUnaryMethod_AddToUsersDB() override {
@@ -248,7 +325,7 @@ class TscService final {
     void BaseClassMustBeDerivedFromService(const Service *service) {}
    public:
     WithStreamedUnaryMethod_RemoveFromUsersDB() {
-      ::grpc::Service::MarkMethodStreamed(1,
+      ::grpc::Service::MarkMethodStreamed(2,
         new ::grpc::internal::StreamedUnaryHandler< ::tsc::UnfollowRequest, ::tsc::FollowReply>(std::bind(&WithStreamedUnaryMethod_RemoveFromUsersDB<BaseClass>::StreamedRemoveFromUsersDB, this, std::placeholders::_1, std::placeholders::_2)));
     }
     ~WithStreamedUnaryMethod_RemoveFromUsersDB() override {
@@ -268,7 +345,7 @@ class TscService final {
     void BaseClassMustBeDerivedFromService(const Service *service) {}
    public:
     WithStreamedUnaryMethod_GetAllFollowers() {
-      ::grpc::Service::MarkMethodStreamed(2,
+      ::grpc::Service::MarkMethodStreamed(3,
         new ::grpc::internal::StreamedUnaryHandler< ::tsc::User, ::tsc::ListReply>(std::bind(&WithStreamedUnaryMethod_GetAllFollowers<BaseClass>::StreamedGetAllFollowers, this, std::placeholders::_1, std::placeholders::_2)));
     }
     ~WithStreamedUnaryMethod_GetAllFollowers() override {
@@ -282,9 +359,9 @@ class TscService final {
     // replace default version of method with streamed unary
     virtual ::grpc::Status StreamedGetAllFollowers(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::tsc::User,::tsc::ListReply>* server_unary_streamer) = 0;
   };
-  typedef WithStreamedUnaryMethod_AddToUsersDB<WithStreamedUnaryMethod_RemoveFromUsersDB<WithStreamedUnaryMethod_GetAllFollowers<Service > > > StreamedUnaryService;
+  typedef WithStreamedUnaryMethod_AddNewUser<WithStreamedUnaryMethod_AddToUsersDB<WithStreamedUnaryMethod_RemoveFromUsersDB<WithStreamedUnaryMethod_GetAllFollowers<Service > > > > StreamedUnaryService;
   typedef Service SplitStreamedService;
-  typedef WithStreamedUnaryMethod_AddToUsersDB<WithStreamedUnaryMethod_RemoveFromUsersDB<WithStreamedUnaryMethod_GetAllFollowers<Service > > > StreamedService;
+  typedef WithStreamedUnaryMethod_AddNewUser<WithStreamedUnaryMethod_AddToUsersDB<WithStreamedUnaryMethod_RemoveFromUsersDB<WithStreamedUnaryMethod_GetAllFollowers<Service > > > > StreamedService;
 };
 
 }  // namespace tsc

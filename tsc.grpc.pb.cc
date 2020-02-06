@@ -16,6 +16,7 @@
 namespace tsc {
 
 static const char* TscService_method_names[] = {
+  "/tsc.TscService/AddNewUser",
   "/tsc.TscService/AddToUsersDB",
   "/tsc.TscService/RemoveFromUsersDB",
   "/tsc.TscService/GetAllFollowers",
@@ -27,10 +28,23 @@ std::unique_ptr< TscService::Stub> TscService::NewStub(const std::shared_ptr< ::
 }
 
 TscService::Stub::Stub(const std::shared_ptr< ::grpc::ChannelInterface>& channel)
-  : channel_(channel), rpcmethod_AddToUsersDB_(TscService_method_names[0], ::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_RemoveFromUsersDB_(TscService_method_names[1], ::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_GetAllFollowers_(TscService_method_names[2], ::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  : channel_(channel), rpcmethod_AddNewUser_(TscService_method_names[0], ::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_AddToUsersDB_(TscService_method_names[1], ::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_RemoveFromUsersDB_(TscService_method_names[2], ::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_GetAllFollowers_(TscService_method_names[3], ::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   {}
+
+::grpc::Status TscService::Stub::AddNewUser(::grpc::ClientContext* context, const ::tsc::ConnectRequest& request, ::tsc::FollowReply* response) {
+  return ::grpc::internal::BlockingUnaryCall(channel_.get(), rpcmethod_AddNewUser_, context, request, response);
+}
+
+::grpc::ClientAsyncResponseReader< ::tsc::FollowReply>* TscService::Stub::AsyncAddNewUserRaw(::grpc::ClientContext* context, const ::tsc::ConnectRequest& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderFactory< ::tsc::FollowReply>::Create(channel_.get(), cq, rpcmethod_AddNewUser_, context, request, true);
+}
+
+::grpc::ClientAsyncResponseReader< ::tsc::FollowReply>* TscService::Stub::PrepareAsyncAddNewUserRaw(::grpc::ClientContext* context, const ::tsc::ConnectRequest& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderFactory< ::tsc::FollowReply>::Create(channel_.get(), cq, rpcmethod_AddNewUser_, context, request, false);
+}
 
 ::grpc::Status TscService::Stub::AddToUsersDB(::grpc::ClientContext* context, const ::tsc::FollowRequest& request, ::tsc::FollowReply* response) {
   return ::grpc::internal::BlockingUnaryCall(channel_.get(), rpcmethod_AddToUsersDB_, context, request, response);
@@ -72,21 +86,33 @@ TscService::Service::Service() {
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       TscService_method_names[0],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< TscService::Service, ::tsc::ConnectRequest, ::tsc::FollowReply>(
+          std::mem_fn(&TscService::Service::AddNewUser), this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      TscService_method_names[1],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< TscService::Service, ::tsc::FollowRequest, ::tsc::FollowReply>(
           std::mem_fn(&TscService::Service::AddToUsersDB), this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
-      TscService_method_names[1],
+      TscService_method_names[2],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< TscService::Service, ::tsc::UnfollowRequest, ::tsc::FollowReply>(
           std::mem_fn(&TscService::Service::RemoveFromUsersDB), this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
-      TscService_method_names[2],
+      TscService_method_names[3],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< TscService::Service, ::tsc::User, ::tsc::ListReply>(
           std::mem_fn(&TscService::Service::GetAllFollowers), this)));
 }
 
 TscService::Service::~Service() {
+}
+
+::grpc::Status TscService::Service::AddNewUser(::grpc::ServerContext* context, const ::tsc::ConnectRequest* request, ::tsc::FollowReply* response) {
+  (void) context;
+  (void) request;
+  (void) response;
+  return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
 }
 
 ::grpc::Status TscService::Service::AddToUsersDB(::grpc::ServerContext* context, const ::tsc::FollowRequest* request, ::tsc::FollowReply* response) {
