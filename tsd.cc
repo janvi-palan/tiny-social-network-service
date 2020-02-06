@@ -55,7 +55,7 @@ class TscImpl final : public TscService::Service {
 		fs.open(filename, std::fstream::in | std::fstream::out | std::fstream::app);
 		if(!fs){
 			std::cout<<"Creating a new json file";
-			fs.open(filename,  fstream::in | fstream::out | fstream::trunc);
+			fs.open(filename,  std::fstream::in | std::fstream::out | std::fstream::trunc);
 			std::cout<<"Creating db as first time used. ";
 			Json::Value users;
 			users[cRequest->user1().name()] = user;
