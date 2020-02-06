@@ -57,7 +57,7 @@ class TscImpl final : public TscService::Service {
 		std::string filename = "db.json";
 		std::cout<<cRequest->user1().name()<<std::endl;
 		std::string curr_user = cRequest->user1().name();
-		
+		//read from users db and check if present
 		Json::Value users;
 		Json::Reader reader;
 		std::ifstream ip_users(filename);
@@ -73,14 +73,13 @@ class TscImpl final : public TscService::Service {
 			std::cout<<"This user already exists. Connection done!"<<std::endl;
 			return Status::OK;		
 		} 
-		
+		//finished checking for user
 		Json::Value user; 
 		user["Followers"] = Json::Value(Json::arrayValue);
 		user["Following"] = Json::Value(Json::arrayValue);
 
 		std::cout<<"Adding new user to the database."<<std::endl;
 		
-		Json::Value users;
 		users[curr_user] = user;
 		std::ofstream of_obj(filename);
 		of_obj<<std::setw(4)<<users<<std::endl;
@@ -89,9 +88,32 @@ class TscImpl final : public TscService::Service {
 
 	Status AddToUsersDB(ServerContext* context, const FollowRequest* fRequest,
 	                  FollowReply* fReply) override {
-	  fReply->set_message("Success");
+		fReply->set_message("Success");
+		std::string user1 = fRequest->user1().name();
+		std::string user2 = fRequest->user2().name();
 
-	  return Status::OK;		
+		Json::Value users;
+		Json::Reader reader;
+		std::ifstream ip_users(filename);
+		ip_users >> users;
+
+		if(!reader.parse(ip_users, users, true)){
+		        //for some reason it always fails to parse
+			std::cout  << "Failed to parse configuration\n"
+		               << reader.getFormattedErrorMessages();
+		}
+		// user["Name"] = 
+
+		if(!(users::isMember(user1) && users::isMember(user2))){
+			std::cout<<"Both the users don't exist."<<std::endl;
+			return Status::OK;		
+		} 
+
+		users[user1]["Following"].append(user2);
+		users[user2]["Followers"].append(user1);
+		std::cout<<"Finished appending to users db.";
+
+		return Status::OK;		
 	}
 
 	Status RemoveFromUsersDB(ServerContext* context, const UnfollowRequest* uRequest,

@@ -104,16 +104,16 @@ int Client::connectTo()
     Status status = stub_->AddNewUser(&context, c1, &r1);
     if (!status.ok())
         {
-            std::cout<<"connection failed.";
+            std::cout<<"connection failed."<<std::endl;
             //return false;
         }
         else
         { 
-            std::cout << "Connection worked! ";
+            std::cout << "Connection worked! "<<std::endl;
         //return true;
         }
-    std::cout<<r1.message();
-    std::cout<<"Finished connect method!";
+    std::cout<<r1.message()<<std::endl;
+    std::cout<<"Finished connect method!"<<std::endl;
     return 1; // return 1 if success, otherwise return -1
 }
 
@@ -133,7 +133,26 @@ IReply Client::processCommand(std::string& input)
     //
     // - JOIN/LEAVE and "<username>" are separated by one space.
     // ------------------------------------------------------------
-    
+    FollowReply r1;
+    ClientContext context;
+    if(strncmp(input, "FOLLOW", 6) == 0){
+        std::string user2 = input.substr(7,input.length() - 1);
+        std::cout<<user2<<std::endl;
+        std::cout<<"Follow request!"<<std::endl;
+        User u1, u2;
+        FollowRequest f1;
+        f1.set_allocated_user1(this->username);
+        f1.set_allocated_user2(user2);
+
+        Status status = stub_->AddToUsersDB(&context, f1, &r1);
+
+        if(!status.ok()){
+            std::cout<<"Something went wrong!"<<std::endl;
+        }
+        std::cout<<"Finished Follow!"<<std::endl;
+        
+
+    }
     // ------------------------------------------------------------
     // GUIDE 2:
     // Then, you should create a variable of IReply structure
@@ -165,6 +184,7 @@ IReply Client::processCommand(std::string& input)
     // "following_users" member variable of IReply.
     // ------------------------------------------------------------
     
+
     IReply ire;
     return ire;
 }
