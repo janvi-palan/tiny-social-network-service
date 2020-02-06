@@ -45,11 +45,12 @@ class TscImpl final : public TscService::Service {
 	Status AddNewUser(ServerContext* context, const ConnectRequest* cRequest,
 	                  FollowReply* fReply) override {
 		fReply->set_message("Success");
+		std::cout<<cRequest->user1().name()<<std::endl;
 		Json::Value user; 
 		// user["Name"] = 
 		user["Followers"] = Json::Value(Json::arrayValue);
 		user["Following"] = Json::Value(Json::arrayValue);
-std::cout<<"outside!"<<std::endl;
+		std::cout<<"outside!"<<std::endl;
 		std::fstream fs;
 		std::string filename = "db.json";
 		fs.open(filename, std::fstream::in | std::fstream::out | std::fstream::app);
