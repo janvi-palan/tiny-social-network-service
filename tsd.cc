@@ -119,7 +119,31 @@ class TscImpl final : public TscService::Service {
 	Status RemoveFromUsersDB(ServerContext* context, const UnfollowRequest* uRequest,
 	                  FollowReply* fReply) override {
 		fReply->set_message("Success");
-		return Status::OK;
+		std::string filename = "db.json";
+		std::string user1 = uRequest->user1();
+		std::string user2 = uRequest->user2();
+		std::cout<<user1<<" unfollowing "<<user2<<std::endl;
+
+		Json::Value users;
+		Json::Reader reader;
+		std::ifstream ip_users(filename);
+		ip_users >> users;
+
+
+		if(users.isMember(user1) && users.isMember(user2)){
+			users[user1]["Following"].removeMember(user2);
+			users[user2]["Followers"].removeMember(user1);
+			std::cout<<"Finished unfollowing users db."<<std::endl;
+			std::ofstream of_obj(filename);
+			of_obj<<std::setw(4)<<users<<std::endl;
+			return Status::OK;		
+		} else{
+			std::cout<<"Either of the users don't exist."<<std::endl;
+		}
+
+		
+
+		return Status::OK;		
 	}
 	Status GetAllFollowers(ServerContext* context, const User* user,
 	                  ListReply* listReply) override {

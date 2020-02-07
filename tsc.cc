@@ -137,7 +137,7 @@ IReply Client::processCommand(std::string& input)
     IReply ire;
     ClientContext context;
     if(input.substr(0,6).compare("FOLLOW")==0){
-        std::string user2 = input.substr(8,input.length());
+        std::string user2 = input.substr(7,input.length());
         // std::cout<<user2<<std::endl;
         std::cout<<"Follow request!"<<std::endl;
         User u1, u2;
@@ -150,6 +150,35 @@ IReply Client::processCommand(std::string& input)
         f1.set_user2(user2);
 
         Status status = stub_->AddToUsersDB(&context, f1, &r1);
+
+        if(!status.ok()){
+            std::cout<<"Something went wrong!"<<std::endl;
+        }
+        std::cout<<"Finished Follow!"<<std::endl;
+        ire.grpc_status = status;
+        if (status.ok()) {
+            ire.comm_status = SUCCESS;
+        } else {
+            ire.comm_status = FAILURE_NOT_EXISTS;
+        }
+
+    }
+
+
+    if(input.substr(0,8).compare("UNFOLLOW")==0){
+        std::string user2 = input.substr(9,input.length());
+        // std::cout<<user2<<std::endl;
+        std::cout<<"Unfollow request!"<<std::endl;
+        User u1, u2;
+        // std::string user1 = "User2";
+        // std::string user2 = "User3";
+        u1.set_name(username);
+        u2.set_name(user2);
+        UnfollowRequest u1;
+        uf1.set_user1(username);
+        uf1.set_user2(user2);
+
+        Status status = stub_->RemoveFromUsersDB(&context, uf1, &r1);
 
         if(!status.ok()){
             std::cout<<"Something went wrong!"<<std::endl;
