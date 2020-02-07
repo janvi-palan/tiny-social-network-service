@@ -62,12 +62,6 @@ class TscImpl final : public TscService::Service {
 		Json::Reader reader;
 		std::ifstream ip_users(filename);
 		ip_users >> users;
-
-		if(!reader.parse(ip_users, users, true)){
-		        //for some reason it always fails to parse
-			std::cout  << "Failed to parse configuration\n"
-		               << reader.getFormattedErrorMessages();
-		}
 		// user["Name"] = 
 		if(users.isMember(curr_user)){
 			std::cout<<"This user already exists. Connection done!"<<std::endl;
