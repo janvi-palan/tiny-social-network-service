@@ -124,18 +124,34 @@ class TscImpl final : public TscService::Service {
 		ip_users >> users;
 		users["default"]["Following"].append("UserX");
 		std::cout<<"Adding to remove"<<std::endl;
-		users.removeMember("default", &user2);
+		// users.removeMember("default", &user2);
 		if(users.isMember(user1) && users.isMember(user2)){
-			// int i;
-			// for(i = 0; i<users[user1]["Following"].size(); i++){
-			// 	if(users[user1]["Following"][i].compare(user2) == 0){
-			// 		break;
-			// 	}
-			// }
+			Json::Value new_items;
+			Json::Value new_followers;
+			int c = 0;
+			for(int i = 0; i<users[user1]["Following"].size(); i++){
+				if(users[user1]["Following"][i].compare(user2) != 0){
+					new_items[c] = users[user1]["Following"][i];
+					c++;
+					
+				}
+
+			}
+			users[user1]["Following"] = new_items;
+
+			int d = 0;
+			for(int i = 0; i<users[user1]["Followers"].size(); i++){
+				if(users[user1]["Followers"][i].compare(user2) != 0){
+					new_followers[d] = users[user1]["Followers"][i];
+					d++;
+					
+				}
+
+			}
+			users[user1]["Followers"] = new_followers;
 
 			// users[user1]["Following"].removeIndex()
-			users[user1]["Following"].removeMember(user2);
-			users[user2]["Followers"].removeMember(user1);
+			
 			std::cout<<"Finished unfollowing users db."<<std::endl;
 			std::ofstream of_obj(filename);
 			of_obj<<std::setw(4)<<users<<std::endl;
