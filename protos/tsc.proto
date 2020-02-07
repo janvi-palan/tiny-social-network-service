@@ -20,8 +20,8 @@ message User {
 }
 
 message FollowRequest{
-  User user1 = 1;
-  User user2 = 2;
+  string user1 = 1;
+  string user2 = 2;
 }
 
 message UnfollowRequest{

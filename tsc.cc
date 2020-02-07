@@ -146,8 +146,8 @@ IReply Client::processCommand(std::string& input)
         u1.set_name(user1);
         u2.set_name(user2);
         FollowRequest f1;
-        f1.set_allocated_user1(&u1);
-        f1.set_allocated_user2(&u2);
+        f1.set_user1(user1);
+        f1.set_user2(user2);
 
         Status status = stub_->AddToUsersDB(&context, f1, &r1);
 
