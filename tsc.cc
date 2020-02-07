@@ -174,7 +174,7 @@ IReply Client::processCommand(std::string& input)
         // std::string user2 = "User3";
         u1.set_name(username);
         u2.set_name(user2);
-        UnfollowRequest u1;
+        UnfollowRequest uf1;
         uf1.set_user1(username);
         uf1.set_user2(user2);
 
