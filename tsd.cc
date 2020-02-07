@@ -66,7 +66,7 @@ class TscImpl final : public TscService::Service {
 		// user["Name"] = 
 		if(users.isMember(curr_user)){
 			std::cout<<"This user already exists. Connection done!"<<std::endl;
-			return Status::OK;		
+			return Status::ALREADY_EXISTS;		
 		} 
 		//finished checking for user
 		Json::Value user; 

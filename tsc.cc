@@ -291,7 +291,6 @@ void Client::processTimeline()
             while (1) {
                 msg = getPostMessage();
                 Post p;
-                msg = username + " " + msg;
                 p.set_content(msg);
                 stream->Write(p);
             }
