@@ -122,8 +122,6 @@ class TscImpl final : public TscService::Service {
 		Json::Reader reader;
 		std::ifstream ip_users(filename);
 		ip_users >> users;
-		users["default"]["Following"].append("UserX");
-		std::cout<<"Adding to remove"<<std::endl;
 		// users.removeMember("default", &user2);
 		if(users.isMember(user1) && users.isMember(user2)){
 			Json::Value new_items;
@@ -140,9 +138,9 @@ class TscImpl final : public TscService::Service {
 			users[user1]["Following"] = new_items;
 
 			int d = 0;
-			for(int i = 0; i<users[user1]["Followers"].size(); i++){
-				if(users[user1]["Followers"][i].compare(user2) != 0){
-					new_followers[d] = users[user1]["Followers"][i];
+			for(int i = 0; i<users[user2]["Followers"].size(); i++){
+				if(users[user2]["Followers"][i].compare(user1) != 0){
+					new_followers[d] = users[user2]["Followers"][i];
 					d++;
 					
 				}
