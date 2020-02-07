@@ -211,7 +211,9 @@ IReply Client::processCommand(std::string& input)
         // for(int i = 0; l1->users_size(); i++){
         //     std::cout<<l1->users(i)<<std::end;
         // }
-        ire.following_users = l1->users();
+        std::vector<std::string> following(l1.users().begin(), l1.users().end());
+
+        ire.following_users = following;
         if(!status.ok()){
             std::cout<<"Something went wrong!"<<std::endl;
         }
