@@ -163,12 +163,26 @@ class TscImpl final : public TscService::Service {
 
 		return Status::OK;		
 	}
-	Status GetAllFollowers(ServerContext* context, const User* user,
+	Status GetAllFollowers(ServerContext* context, const ConnectRequest* c1,
 	                  ListReply* listReply) override {
 		// listReply->
-		fReply->set_message("Success");
-		
-		return Status::OK;
+		// listReply->set_message("Success");
+		std::string filename = "db.json";
+		std::string user = c1->user1();
+		Json::Value users;
+		Json::Reader reader;
+		std::ifstream ip_users(filename);
+		ip_users >> users;
+		if(users.isMember(user)){
+			for(int i = 0 ; i < users[user]["Following"].size();i++){
+				listReply->add_users(users[user]["Following"][i]);
+			}
+			return Status::OK;
+		}else{
+			std::cout<<"Member does not exist in the database"<<std::endl;
+			return Status::OK;
+		}
+
 	}
 
 };

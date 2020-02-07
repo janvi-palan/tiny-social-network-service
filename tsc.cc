@@ -192,6 +192,35 @@ IReply Client::processCommand(std::string& input)
         }
 
     }
+
+    if(input.substr(0,4).compare("LIST")==0){
+        // std::string user2 = input.substr(9,input.length());
+        // std::cout<<user2<<std::endl;
+        ListReply l1;
+        std::cout<<"List request!"<<std::endl;
+        User u1;
+        // std::string user1 = "User2";
+        // std::string user2 = "User3";
+        u1.set_name(username);
+        // u2.set_name(user2);
+        ConnectRequest c1;
+        c1.set_user1(username);
+        // uf1.set_user2(user2);
+
+        Status status = stub_->GetAllFollowers(&context, c1, &l1);
+        std::cout<<l1->users()<<std::endl;
+        if(!status.ok()){
+            std::cout<<"Something went wrong!"<<std::endl;
+        }
+        std::cout<<"Finished List!"<<std::endl;
+        ire.grpc_status = status;
+        if (status.ok()) {
+            ire.comm_status = SUCCESS;
+        } else {
+            ire.comm_status = FAILURE_NOT_EXISTS;
+        }
+
+    }
     // ------------------------------------------------------------
     // GUIDE 2:
     // Then, you should create a variable of IReply structure
