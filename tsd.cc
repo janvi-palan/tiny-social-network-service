@@ -7,6 +7,7 @@
 #include <string>
 //#include <memory>
 #include <thread>
+#include <map>
 //#include <vector>
 #include <string>
 #include <unistd.h>
@@ -15,6 +16,7 @@
 #include <grpc/grpc.h>
 // #include <iostream>
 #include <fstream>
+#include <grpc++/support/string_ref.h>
 
 #include "/home/csce438/grpc/third_party/protobuf/conformance/third_party/jsoncpp/jsoncpp.cpp"
 #include "/home/csce438/grpc/third_party/protobuf/conformance/third_party/jsoncpp/json.h"
@@ -48,7 +50,7 @@ using tsc::Post;
 // }
 class TscImpl final : public TscService::Service {
 	public:
-		hash_map<std::string, std::vector<ServerReaderWriter<Post, Post>>> name_streams;
+		std::map<std::string, std::vector<ServerReaderWriter<Post, Post>>> name_streams;
 	// explicit TscImpl() {
 	//     // tsc::ParseDb(db, &feature_list_);
 	// }
@@ -194,9 +196,10 @@ class TscImpl final : public TscService::Service {
 
 	Status TimeLine(ServerContext* context, ServerReaderWriter<Post, Post>* stream) override {
 		Post p;
-		string_ref curr_ref = context->client_metadata().find("user_name")->second;
-   		string user(user_ref.begin(), user_ref.end());
-		user_streams.insert(std::pair<std::string, std::vector<ServerReaderWriter<Post, Post>>>(user, stream));
+		grpc::string_ref curr_ref = context->client_metadata().find("user_name")->second;
+   		std::string user(curr_ref.begin(), curr_ref.end());
+   		std::cout<<user<<std::endl;
+		// name_streams.insert({user, stream});
         while(stream->Read(&p)) {
             std::string msg = p.content();
             std::cout << "got a message from client: " << msg << std::endl;
