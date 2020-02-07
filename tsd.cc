@@ -50,7 +50,7 @@ using tsc::Post;
 // }
 class TscImpl final : public TscService::Service {
 	public:
-		std::unordered_map<std::string, std::vector<ServerReaderWriter<Post, Post>>> name_streams;
+		std::unordered_map<std::string, ServerReaderWriter<Post, Post>* > name_streams;
 	// explicit TscImpl() {
 	//     // tsc::ParseDb(db, &feature_list_);
 	// }
@@ -179,8 +179,8 @@ class TscImpl final : public TscService::Service {
 		std::ifstream ip_users(filename);
 		ip_users >> users;
 		if(users.isMember(user)){
-			for(int i = 0 ; i < users[user]["Following"].size();i++){
-				listReply->add_users(users[user]["Following"][i].asString());
+			for(int i = 0 ; i < users[user]["Followers"].size();i++){
+				listReply->add_users(users[user]["Followers"][i].asString());
 			}
 			
 		}else{
@@ -198,8 +198,8 @@ class TscImpl final : public TscService::Service {
 		Post p;
 		grpc::string_ref curr_ref = context->client_metadata().find("user_name")->second;
    		std::string user(curr_ref.begin(), curr_ref.end());
-   		std::cout<<user<<std::endl;
 		name_streams[user] = stream;
+		std::cout<<name_streams[user]<<std::endl;
         while(stream->Read(&p)) {
             std::string msg = p.content();
             std::cout << "got a message from client: " << msg << std::endl;
