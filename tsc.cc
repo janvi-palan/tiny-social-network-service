@@ -88,7 +88,7 @@ int Client::connectTo()
     // Please refer to gRpc tutorial how to create a stub.
     // ------------------------------------------------------------
     // create a channel
-    std::string channelName = this->hostname + ":" + this->port;
+    std::string channelName = hostname + ":" + port;
     std::cout<<"connecting to : "<<channelName;
     stub_ = TscService::NewStub(grpc::CreateChannel(channelName,
                             grpc::InsecureChannelCredentials()));
