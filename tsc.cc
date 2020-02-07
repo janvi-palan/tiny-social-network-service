@@ -137,12 +137,12 @@ IReply Client::processCommand(std::string& input)
     IReply ire;
     ClientContext context;
     if(input.substr(0,6).compare("FOLLOW")==0){
-        std::string user2 = input.substr(8,input.length());
-        std::cout<<user2<<std::endl;
+        // std::string user2 = input.substr(8,input.length());
+        // std::cout<<user2<<std::endl;
         std::cout<<"Follow request!"<<std::endl;
         User u1, u2;
-        std::string&& user1 = "User2";
-        std::string&& user2 = "User3";
+        std::string user1 = "User2";
+        std::string user2 = "User3";
         u1.set_name(user1);
         u2.set_name(user2);
         FollowRequest f1;

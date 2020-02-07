@@ -88,7 +88,7 @@ class TscImpl final : public TscService::Service {
 
 	Status AddToUsersDB(ServerContext* context, const FollowRequest* fRequest,
 	                  FollowReply* fReply) override {
-		// fReply->set_message("Success");
+		fReply->set_message("Success");
 		std::string filename = "db.json";
 		std::string user1 = fRequest->user1().name();
 		std::string user2 = fRequest->user2().name();
