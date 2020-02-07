@@ -35,7 +35,6 @@ using tsc::UnfollowRequest;
 using tsc::FollowReply;
 using tsc::ListReply;
 using tsc::ConnectRequest;
-using tsc::TimeLine;
 using tsc::Post;
 
 // bool isUserExists(std::string curr_user, Json::Value users){

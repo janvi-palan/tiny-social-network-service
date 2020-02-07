@@ -23,7 +23,7 @@ using tsc::FollowReply;
 using tsc::ListReply;
 using tsc::ConnectRequest;
 using tsc::Post;
-using tsc::TimeLine;
+
 
 class Client : public IClient
 {
@@ -291,6 +291,7 @@ void Client::processTimeline()
             while (1) {
                 msg = getPostMessage();
                 Post p;
+                msg = username + " " + msg;
                 p.set_content(msg);
                 stream->Write(p);
             }
