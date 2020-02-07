@@ -124,8 +124,16 @@ class TscImpl final : public TscService::Service {
 		ip_users >> users;
 		users["default"]["Following"].append("UserX");
 		std::cout<<"Adding to remove"<<std::endl;
-		users["default"]["Following"].removeMember("UserX");
+		users.removeMember("default", &user2);
 		if(users.isMember(user1) && users.isMember(user2)){
+			// int i;
+			// for(i = 0; i<users[user1]["Following"].size(); i++){
+			// 	if(users[user1]["Following"][i].compare(user2) == 0){
+			// 		break;
+			// 	}
+			// }
+
+			// users[user1]["Following"].removeIndex()
 			users[user1]["Following"].removeMember(user2);
 			users[user2]["Followers"].removeMember(user1);
 			std::cout<<"Finished unfollowing users db."<<std::endl;
