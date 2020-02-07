@@ -189,6 +189,22 @@ class TscImpl final : public TscService::Service {
 		return Status::OK;
 	}
 
+	Status TimeLine(ServerContext* context, ServerReaderWriter<Post, Post>* stream) override {
+		Post p;
+        while(stream->Read(&p)) {
+            std::string msg = p.content();
+            std::cout << "got a message from client: " << msg << std::endl;
+            
+            Post new_post;
+            new_post.set_content(msg + " from server");
+            std::cout << "returning a message to client: " << new_post.content() << std::endl;
+            
+            stream->Write(new_post);
+        }
+
+        return Status::OK;
+	}
+
 };
 
 void RunServer() {

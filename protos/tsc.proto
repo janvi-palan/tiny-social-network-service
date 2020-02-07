@@ -13,6 +13,7 @@ service TscService {
   rpc AddToUsersDB(FollowRequest) returns (FollowReply) {}
   rpc RemoveFromUsersDB(UnfollowRequest) returns (FollowReply){}
   rpc GetAllFollowers(ConnectRequest) returns (ListReply){}
+  rpc TimeLine(stream Post) returns (stream Post){}
 }
 
 message User {
@@ -41,6 +42,12 @@ message ListReply{
   repeated string users = 1;      
   repeated string allusers = 2;
 }
+
+message Post{
+  string content = 1;
+}
+
+
 
 
 

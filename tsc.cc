@@ -22,6 +22,8 @@ using tsc::UnfollowRequest;
 using tsc::FollowReply;
 using tsc::ListReply;
 using tsc::ConnectRequest;
+using tsc::Post;
+using tsc::TimeLine;
 
 class Client : public IClient
 {
@@ -227,6 +229,10 @@ IReply Client::processCommand(std::string& input)
         }
 
     }
+
+    if(input.substr(0,8).compare("TIMELINE") == 0){
+
+    }
     // ------------------------------------------------------------
     // GUIDE 2:
     // Then, you should create a variable of IReply structure
@@ -272,6 +278,35 @@ void Client::processTimeline()
     // for both getting and displaying messages in timeline mode.
     // You should use them as you did in hw1.
     // ------------------------------------------------------------
+
+    ClientContext context;
+    std::cout<<"You are in the timeline mode!"<<std::endl;
+
+    std::shared_ptr<ClientReaderWriter<Post, Post>> stream(
+            stub->TimeLine(&context));
+
+    //Thread used to read chat messages and send them to the server
+    std::thread writer([stream]() {
+            std::string msg;
+            while (1) {
+                msg = getPostMessage();
+                Post p;
+                p.set_content(msg);
+                stream->Write(p);
+            }
+            stream->WritesDone();
+    });
+
+    std::thread reader([stream]() {
+            Post p;
+            while(stream->Read(&p)){
+                std::cout << p.content() << std::endl;
+            }
+    });
+
+    //Wait for the threads to finish
+    writer.join();
+    reader.join();
 
     // ------------------------------------------------------------
     // IMPORTANT NOTICE:
