@@ -7,7 +7,7 @@
 #include <string>
 //#include <memory>
 #include <thread>
-#include <map>
+#include <unordered_map>
 //#include <vector>
 #include <string>
 #include <unistd.h>
@@ -50,7 +50,7 @@ using tsc::Post;
 // }
 class TscImpl final : public TscService::Service {
 	public:
-		std::map<std::string, std::vector<ServerReaderWriter<Post, Post>>> name_streams;
+		std::unordered_map<std::string, std::vector<ServerReaderWriter<Post, Post>>> name_streams;
 	// explicit TscImpl() {
 	//     // tsc::ParseDb(db, &feature_list_);
 	// }
@@ -199,7 +199,7 @@ class TscImpl final : public TscService::Service {
 		grpc::string_ref curr_ref = context->client_metadata().find("user_name")->second;
    		std::string user(curr_ref.begin(), curr_ref.end());
    		std::cout<<user<<std::endl;
-		// name_streams.insert({user, stream});
+		name_streams[user] = stream;
         while(stream->Read(&p)) {
             std::string msg = p.content();
             std::cout << "got a message from client: " << msg << std::endl;
