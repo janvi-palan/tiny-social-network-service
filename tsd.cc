@@ -28,6 +28,7 @@ using grpc::ServerReader;
 using grpc::ServerReaderWriter;
 using grpc::ServerWriter;
 using grpc::Status;
+using grpc::StatusCode;
 using tsc::TscService;
 using tsc::User;
 using tsc::FollowRequest;
@@ -47,6 +48,7 @@ using tsc::Post;
 // }
 class TscImpl final : public TscService::Service {
 	public:
+		hash_map<std::string, std::vector<ServerReaderWriter<Post, Post>>> name_streams;
 	// explicit TscImpl() {
 	//     // tsc::ParseDb(db, &feature_list_);
 	// }
@@ -66,7 +68,7 @@ class TscImpl final : public TscService::Service {
 		// user["Name"] = 
 		if(users.isMember(curr_user)){
 			std::cout<<"This user already exists. Connection done!"<<std::endl;
-			return Status::ALREADY_EXISTS;		
+			return Status(StatusCode::ALREADY_EXISTS, "User exists!");		
 		} 
 		//finished checking for user
 		Json::Value user; 
@@ -192,6 +194,9 @@ class TscImpl final : public TscService::Service {
 
 	Status TimeLine(ServerContext* context, ServerReaderWriter<Post, Post>* stream) override {
 		Post p;
+		string_ref curr_ref = context->client_metadata().find("user_name")->second;
+   		string user(user_ref.begin(), user_ref.end());
+		user_streams.insert(std::pair<std::string, std::vector<ServerReaderWriter<Post, Post>>>(user, stream));
         while(stream->Read(&p)) {
             std::string msg = p.content();
             std::cout << "got a message from client: " << msg << std::endl;

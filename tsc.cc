@@ -281,6 +281,7 @@ void Client::processTimeline()
 
     ClientContext context;
     std::cout<<"You are in the timeline mode!"<<std::endl;
+    context.AddMetadata("user_name", username.c_str());
 
     std::shared_ptr<ClientReaderWriter<Post, Post>> stream(
             stub_->TimeLine(&context));
