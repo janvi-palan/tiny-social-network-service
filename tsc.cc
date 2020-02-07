@@ -1,12 +1,12 @@
 #include <iostream>
-//#include <memory>
+#include <memory>
 //#include <thread>
-//#include <vector>
+#include <vector>
 #include <string>
 #include <unistd.h>
 #include <grpc++/grpc++.h>
 #include "client.h"
-
+#include <thread>
 #include "tsc.grpc.pb.h"
 #include "tsc.pb.h"
 using grpc::Channel;
@@ -283,7 +283,7 @@ void Client::processTimeline()
     std::cout<<"You are in the timeline mode!"<<std::endl;
 
     std::shared_ptr<ClientReaderWriter<Post, Post>> stream(
-            stub->TimeLine(&context));
+            stub_->TimeLine(&context));
 
     //Thread used to read chat messages and send them to the server
     std::thread writer([stream]() {
