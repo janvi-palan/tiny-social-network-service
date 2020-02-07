@@ -99,17 +99,13 @@ class TscImpl final : public TscService::Service {
 		std::ifstream ip_users(filename);
 		ip_users >> users;
 
-		// if(!reader.parse(ip_users, users, true)){
-		//         //for some reason it always fails to parse
-		// 	std::cout  << "Failed to parse configuration\n"
-		//                << reader.getFormattedErrorMessages();
-		// }
-		// user["Name"] = 
 
 		if(users.isMember(user1) && users.isMember(user2)){
 			users[user1]["Following"].append(user2);
 			users[user2]["Followers"].append(user1);
-			std::cout<<"Finished appending to users db.";
+			std::cout<<"Finished appending to users db."<<std::endl;
+			std::ofstream of_obj(filename);
+			of_obj<<std::setw(4)<<users<<std::endl;
 			return Status::OK;		
 		} else{
 			std::cout<<"Both the users don't exist."<<std::endl;

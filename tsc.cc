@@ -96,7 +96,7 @@ int Client::connectTo()
     u1.set_name("default");
     
     ConnectRequest c1;
-    c1.set_user1(username)
+    c1.set_user1(username);
     // f1.set_allocated_user2(&u2);
 
     ClientContext context;
