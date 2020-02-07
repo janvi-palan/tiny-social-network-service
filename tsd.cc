@@ -184,7 +184,7 @@ class TscImpl final : public TscService::Service {
 
 		// Json::Value::members allUsers = users.getMemberNames();
 		for(auto const& id : users.getMemberNames()){
-			listReply->add_allusers(id).asString();
+			listReply->add_allusers(id);
 		}
 		return Status::OK;
 	}
