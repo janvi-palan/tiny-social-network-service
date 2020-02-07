@@ -25,12 +25,12 @@ message FollowRequest{
 }
 
 message UnfollowRequest{
-  User user1 = 1;
-  User user2 = 2;
+  string user1 = 1;
+  string user2 = 2;
 }
 
 message ConnectRequest{
-  User user1 = 1;
+  string user1 = 1;
 }
 
 message FollowReply{
@@ -38,7 +38,7 @@ message FollowReply{
 }
 
 message ListReply{
-  repeated User users = 1;
+  repeated string users = 1;
 }
 
 

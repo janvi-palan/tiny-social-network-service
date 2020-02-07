@@ -56,7 +56,7 @@ class TscImpl final : public TscService::Service {
 		fReply->set_message("Connection to server is successful.");
 		std::string filename = "db.json";
 		std::cout<<cRequest->user1().name()<<std::endl;
-		std::string curr_user = cRequest->user1().name();
+		std::string curr_user = cRequest->user1();
 		//read from users db and check if present
 		Json::Value users;
 		Json::Reader reader;
@@ -90,8 +90,8 @@ class TscImpl final : public TscService::Service {
 	                  FollowReply* fReply) override {
 		fReply->set_message("Success");
 		std::string filename = "db.json";
-		std::string user1 = fRequest->user1().name();
-		std::string user2 = fRequest->user2().name();
+		std::string user1 = fRequest->user1();
+		std::string user2 = fRequest->user2();
 		std::cout<<user1<<" Following "<<user2<<std::endl;
 
 		Json::Value users;

@@ -92,28 +92,28 @@ int Client::connectTo()
     std::cout<<"connecting to : "<<channelName;
     stub_ = TscService::NewStub(grpc::CreateChannel(channelName,
                             grpc::InsecureChannelCredentials()));
-    // User u1;
-    // u1.set_name("User1");
+    User u1;
+    u1.set_name("default");
     
-    // ConnectRequest c1;
-    // c1.set_allocated_user1(&u1);
-    // // f1.set_allocated_user2(&u2);
+    ConnectRequest c1;
+    c1.set_user1(username)
+    // f1.set_allocated_user2(&u2);
 
-    // ClientContext context;
-    // FollowReply r1;
-    // // Status status = stub_->AddNewUser(&context, c1, &r1);
-    // // if (!status.ok())
-    // //     {
-    // //         std::cout<<"connection failed."<<std::endl;
-    // //         //return false;
-    // //     }
-    // //     else
-    // //     { 
-    // //         std::cout << "Connection worked! "<<std::endl;
-    // //     //return true;
-    // //     }
-    // // std::cout<<r1.message()<<std::endl;
-    // std::cout<<"Finished connect method!"<<std::endl;
+    ClientContext context;
+    FollowReply r1;
+    Status status = stub_->AddNewUser(&context, c1, &r1);
+    if (!status.ok())
+        {
+            std::cout<<"connection failed."<<std::endl;
+            //return false;
+        }
+        else
+        { 
+            std::cout << "Connection worked! "<<std::endl;
+        //return true;
+        }
+    std::cout<<r1.message()<<std::endl;
+    std::cout<<"Finished connect method!"<<std::endl;
     return 1; // return 1 if success, otherwise return -1
 }
 
