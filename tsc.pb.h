@@ -276,30 +276,40 @@ class FollowRequest : public ::google::protobuf::Message /* @@protoc_insertion_p
 
   // accessors -------------------------------------------------------
 
-  // .tsc.User user1 = 1;
-  bool has_user1() const;
+  // string user1 = 1;
   void clear_user1();
   static const int kUser1FieldNumber = 1;
-  const ::tsc::User& user1() const;
-  ::tsc::User* release_user1();
-  ::tsc::User* mutable_user1();
-  void set_allocated_user1(::tsc::User* user1);
+  const ::std::string& user1() const;
+  void set_user1(const ::std::string& value);
+  #if LANG_CXX11
+  void set_user1(::std::string&& value);
+  #endif
+  void set_user1(const char* value);
+  void set_user1(const char* value, size_t size);
+  ::std::string* mutable_user1();
+  ::std::string* release_user1();
+  void set_allocated_user1(::std::string* user1);
 
-  // .tsc.User user2 = 2;
-  bool has_user2() const;
+  // string user2 = 2;
   void clear_user2();
   static const int kUser2FieldNumber = 2;
-  const ::tsc::User& user2() const;
-  ::tsc::User* release_user2();
-  ::tsc::User* mutable_user2();
-  void set_allocated_user2(::tsc::User* user2);
+  const ::std::string& user2() const;
+  void set_user2(const ::std::string& value);
+  #if LANG_CXX11
+  void set_user2(::std::string&& value);
+  #endif
+  void set_user2(const char* value);
+  void set_user2(const char* value, size_t size);
+  ::std::string* mutable_user2();
+  ::std::string* release_user2();
+  void set_allocated_user2(::std::string* user2);
 
   // @@protoc_insertion_point(class_scope:tsc.FollowRequest)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
-  ::tsc::User* user1_;
-  ::tsc::User* user2_;
+  ::google::protobuf::internal::ArenaStringPtr user1_;
+  ::google::protobuf::internal::ArenaStringPtr user2_;
   mutable int _cached_size_;
   friend struct ::protobuf_tsc_2eproto::TableStruct;
   friend void ::protobuf_tsc_2eproto::InitDefaultsFollowRequestImpl();
@@ -388,30 +398,40 @@ class UnfollowRequest : public ::google::protobuf::Message /* @@protoc_insertion
 
   // accessors -------------------------------------------------------
 
-  // .tsc.User user1 = 1;
-  bool has_user1() const;
+  // string user1 = 1;
   void clear_user1();
   static const int kUser1FieldNumber = 1;
-  const ::tsc::User& user1() const;
-  ::tsc::User* release_user1();
-  ::tsc::User* mutable_user1();
-  void set_allocated_user1(::tsc::User* user1);
+  const ::std::string& user1() const;
+  void set_user1(const ::std::string& value);
+  #if LANG_CXX11
+  void set_user1(::std::string&& value);
+  #endif
+  void set_user1(const char* value);
+  void set_user1(const char* value, size_t size);
+  ::std::string* mutable_user1();
+  ::std::string* release_user1();
+  void set_allocated_user1(::std::string* user1);
 
-  // .tsc.User user2 = 2;
-  bool has_user2() const;
+  // string user2 = 2;
   void clear_user2();
   static const int kUser2FieldNumber = 2;
-  const ::tsc::User& user2() const;
-  ::tsc::User* release_user2();
-  ::tsc::User* mutable_user2();
-  void set_allocated_user2(::tsc::User* user2);
+  const ::std::string& user2() const;
+  void set_user2(const ::std::string& value);
+  #if LANG_CXX11
+  void set_user2(::std::string&& value);
+  #endif
+  void set_user2(const char* value);
+  void set_user2(const char* value, size_t size);
+  ::std::string* mutable_user2();
+  ::std::string* release_user2();
+  void set_allocated_user2(::std::string* user2);
 
   // @@protoc_insertion_point(class_scope:tsc.UnfollowRequest)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
-  ::tsc::User* user1_;
-  ::tsc::User* user2_;
+  ::google::protobuf::internal::ArenaStringPtr user1_;
+  ::google::protobuf::internal::ArenaStringPtr user2_;
   mutable int _cached_size_;
   friend struct ::protobuf_tsc_2eproto::TableStruct;
   friend void ::protobuf_tsc_2eproto::InitDefaultsUnfollowRequestImpl();
@@ -500,20 +520,25 @@ class ConnectRequest : public ::google::protobuf::Message /* @@protoc_insertion_
 
   // accessors -------------------------------------------------------
 
-  // .tsc.User user1 = 1;
-  bool has_user1() const;
+  // string user1 = 1;
   void clear_user1();
   static const int kUser1FieldNumber = 1;
-  const ::tsc::User& user1() const;
-  ::tsc::User* release_user1();
-  ::tsc::User* mutable_user1();
-  void set_allocated_user1(::tsc::User* user1);
+  const ::std::string& user1() const;
+  void set_user1(const ::std::string& value);
+  #if LANG_CXX11
+  void set_user1(::std::string&& value);
+  #endif
+  void set_user1(const char* value);
+  void set_user1(const char* value, size_t size);
+  ::std::string* mutable_user1();
+  ::std::string* release_user1();
+  void set_allocated_user1(::std::string* user1);
 
   // @@protoc_insertion_point(class_scope:tsc.ConnectRequest)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
-  ::tsc::User* user1_;
+  ::google::protobuf::internal::ArenaStringPtr user1_;
   mutable int _cached_size_;
   friend struct ::protobuf_tsc_2eproto::TableStruct;
   friend void ::protobuf_tsc_2eproto::InitDefaultsConnectRequestImpl();
@@ -709,23 +734,33 @@ class ListReply : public ::google::protobuf::Message /* @@protoc_insertion_point
 
   // accessors -------------------------------------------------------
 
-  // repeated .tsc.User users = 1;
+  // repeated string users = 1;
   int users_size() const;
   void clear_users();
   static const int kUsersFieldNumber = 1;
-  const ::tsc::User& users(int index) const;
-  ::tsc::User* mutable_users(int index);
-  ::tsc::User* add_users();
-  ::google::protobuf::RepeatedPtrField< ::tsc::User >*
-      mutable_users();
-  const ::google::protobuf::RepeatedPtrField< ::tsc::User >&
-      users() const;
+  const ::std::string& users(int index) const;
+  ::std::string* mutable_users(int index);
+  void set_users(int index, const ::std::string& value);
+  #if LANG_CXX11
+  void set_users(int index, ::std::string&& value);
+  #endif
+  void set_users(int index, const char* value);
+  void set_users(int index, const char* value, size_t size);
+  ::std::string* add_users();
+  void add_users(const ::std::string& value);
+  #if LANG_CXX11
+  void add_users(::std::string&& value);
+  #endif
+  void add_users(const char* value);
+  void add_users(const char* value, size_t size);
+  const ::google::protobuf::RepeatedPtrField< ::std::string>& users() const;
+  ::google::protobuf::RepeatedPtrField< ::std::string>* mutable_users();
 
   // @@protoc_insertion_point(class_scope:tsc.ListReply)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
-  ::google::protobuf::RepeatedPtrField< ::tsc::User > users_;
+  ::google::protobuf::RepeatedPtrField< ::std::string> users_;
   mutable int _cached_size_;
   friend struct ::protobuf_tsc_2eproto::TableStruct;
   friend void ::protobuf_tsc_2eproto::InitDefaultsListReplyImpl();
@@ -798,103 +833,109 @@ inline void User::set_allocated_name(::std::string* name) {
 
 // FollowRequest
 
-// .tsc.User user1 = 1;
-inline bool FollowRequest::has_user1() const {
-  return this != internal_default_instance() && user1_ != NULL;
-}
+// string user1 = 1;
 inline void FollowRequest::clear_user1() {
-  if (GetArenaNoVirtual() == NULL && user1_ != NULL) {
-    delete user1_;
-  }
-  user1_ = NULL;
+  user1_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline const ::tsc::User& FollowRequest::user1() const {
-  const ::tsc::User* p = user1_;
+inline const ::std::string& FollowRequest::user1() const {
   // @@protoc_insertion_point(field_get:tsc.FollowRequest.user1)
-  return p != NULL ? *p : *reinterpret_cast<const ::tsc::User*>(
-      &::tsc::_User_default_instance_);
+  return user1_.GetNoArena();
 }
-inline ::tsc::User* FollowRequest::release_user1() {
+inline void FollowRequest::set_user1(const ::std::string& value) {
+  
+  user1_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:tsc.FollowRequest.user1)
+}
+#if LANG_CXX11
+inline void FollowRequest::set_user1(::std::string&& value) {
+  
+  user1_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:tsc.FollowRequest.user1)
+}
+#endif
+inline void FollowRequest::set_user1(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  
+  user1_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:tsc.FollowRequest.user1)
+}
+inline void FollowRequest::set_user1(const char* value, size_t size) {
+  
+  user1_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:tsc.FollowRequest.user1)
+}
+inline ::std::string* FollowRequest::mutable_user1() {
+  
+  // @@protoc_insertion_point(field_mutable:tsc.FollowRequest.user1)
+  return user1_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* FollowRequest::release_user1() {
   // @@protoc_insertion_point(field_release:tsc.FollowRequest.user1)
   
-  ::tsc::User* temp = user1_;
-  user1_ = NULL;
-  return temp;
+  return user1_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline ::tsc::User* FollowRequest::mutable_user1() {
-  
-  if (user1_ == NULL) {
-    user1_ = new ::tsc::User;
-  }
-  // @@protoc_insertion_point(field_mutable:tsc.FollowRequest.user1)
-  return user1_;
-}
-inline void FollowRequest::set_allocated_user1(::tsc::User* user1) {
-  ::google::protobuf::Arena* message_arena = GetArenaNoVirtual();
-  if (message_arena == NULL) {
-    delete user1_;
-  }
-  if (user1) {
-    ::google::protobuf::Arena* submessage_arena = NULL;
-    if (message_arena != submessage_arena) {
-      user1 = ::google::protobuf::internal::GetOwnedMessage(
-          message_arena, user1, submessage_arena);
-    }
+inline void FollowRequest::set_allocated_user1(::std::string* user1) {
+  if (user1 != NULL) {
     
   } else {
     
   }
-  user1_ = user1;
+  user1_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), user1);
   // @@protoc_insertion_point(field_set_allocated:tsc.FollowRequest.user1)
 }
 
-// .tsc.User user2 = 2;
-inline bool FollowRequest::has_user2() const {
-  return this != internal_default_instance() && user2_ != NULL;
-}
+// string user2 = 2;
 inline void FollowRequest::clear_user2() {
-  if (GetArenaNoVirtual() == NULL && user2_ != NULL) {
-    delete user2_;
-  }
-  user2_ = NULL;
+  user2_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline const ::tsc::User& FollowRequest::user2() const {
-  const ::tsc::User* p = user2_;
+inline const ::std::string& FollowRequest::user2() const {
   // @@protoc_insertion_point(field_get:tsc.FollowRequest.user2)
-  return p != NULL ? *p : *reinterpret_cast<const ::tsc::User*>(
-      &::tsc::_User_default_instance_);
+  return user2_.GetNoArena();
 }
-inline ::tsc::User* FollowRequest::release_user2() {
+inline void FollowRequest::set_user2(const ::std::string& value) {
+  
+  user2_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:tsc.FollowRequest.user2)
+}
+#if LANG_CXX11
+inline void FollowRequest::set_user2(::std::string&& value) {
+  
+  user2_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:tsc.FollowRequest.user2)
+}
+#endif
+inline void FollowRequest::set_user2(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  
+  user2_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:tsc.FollowRequest.user2)
+}
+inline void FollowRequest::set_user2(const char* value, size_t size) {
+  
+  user2_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:tsc.FollowRequest.user2)
+}
+inline ::std::string* FollowRequest::mutable_user2() {
+  
+  // @@protoc_insertion_point(field_mutable:tsc.FollowRequest.user2)
+  return user2_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* FollowRequest::release_user2() {
   // @@protoc_insertion_point(field_release:tsc.FollowRequest.user2)
   
-  ::tsc::User* temp = user2_;
-  user2_ = NULL;
-  return temp;
+  return user2_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline ::tsc::User* FollowRequest::mutable_user2() {
-  
-  if (user2_ == NULL) {
-    user2_ = new ::tsc::User;
-  }
-  // @@protoc_insertion_point(field_mutable:tsc.FollowRequest.user2)
-  return user2_;
-}
-inline void FollowRequest::set_allocated_user2(::tsc::User* user2) {
-  ::google::protobuf::Arena* message_arena = GetArenaNoVirtual();
-  if (message_arena == NULL) {
-    delete user2_;
-  }
-  if (user2) {
-    ::google::protobuf::Arena* submessage_arena = NULL;
-    if (message_arena != submessage_arena) {
-      user2 = ::google::protobuf::internal::GetOwnedMessage(
-          message_arena, user2, submessage_arena);
-    }
+inline void FollowRequest::set_allocated_user2(::std::string* user2) {
+  if (user2 != NULL) {
     
   } else {
     
   }
-  user2_ = user2;
+  user2_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), user2);
   // @@protoc_insertion_point(field_set_allocated:tsc.FollowRequest.user2)
 }
 
@@ -902,103 +943,109 @@ inline void FollowRequest::set_allocated_user2(::tsc::User* user2) {
 
 // UnfollowRequest
 
-// .tsc.User user1 = 1;
-inline bool UnfollowRequest::has_user1() const {
-  return this != internal_default_instance() && user1_ != NULL;
-}
+// string user1 = 1;
 inline void UnfollowRequest::clear_user1() {
-  if (GetArenaNoVirtual() == NULL && user1_ != NULL) {
-    delete user1_;
-  }
-  user1_ = NULL;
+  user1_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline const ::tsc::User& UnfollowRequest::user1() const {
-  const ::tsc::User* p = user1_;
+inline const ::std::string& UnfollowRequest::user1() const {
   // @@protoc_insertion_point(field_get:tsc.UnfollowRequest.user1)
-  return p != NULL ? *p : *reinterpret_cast<const ::tsc::User*>(
-      &::tsc::_User_default_instance_);
+  return user1_.GetNoArena();
 }
-inline ::tsc::User* UnfollowRequest::release_user1() {
+inline void UnfollowRequest::set_user1(const ::std::string& value) {
+  
+  user1_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:tsc.UnfollowRequest.user1)
+}
+#if LANG_CXX11
+inline void UnfollowRequest::set_user1(::std::string&& value) {
+  
+  user1_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:tsc.UnfollowRequest.user1)
+}
+#endif
+inline void UnfollowRequest::set_user1(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  
+  user1_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:tsc.UnfollowRequest.user1)
+}
+inline void UnfollowRequest::set_user1(const char* value, size_t size) {
+  
+  user1_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:tsc.UnfollowRequest.user1)
+}
+inline ::std::string* UnfollowRequest::mutable_user1() {
+  
+  // @@protoc_insertion_point(field_mutable:tsc.UnfollowRequest.user1)
+  return user1_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* UnfollowRequest::release_user1() {
   // @@protoc_insertion_point(field_release:tsc.UnfollowRequest.user1)
   
-  ::tsc::User* temp = user1_;
-  user1_ = NULL;
-  return temp;
+  return user1_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline ::tsc::User* UnfollowRequest::mutable_user1() {
-  
-  if (user1_ == NULL) {
-    user1_ = new ::tsc::User;
-  }
-  // @@protoc_insertion_point(field_mutable:tsc.UnfollowRequest.user1)
-  return user1_;
-}
-inline void UnfollowRequest::set_allocated_user1(::tsc::User* user1) {
-  ::google::protobuf::Arena* message_arena = GetArenaNoVirtual();
-  if (message_arena == NULL) {
-    delete user1_;
-  }
-  if (user1) {
-    ::google::protobuf::Arena* submessage_arena = NULL;
-    if (message_arena != submessage_arena) {
-      user1 = ::google::protobuf::internal::GetOwnedMessage(
-          message_arena, user1, submessage_arena);
-    }
+inline void UnfollowRequest::set_allocated_user1(::std::string* user1) {
+  if (user1 != NULL) {
     
   } else {
     
   }
-  user1_ = user1;
+  user1_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), user1);
   // @@protoc_insertion_point(field_set_allocated:tsc.UnfollowRequest.user1)
 }
 
-// .tsc.User user2 = 2;
-inline bool UnfollowRequest::has_user2() const {
-  return this != internal_default_instance() && user2_ != NULL;
-}
+// string user2 = 2;
 inline void UnfollowRequest::clear_user2() {
-  if (GetArenaNoVirtual() == NULL && user2_ != NULL) {
-    delete user2_;
-  }
-  user2_ = NULL;
+  user2_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline const ::tsc::User& UnfollowRequest::user2() const {
-  const ::tsc::User* p = user2_;
+inline const ::std::string& UnfollowRequest::user2() const {
   // @@protoc_insertion_point(field_get:tsc.UnfollowRequest.user2)
-  return p != NULL ? *p : *reinterpret_cast<const ::tsc::User*>(
-      &::tsc::_User_default_instance_);
+  return user2_.GetNoArena();
 }
-inline ::tsc::User* UnfollowRequest::release_user2() {
+inline void UnfollowRequest::set_user2(const ::std::string& value) {
+  
+  user2_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:tsc.UnfollowRequest.user2)
+}
+#if LANG_CXX11
+inline void UnfollowRequest::set_user2(::std::string&& value) {
+  
+  user2_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:tsc.UnfollowRequest.user2)
+}
+#endif
+inline void UnfollowRequest::set_user2(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  
+  user2_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:tsc.UnfollowRequest.user2)
+}
+inline void UnfollowRequest::set_user2(const char* value, size_t size) {
+  
+  user2_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:tsc.UnfollowRequest.user2)
+}
+inline ::std::string* UnfollowRequest::mutable_user2() {
+  
+  // @@protoc_insertion_point(field_mutable:tsc.UnfollowRequest.user2)
+  return user2_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* UnfollowRequest::release_user2() {
   // @@protoc_insertion_point(field_release:tsc.UnfollowRequest.user2)
   
-  ::tsc::User* temp = user2_;
-  user2_ = NULL;
-  return temp;
+  return user2_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline ::tsc::User* UnfollowRequest::mutable_user2() {
-  
-  if (user2_ == NULL) {
-    user2_ = new ::tsc::User;
-  }
-  // @@protoc_insertion_point(field_mutable:tsc.UnfollowRequest.user2)
-  return user2_;
-}
-inline void UnfollowRequest::set_allocated_user2(::tsc::User* user2) {
-  ::google::protobuf::Arena* message_arena = GetArenaNoVirtual();
-  if (message_arena == NULL) {
-    delete user2_;
-  }
-  if (user2) {
-    ::google::protobuf::Arena* submessage_arena = NULL;
-    if (message_arena != submessage_arena) {
-      user2 = ::google::protobuf::internal::GetOwnedMessage(
-          message_arena, user2, submessage_arena);
-    }
+inline void UnfollowRequest::set_allocated_user2(::std::string* user2) {
+  if (user2 != NULL) {
     
   } else {
     
   }
-  user2_ = user2;
+  user2_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), user2);
   // @@protoc_insertion_point(field_set_allocated:tsc.UnfollowRequest.user2)
 }
 
@@ -1006,53 +1053,56 @@ inline void UnfollowRequest::set_allocated_user2(::tsc::User* user2) {
 
 // ConnectRequest
 
-// .tsc.User user1 = 1;
-inline bool ConnectRequest::has_user1() const {
-  return this != internal_default_instance() && user1_ != NULL;
-}
+// string user1 = 1;
 inline void ConnectRequest::clear_user1() {
-  if (GetArenaNoVirtual() == NULL && user1_ != NULL) {
-    delete user1_;
-  }
-  user1_ = NULL;
+  user1_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline const ::tsc::User& ConnectRequest::user1() const {
-  const ::tsc::User* p = user1_;
+inline const ::std::string& ConnectRequest::user1() const {
   // @@protoc_insertion_point(field_get:tsc.ConnectRequest.user1)
-  return p != NULL ? *p : *reinterpret_cast<const ::tsc::User*>(
-      &::tsc::_User_default_instance_);
+  return user1_.GetNoArena();
 }
-inline ::tsc::User* ConnectRequest::release_user1() {
+inline void ConnectRequest::set_user1(const ::std::string& value) {
+  
+  user1_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:tsc.ConnectRequest.user1)
+}
+#if LANG_CXX11
+inline void ConnectRequest::set_user1(::std::string&& value) {
+  
+  user1_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:tsc.ConnectRequest.user1)
+}
+#endif
+inline void ConnectRequest::set_user1(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  
+  user1_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:tsc.ConnectRequest.user1)
+}
+inline void ConnectRequest::set_user1(const char* value, size_t size) {
+  
+  user1_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:tsc.ConnectRequest.user1)
+}
+inline ::std::string* ConnectRequest::mutable_user1() {
+  
+  // @@protoc_insertion_point(field_mutable:tsc.ConnectRequest.user1)
+  return user1_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* ConnectRequest::release_user1() {
   // @@protoc_insertion_point(field_release:tsc.ConnectRequest.user1)
   
-  ::tsc::User* temp = user1_;
-  user1_ = NULL;
-  return temp;
+  return user1_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline ::tsc::User* ConnectRequest::mutable_user1() {
-  
-  if (user1_ == NULL) {
-    user1_ = new ::tsc::User;
-  }
-  // @@protoc_insertion_point(field_mutable:tsc.ConnectRequest.user1)
-  return user1_;
-}
-inline void ConnectRequest::set_allocated_user1(::tsc::User* user1) {
-  ::google::protobuf::Arena* message_arena = GetArenaNoVirtual();
-  if (message_arena == NULL) {
-    delete user1_;
-  }
-  if (user1) {
-    ::google::protobuf::Arena* submessage_arena = NULL;
-    if (message_arena != submessage_arena) {
-      user1 = ::google::protobuf::internal::GetOwnedMessage(
-          message_arena, user1, submessage_arena);
-    }
+inline void ConnectRequest::set_allocated_user1(::std::string* user1) {
+  if (user1 != NULL) {
     
   } else {
     
   }
-  user1_ = user1;
+  user1_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), user1);
   // @@protoc_insertion_point(field_set_allocated:tsc.ConnectRequest.user1)
 }
 
@@ -1117,34 +1167,73 @@ inline void FollowReply::set_allocated_message(::std::string* message) {
 
 // ListReply
 
-// repeated .tsc.User users = 1;
+// repeated string users = 1;
 inline int ListReply::users_size() const {
   return users_.size();
 }
 inline void ListReply::clear_users() {
   users_.Clear();
 }
-inline const ::tsc::User& ListReply::users(int index) const {
+inline const ::std::string& ListReply::users(int index) const {
   // @@protoc_insertion_point(field_get:tsc.ListReply.users)
   return users_.Get(index);
 }
-inline ::tsc::User* ListReply::mutable_users(int index) {
+inline ::std::string* ListReply::mutable_users(int index) {
   // @@protoc_insertion_point(field_mutable:tsc.ListReply.users)
   return users_.Mutable(index);
 }
-inline ::tsc::User* ListReply::add_users() {
-  // @@protoc_insertion_point(field_add:tsc.ListReply.users)
+inline void ListReply::set_users(int index, const ::std::string& value) {
+  // @@protoc_insertion_point(field_set:tsc.ListReply.users)
+  users_.Mutable(index)->assign(value);
+}
+#if LANG_CXX11
+inline void ListReply::set_users(int index, ::std::string&& value) {
+  // @@protoc_insertion_point(field_set:tsc.ListReply.users)
+  users_.Mutable(index)->assign(std::move(value));
+}
+#endif
+inline void ListReply::set_users(int index, const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  users_.Mutable(index)->assign(value);
+  // @@protoc_insertion_point(field_set_char:tsc.ListReply.users)
+}
+inline void ListReply::set_users(int index, const char* value, size_t size) {
+  users_.Mutable(index)->assign(
+    reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_set_pointer:tsc.ListReply.users)
+}
+inline ::std::string* ListReply::add_users() {
+  // @@protoc_insertion_point(field_add_mutable:tsc.ListReply.users)
   return users_.Add();
 }
-inline ::google::protobuf::RepeatedPtrField< ::tsc::User >*
-ListReply::mutable_users() {
-  // @@protoc_insertion_point(field_mutable_list:tsc.ListReply.users)
-  return &users_;
+inline void ListReply::add_users(const ::std::string& value) {
+  users_.Add()->assign(value);
+  // @@protoc_insertion_point(field_add:tsc.ListReply.users)
 }
-inline const ::google::protobuf::RepeatedPtrField< ::tsc::User >&
+#if LANG_CXX11
+inline void ListReply::add_users(::std::string&& value) {
+  users_.Add(std::move(value));
+  // @@protoc_insertion_point(field_add:tsc.ListReply.users)
+}
+#endif
+inline void ListReply::add_users(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  users_.Add()->assign(value);
+  // @@protoc_insertion_point(field_add_char:tsc.ListReply.users)
+}
+inline void ListReply::add_users(const char* value, size_t size) {
+  users_.Add()->assign(reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_add_pointer:tsc.ListReply.users)
+}
+inline const ::google::protobuf::RepeatedPtrField< ::std::string>&
 ListReply::users() const {
   // @@protoc_insertion_point(field_list:tsc.ListReply.users)
   return users_;
+}
+inline ::google::protobuf::RepeatedPtrField< ::std::string>*
+ListReply::mutable_users() {
+  // @@protoc_insertion_point(field_mutable_list:tsc.ListReply.users)
+  return &users_;
 }
 
 #ifdef __GNUC__
