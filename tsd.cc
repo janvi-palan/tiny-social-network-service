@@ -124,8 +124,8 @@ class TscImpl final : public TscService::Service {
 		ip_users >> users;
 		// users.removeMember("default", &user2);
 		if(users.isMember(user1) && users.isMember(user2)){
-			Json::Value new_items;
-			Json::Value new_followers;
+			Json::arrayValue new_items;
+			Json::arrayValue new_followers;
 			int c = 0;
 			for(int i = 0; i<users[user1]["Following"].size(); i++){
 				if(users[user1]["Following"][i].compare(user2) != 0){
