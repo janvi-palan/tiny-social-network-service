@@ -183,7 +183,7 @@ IReply Client::processCommand(std::string& input)
         if(!status.ok()){
             std::cout<<"Something went wrong!"<<std::endl;
         }
-        std::cout<<"Finished Follow!"<<std::endl;
+        std::cout<<"Finished Unfollow!"<<std::endl;
         ire.grpc_status = status;
         if (status.ok()) {
             ire.comm_status = SUCCESS;
