@@ -12,7 +12,7 @@ service TscService {
   rpc AddNewUser(ConnectRequest) returns (FollowReply){}
   rpc AddToUsersDB(FollowRequest) returns (FollowReply) {}
   rpc RemoveFromUsersDB(UnfollowRequest) returns (FollowReply){}
-  rpc GetAllFollowers(User) returns (ListReply){}
+  rpc GetAllFollowers(ConnectRequest) returns (ListReply){}
 }
 
 message User {
