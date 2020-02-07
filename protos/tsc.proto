@@ -39,6 +39,7 @@ message FollowReply{
 
 message ListReply{
   repeated string users = 1;
+  repeated string allUsers = 2;
 }
 
 

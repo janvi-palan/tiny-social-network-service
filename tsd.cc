@@ -175,16 +175,20 @@ class TscImpl final : public TscService::Service {
 		ip_users >> users;
 		if(users.isMember(user)){
 			for(int i = 0 ; i < users[user]["Following"].size();i++){
-				listReply->add_users(users[user]["Following"][i]);
+				listReply->add_users(users[user]["Following"][i].asString());
 			}
-			return Status::OK;
+			
 		}else{
 			std::cout<<"Member does not exist in the database"<<std::endl;
-			return Status::OK;
 		}
 
+		// Json::Value::members allUsers = users.getMemberNames();
+		for(auto const& id : users.getMemberNames()){
+			listReply->add_allUsers(id).asString();
+		}
+		return Status::OK;
 	}
-
+	
 };
 
 void RunServer() {
