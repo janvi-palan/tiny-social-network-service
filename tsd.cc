@@ -6,7 +6,7 @@
 #include <memory>
 #include <string>
 //#include <memory>
-//#include <thread>
+#include <thread>
 //#include <vector>
 #include <string>
 #include <unistd.h>
@@ -35,6 +35,8 @@ using tsc::UnfollowRequest;
 using tsc::FollowReply;
 using tsc::ListReply;
 using tsc::ConnectRequest;
+using tsc::TimeLine;
+using tsc::Post;
 
 // bool isUserExists(std::string curr_user, Json::Value users){
 // 	if(users::isMember(curr_user)){

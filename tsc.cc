@@ -231,7 +231,7 @@ IReply Client::processCommand(std::string& input)
     }
 
     if(input.substr(0,8).compare("TIMELINE") == 0){
-
+        processTimeline();
     }
     // ------------------------------------------------------------
     // GUIDE 2:
