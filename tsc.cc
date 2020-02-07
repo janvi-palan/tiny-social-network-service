@@ -208,9 +208,10 @@ IReply Client::processCommand(std::string& input)
         // uf1.set_user2(user2);
 
         Status status = stub_->GetAllFollowers(&context, c1, &l1);
-        for(int i = 0; l1->users_size(); i++){
-            std::cout<<l1->users(i)<<std::end;
-        }
+        // for(int i = 0; l1->users_size(); i++){
+        //     std::cout<<l1->users(i)<<std::end;
+        // }
+        ire.following_users = l1->users();
         if(!status.ok()){
             std::cout<<"Something went wrong!"<<std::endl;
         }
