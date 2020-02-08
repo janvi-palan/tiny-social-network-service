@@ -100,7 +100,7 @@ class TscImpl final : public TscService::Service {
 		std::string filename = "db.json";
 		std::string user1 = fRequest->user1();
 		std::string user2 = fRequest->user2();
-		std::cout<<user1<<" Following "<<user2<<std::endl;
+		// std::cout<<user1<<" Following "<<user2<<std::endl;
 
 		Json::Value users;
 		Json::Reader reader;
@@ -137,14 +137,19 @@ class TscImpl final : public TscService::Service {
 		std::string filename = "db.json";
 		std::string user1 = uRequest->user1();
 		std::string user2 = uRequest->user2();
-		std::cout<<user1<<" unfollowing "<<user2<<std::endl;
+		// std::cout<<user1<<" unfollowing "<<user2<<std::endl;
 
 		Json::Value users;
 		Json::Reader reader;
 		std::ifstream ip_users(filename);
 		ip_users >> users;
+		if(user1.compare(user2) == 0){
+			fReply.set_message(4);
+			return Status::OK;
+		}
 		// users.removeMember("default", &user2);
 		if(users.isMember(user1) && users.isMember(user2)){
+
 			Json::Value new_items = Json::arrayValue;
 			// Json::arrayValue new_items;
 			Json::Value new_followers = Json::arrayValue;
@@ -178,6 +183,8 @@ class TscImpl final : public TscService::Service {
 			return Status::OK;		
 		} else{
 			std::cout<<"Either of the users don't exist."<<std::endl;
+			fReply.set_message(4);
+			return Status::OK;
 		}
 
 		

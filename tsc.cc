@@ -165,6 +165,8 @@ IReply Client::processCommand(std::string& input)
                 ire.comm_status = FAILURE_ALREADY_EXISTS;
             } else if(r1.message() == 3){
                 ire.comm_status = FAILURE_NOT_EXISTS;
+            } else if(r1.message() == 4){
+                ire.comm_status = FAILURE_INVALID_USERNAME;
             }
         } 
     }
