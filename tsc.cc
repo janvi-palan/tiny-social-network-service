@@ -160,15 +160,9 @@ IReply Client::processCommand(std::string& input)
         ire.grpc_status = status;
         if (status.ok()) {
             ire.comm_status = SUCCESS;
-        } else {
-            std::cout<<r1.message()<<std::endl;
-            if(r1.message().compare("Failed") == 0){
-                ire.comm_status = FAILURE_ALREADY_EXISTS;
-            } else{
-                ire.comm_status = FAILURE_INVALID;
-            }
+        } else { 
+            ire.comm_status = FAILURE_INVALID;
         }
-
     }
 
 
