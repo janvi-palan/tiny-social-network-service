@@ -60,28 +60,36 @@ class TscImpl final : public TscService::Service {
 	                  FollowReply* fReply) override {
 		fReply->set_message("Connection to server is successful.");
 		std::string filename = "db.json";
+		std::string timeline_name = "timeline.json";
 		std::cout<<cRequest->user1()<<std::endl;
 		std::string curr_user = cRequest->user1();
 		//read from users db and check if present
 		Json::Value users;
 		Json::Reader reader;
 		std::ifstream ip_users(filename);
+		std::ifstream ip_posts(timeline_name);
 		ip_users >> users;
+		ip_posts >> posts;
 		// user["Name"] = 
 		if(users.isMember(curr_user)){
 			std::cout<<"This user already exists. Connection done!"<<std::endl;
 			return Status(StatusCode::ALREADY_EXISTS, "User exists!");		
 		} 
 		//finished checking for user
-		Json::Value user; 
+		Json::Value user;
+		Json::Value post_user; 
 		user["Followers"] = Json::Value(Json::arrayValue);
 		user["Following"] = Json::Value(Json::arrayValue);
-
+		post_user["posts"] = Json::Value(Json::arrayValue);
 		std::cout<<"Adding new user to the database."<<std::endl;
 		
 		users[curr_user] = user;
+		posts[curr_user] = post_user;
 		std::ofstream of_obj(filename);
+		std::ofstream of_post(timeline_name);
+
 		of_obj<<std::setw(4)<<users<<std::endl;
+		of_post<<std::setw(4)<<posts<<std::endl;
 		return Status::OK;
 	}
 
@@ -195,20 +203,44 @@ class TscImpl final : public TscService::Service {
 	}
 
 	Status TimeLine(ServerContext* context, ServerReaderWriter<Post, Post>* stream) override {
+		std::string filename = "timeline.json";
+		std::string db_filename = "db.json";
+		Json::Value posts;
+		Json::Value users;
+		Json::Reader reader;
+		std::ifstream ip_posts(filename);
+		std::ifstream ip_users(db_filename);
+		ip_posts >> posts;
+		ip_users >> users;
+		
 		Post p;
 		grpc::string_ref curr_ref = context->client_metadata().find("user_name")->second;
    		std::string user(curr_ref.begin(), curr_ref.end());
 		name_streams[user] = stream;
-		std::cout<<name_streams[user]<<std::endl;
+
+		// std::cout<<name_streams[user]<<std::endl;
         while(stream->Read(&p)) {
+
             std::string msg = p.content();
-            std::cout << "got a message from client: " << msg << std::endl;
-            
             Post new_post;
-            new_post.set_content(msg + " from server");
-            std::cout << "returning a message to client: " << new_post.content() << std::endl;
+            new_post.set_content(msg);
+            std::cout << "got a message from client: " << msg << std::endl;
+            for(int i =0; i< users[user]["Followers"].size(); i++){
+            	std::string curr_follower = users[user]["Followers"][i];
+            	if(name_streams.find(curr_follower) == name_streams.end()){
+            		std::cout<<"No stream for follower yet."<<std::endl;
+            	} else{
+            		std::cout << "returning a message to client: " << new_post.content() << std::endl;
+            		name_streams[user]->Write(new_post);
+            		posts[user]["posts"].append(msg);
+            		std::ofstream of_obj(filename);
+					of_obj<<std::setw(4)<<posts<<std::endl;
+            	}
+            }
             
-            stream->Write(new_post);
+            // std::cout << "returning a message to client: " << new_post.content() << std::endl;
+            
+            
         }
 
         return Status::OK;
