@@ -144,7 +144,7 @@ class TscImpl final : public TscService::Service {
 		std::ifstream ip_users(filename);
 		ip_users >> users;
 		if(user1.compare(user2) == 0){
-			fReply.set_message(4);
+			fReply->set_message(4);
 			return Status::OK;
 		}
 		// users.removeMember("default", &user2);
@@ -183,7 +183,7 @@ class TscImpl final : public TscService::Service {
 			return Status::OK;		
 		} else{
 			std::cout<<"Either of the users don't exist."<<std::endl;
-			fReply.set_message(4);
+			fReply->set_message(4);
 			return Status::OK;
 		}
 
