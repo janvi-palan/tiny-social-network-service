@@ -50,6 +50,8 @@ using tsc::Post;
 // }
 class TscImpl final : public TscService::Service {
 	public:
+		
+
 		std::unordered_map<std::string, ServerReaderWriter<Post, Post>* > name_streams;
 	// explicit TscImpl() {
 	//     // tsc::ParseDb(db, &feature_list_);
@@ -133,7 +135,7 @@ class TscImpl final : public TscService::Service {
 
 	Status RemoveFromUsersDB(ServerContext* context, const UnfollowRequest* uRequest,
 	                  FollowReply* fReply) override {
-		f
+		
 		std::string filename = "db.json";
 		std::string user1 = uRequest->user1();
 		std::string user2 = uRequest->user2();
@@ -182,7 +184,7 @@ class TscImpl final : public TscService::Service {
 			std::cout<<"Finished unfollowing users db."<<std::endl;
 			std::ofstream of_obj(filename);
 			of_obj<<std::setw(4)<<users<<std::endl;
-			Reply->set_message(1);
+			fReply->set_message(1);
 			return Status::OK;		
 		} else{
 			std::cout<<"Either of the users don't exist."<<std::endl;
@@ -300,8 +302,15 @@ void RunServer() {
 }
 
 int main(int argc, char** argv) {
-  std::fstream fs;
+  std::ofstream u_fs;
+  std::ofstream p_fs;
   std::string filename = "db.json";
+  std::string timeline_name = "timeline.json";
+  u_fs.open(filename,  fstream::in | fstream::out | fstream::trunc);
+  p_fs.open(filename,  fstream::in | fstream::out | fstream::trunc);
+  u_fs<<"{}";
+  p_fs<<"{}";
+  
 
   // fs.open(filename, std::fstream::in | std::fstream::out | std::fstream::app);
   // if(!fs){
