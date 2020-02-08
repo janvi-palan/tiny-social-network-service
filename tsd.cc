@@ -242,7 +242,7 @@ class TscImpl final : public TscService::Service {
         timeline_curr>>posts;
 		for(int i = 0; i< posts[user]["posts"].size(); i++){
 			Post p;
-			p.set_content(posts[user]["posts"][i]);
+			p.set_content(posts[user]["posts"][i].asString());
 			stream->Write(p);
 		}
 		// std::cout<<name_streams[user]<<std::endl;
@@ -273,22 +273,16 @@ class TscImpl final : public TscService::Service {
             	if(name_streams.find(curr_follower) == name_streams.end()){
             		std::cout<<"No stream for follower yet."<<std::endl;
             	} else{
-
-            		std::cout << "Returning messages to follower: " << curr_follower << std::endl;
-            		for(int j = 0; j<posts[curr_follower]["posts"].size() ; j++){
-            			if(curr_follower.compare(user)){
-
+            		if(curr_follower.compare(user) !=0){
+            			std::cout << "Returning messages to follower: " << curr_follower << std::endl;
+            			for(int j = 0; j<posts[curr_follower]["posts"].size() ; j++){
+	            			Post new_post;
+	            			new_post.set_content(posts[curr_follower]["posts"][j].asString());
+	            			name_streams[curr_follower]->Write(new_post);
+	            			if(j == 20) break;
             			}
-            			Post new_post;
-            			new_post.set_content(posts[curr_follower]["posts"][j].asString());
-            			name_streams[curr_follower]->Write(new_post);
-            			if(j == 20) break;
             		}
-            		// 
-            		
-            		
             	}
-            	
             }
             std::ofstream of_obj(filename);
 			of_obj<<std::setw(4)<<posts<<std::endl;
