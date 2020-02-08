@@ -82,7 +82,8 @@ class TscImpl final : public TscService::Service {
 		user["Following"] = Json::Value(Json::arrayValue);
 		post_user["posts"] = Json::Value(Json::arrayValue);
 		std::cout<<"Adding new user to the database."<<std::endl;
-		
+		user["Following"].append(curr_user);
+		user["Followers"].append(curr_user);
 		users[curr_user] = user;
 		posts[curr_user] = post_user;
 		std::ofstream of_obj(filename);
@@ -235,6 +236,7 @@ class TscImpl final : public TscService::Service {
             			newTL.append(posts[curr_follower][j].asString());
             		}
             	}
+
             	if(name_streams.find(curr_follower) == name_streams.end()){
             		std::cout<<"No stream for follower yet."<<std::endl;
             	} else{
