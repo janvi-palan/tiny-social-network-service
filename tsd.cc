@@ -250,26 +250,29 @@ class TscImpl final : public TscService::Service {
         while(stream->Read(&p)) {
         	std::ifstream ip_users(db_filename);
 			ip_users>>users;
+
         	std::ifstream ip_posts(filename);
         	std::cout<<"Loop begins"<<std::endl;
         	ip_posts>>posts;
+
             std::string msg = p.content();
             msg.erase(std::remove(msg.begin(), msg.end(), '\n'), msg.end());
             Post new_post;
             new_post.set_content(msg);
             std::cout << "got a message from client: " << msg << std::endl;
+            std::cout<<users[user]["Followers"]<<std::endl;
             for(int i =0; i< users[user]["Followers"].size(); i++){
             	std::string curr_follower = users[user]["Followers"][i].asString();
             	Json::Value newTL = Json::arrayValue;
             	//check if timeline for user already exists and add this post to the top of the timeline
             	if(posts.isMember(curr_follower)){
-            		std::cout<<"Inside the posts check"<<std::endl;
+            		
             		newTL.append(msg);
             		for(int j =0;j<posts[curr_follower]["posts"].size() && j <20; j++){
             			newTL.append(posts[curr_follower]["posts"][j].asString());
             		}
             	}
-            	std::cout<<"Outside the posts check"<<std::endl;
+            	
 
             	posts[curr_follower]["posts"] = newTL;
             	std::cout<<newTL[0];
