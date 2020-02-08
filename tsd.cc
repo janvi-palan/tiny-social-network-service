@@ -248,6 +248,8 @@ class TscImpl final : public TscService::Service {
 		}
 		// std::cout<<name_streams[user]<<std::endl;
         while(stream->Read(&p)) {
+        	std::ifstream ip_users(db_filename);
+			ip_users>>users;
         	std::ifstream ip_posts(filename);
         	std::cout<<"Loop begins"<<std::endl;
         	ip_posts>>posts;
