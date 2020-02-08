@@ -106,7 +106,8 @@ int Client::connectTo()
     Status status = stub_->AddNewUser(&context, c1, &r1);
     if (!status.ok())
         {
-            std::cout<<"connection failed."<<std::endl;
+            std::cout<<"Connection failed."<<std::endl;
+            return -1;
             //return false;
         }
         else
@@ -282,7 +283,7 @@ void Client::processTimeline()
     ClientContext context;
     std::cout<<"You are in the timeline mode!"<<std::endl;
     context.AddMetadata("user_name", username.c_str());
-    
+
     std::shared_ptr<ClientReaderWriter<Post, Post>> stream(
             stub_->TimeLine(&context));
 

@@ -207,7 +207,8 @@ class TscImpl final : public TscService::Service {
 		std::string db_filename = "db.json";
 		Json::Value posts;
 		Json::Value users;
-		Json::Reader reader;
+		Json::Reader reader1;
+		Json::Reader reader2;
 		std::ifstream ip_posts(filename);
 		std::ifstream ip_users(db_filename);
 		
