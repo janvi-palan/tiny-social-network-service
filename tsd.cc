@@ -96,7 +96,7 @@ class TscImpl final : public TscService::Service {
 
 	Status AddToUsersDB(ServerContext* context, const FollowRequest* fRequest,
 	                  FollowReply* fReply) override {
-		fReply->set_message("Success");
+		
 		std::string filename = "db.json";
 		std::string user1 = fRequest->user1();
 		std::string user2 = fRequest->user2();
@@ -109,6 +109,12 @@ class TscImpl final : public TscService::Service {
 
 
 		if(users.isMember(user1) && users.isMember(user2)){
+			for(int i = 0; i < users[user1]["Following"].size(); i++){
+				if(users[user1]["Following"][i] == user2){
+					fReply->set_message("Failed");
+					return Status(StatusCode::ALREADY_EXISTS, "User exists!");
+				}
+			}
 			users[user1]["Following"].append(user2);
 			users[user2]["Followers"].append(user1);
 			std::cout<<"Finished appending to users db."<<std::endl;
@@ -116,10 +122,9 @@ class TscImpl final : public TscService::Service {
 			of_obj<<std::setw(4)<<users<<std::endl;
 			return Status::OK;		
 		} else{
-			std::cout<<"Both the users don't exist."<<std::endl;
+			std::cout<<"The user to be followed does'nt exist."<<std::endl;
+			return Status(StatusCode::NOT_FOUND, "User does not exist!");
 		}
-
-		
 
 		return Status::OK;		
 	}

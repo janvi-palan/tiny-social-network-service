@@ -162,7 +162,11 @@ IReply Client::processCommand(std::string& input)
         if (status.ok()) {
             ire.comm_status = SUCCESS;
         } else {
-            ire.comm_status = FAILURE_NOT_EXISTS;
+            if(r1.message().compare("Failed") == 0){
+                ire.comm_status = FAILURE_ALREADY_EXISTS;
+            } else{
+                ire.comm_status = FAILURE_INVALID;
+            }
         }
 
     }
