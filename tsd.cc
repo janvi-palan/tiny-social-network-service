@@ -251,23 +251,24 @@ class TscImpl final : public TscService::Service {
             	//check if timeline for user already exists and add this post to the top of the timeline
             	if(posts.isMember(curr_follower)){
             		newTL.append(msg);
-            		for(int j =1;j<posts[curr_follower].size(); j++){
+            		for(int j =0;j<posts[curr_follower].size(); j++){
             			newTL.append(posts[curr_follower][j].asString());
             		}
             	}
+            	posts[curr_follower]["posts"] = newTL;
 
             	if(name_streams.find(curr_follower) == name_streams.end()){
             		std::cout<<"No stream for follower yet."<<std::endl;
             	} else{
 
             		std::cout << "Returning messages to follower: " << curr_follower << std::endl;
-            		for(int j = 0; j<newTL.size() ; j++){
+            		for(int j = 0; j<posts[curr_follower]["posts"].size() ; j++){
             			Post new_post;
-            			new_post.set_content(newTL[j].asString());
+            			new_post.set_content(posts[curr_follower]["posts"][j].asString());
             			name_streams[curr_follower]->Write(new_post);
             			if(j == 20) break;
             		}
-            		posts[curr_follower]["posts"] = newTL;
+            		// 
             		
             		
             	}
@@ -310,7 +311,7 @@ int main(int argc, char** argv) {
   // p_fs.open(filename,  fstream::in | fstream::out | fstream::trunc);
   // u_fs<<"{}";
   // p_fs<<"{}";
-  
+
 
   // fs.open(filename, std::fstream::in | std::fstream::out | std::fstream::app);
   // if(!fs){
