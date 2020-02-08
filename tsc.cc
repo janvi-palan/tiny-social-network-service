@@ -155,14 +155,12 @@ IReply Client::processCommand(std::string& input)
         Status status = stub_->AddToUsersDB(&context, f1, &r1);
 
         if(!status.ok()){
-            std::cout<<"Something went wrong!"<<std::endl;
+            ire.comm_status = FAILURE_INVALID;
         }
         ire.grpc_status = status;
         if (status.ok()) {
             ire.comm_status = SUCCESS;
-        } else { 
-            ire.comm_status = FAILURE_INVALID;
-        }
+        } 
     }
 
 
