@@ -241,15 +241,20 @@ class TscImpl final : public TscService::Service {
 
             		std::cout << "returning messages to follower: " << curr_follower << std::endl;
             		for(int j = 0; j<20; j++){
+            			Post new_post;
             			new_post.set_content(newTL[j].asString());
             			name_streams[curr_follower]->Write(new_post);
             		}
-            		posts[curr_follower]["posts"] = newTL;
+            		for(int j =0; j<newTL.size(); j++){
+            			posts[curr_follower]["posts"][j] = newTL[j];
+            		}
+            		
             		
             	}
-            	std::ofstream of_obj(filename);
-				of_obj<<std::setw(4)<<posts<<std::endl;
+            	
             }
+            std::ofstream of_obj(filename);
+			of_obj<<std::setw(4)<<posts<<std::endl;
             
             // std::cout << "returning a message to client: " << new_post.content() << std::endl;
             
