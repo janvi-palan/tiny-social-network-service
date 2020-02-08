@@ -64,7 +64,7 @@ class TscImpl final : public TscService::Service {
 		std::cout<<cRequest->user1()<<std::endl;
 		std::string curr_user = cRequest->user1();
 		//read from users db and check if present
-		Json::Value users;
+		Json::Value users, posts;
 		Json::Reader reader;
 		std::ifstream ip_users(filename);
 		std::ifstream ip_posts(timeline_name);
@@ -226,16 +226,29 @@ class TscImpl final : public TscService::Service {
             new_post.set_content(msg);
             std::cout << "got a message from client: " << msg << std::endl;
             for(int i =0; i< users[user]["Followers"].size(); i++){
-            	std::string curr_follower = users[user]["Followers"][i];
+            	std::string curr_follower = users[user]["Followers"][i].asString();
+            	Json::Value newTL = Json::arrayValue;
+            	//check if timeline for user already exists and add this post to the top of the timeline
+            	if(posts.isMember(curr_follower)){
+            		newTL.append(msg);
+            		for(int j =0;j<posts[curr_follower].size(); j++){
+            			newTL.append(posts[curr_follower][j].asString());
+            		}
+            	}
             	if(name_streams.find(curr_follower) == name_streams.end()){
             		std::cout<<"No stream for follower yet."<<std::endl;
             	} else{
-            		std::cout << "returning a message to client: " << new_post.content() << std::endl;
-            		name_streams[user]->Write(new_post);
-            		posts[user]["posts"].append(msg);
-            		std::ofstream of_obj(filename);
-					of_obj<<std::setw(4)<<posts<<std::endl;
+
+            		std::cout << "returning messages to follower: " << curr_follower << std::endl;
+            		for(int j = 0; j<20; j++){
+            			new_post.set_content(newTL[j].asString());
+            			name_streams[curr_follower]->Write(new_post);
+            		}
+            		posts[curr_follower]["posts"] = newTL;
+            		
             	}
+            	std::ofstream of_obj(filename);
+				of_obj<<std::setw(4)<<posts<<std::endl;
             }
             
             // std::cout << "returning a message to client: " << new_post.content() << std::endl;
