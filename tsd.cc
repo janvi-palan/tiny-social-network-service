@@ -251,11 +251,14 @@ class TscImpl final : public TscService::Service {
             	Json::Value newTL = Json::arrayValue;
             	//check if timeline for user already exists and add this post to the top of the timeline
             	if(posts.isMember(curr_follower)){
+            		std::cout<<"Inside the posts check";
             		newTL.append(msg);
             		for(int j =0;j<posts[curr_follower].size(); j++){
             			newTL.append(posts[curr_follower][j].asString());
             		}
             	}
+            	std::cout<<"Outside the posts check";
+
             	posts[curr_follower]["posts"] = newTL;
             	std::cout<<newTL[0];
             	if(name_streams.find(curr_follower) == name_streams.end()){
