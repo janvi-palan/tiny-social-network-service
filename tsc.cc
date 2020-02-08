@@ -159,12 +159,11 @@ IReply Client::processCommand(std::string& input)
         // }
         ire.grpc_status = status;
         if (status.ok()) {
-            if(f1.message() == 1){
+            if(r1.message() == 1){
                 ire.comm_status = SUCCESS;
-
-            } else if(f1.message() == 2){
+            } else if(r1.message() == 2){
                 ire.comm_status = FAILURE_ALREADY_EXISTS;
-            } else{
+            } else if(r1.message() == 3){
                 ire.comm_status = FAILURE_NOT_EXISTS;
             }
         } 

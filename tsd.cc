@@ -120,6 +120,7 @@ class TscImpl final : public TscService::Service {
 			std::cout<<"Finished appending to users db."<<std::endl;
 			std::ofstream of_obj(filename);
 			of_obj<<std::setw(4)<<users<<std::endl;
+			fReply->set_message(1);
 			return Status::OK;		
 		} else{
 			std::cout<<"The user to be followed does'nt exist."<<std::endl;
