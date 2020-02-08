@@ -218,7 +218,8 @@ class TscImpl final : public TscService::Service {
 
 		// std::cout<<name_streams[user]<<std::endl;
         while(stream->Read(&p)) {
-
+        	ip_users>>users;
+        	ip_posts>>posts;
             std::string msg = p.content();
             Post new_post;
             new_post.set_content(msg);
