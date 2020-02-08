@@ -302,14 +302,14 @@ void RunServer() {
 }
 
 int main(int argc, char** argv) {
-  std::ofstream u_fs;
-  std::ofstream p_fs;
-  std::string filename = "db.json";
-  std::string timeline_name = "timeline.json";
-  u_fs.open(filename,  fstream::in | fstream::out | fstream::trunc);
-  p_fs.open(filename,  fstream::in | fstream::out | fstream::trunc);
-  u_fs<<"{}";
-  p_fs<<"{}";
+  // std::ofstream u_fs;
+  // std::ofstream p_fs;
+  // std::string filename = "db.json";
+  // std::string timeline_name = "timeline.json";
+  // u_fs.open(filename,  fstream::in | fstream::out | fstream::trunc);
+  // p_fs.open(filename,  fstream::in | fstream::out | fstream::trunc);
+  // u_fs<<"{}";
+  // p_fs<<"{}";
   
 
   // fs.open(filename, std::fstream::in | std::fstream::out | std::fstream::app);
