@@ -236,7 +236,15 @@ class TscImpl final : public TscService::Service {
 		grpc::string_ref curr_ref = context->client_metadata().find("user_name")->second;
    		std::string user(curr_ref.begin(), curr_ref.end());
 		name_streams[user] = stream;
-
+		//display timeline
+		std::ifstream timeline_curr(filename);
+        // std::cout<<"Loop begins"<<std::endl;
+        timeline_curr>>posts;
+		for(int i = 0; i< posts[user]["posts"].size(); i++){
+			Post p;
+			p.set_content(posts[user]["posts"][i]);
+			stream->Write(p);
+		}
 		// std::cout<<name_streams[user]<<std::endl;
         while(stream->Read(&p)) {
         	std::ifstream ip_posts(filename);
@@ -258,7 +266,7 @@ class TscImpl final : public TscService::Service {
             			newTL.append(posts[curr_follower]["posts"][j].asString());
             		}
             	}
-            	std::cout<<"Outside the posts check";
+            	std::cout<<"Outside the posts check"<<std::endl;
 
             	posts[curr_follower]["posts"] = newTL;
             	std::cout<<newTL[0];
@@ -268,6 +276,9 @@ class TscImpl final : public TscService::Service {
 
             		std::cout << "Returning messages to follower: " << curr_follower << std::endl;
             		for(int j = 0; j<posts[curr_follower]["posts"].size() ; j++){
+            			if(curr_follower.compare(user)){
+
+            			}
             			Post new_post;
             			new_post.set_content(posts[curr_follower]["posts"][j].asString());
             			name_streams[curr_follower]->Write(new_post);
