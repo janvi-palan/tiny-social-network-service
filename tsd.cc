@@ -229,9 +229,9 @@ class TscImpl final : public TscService::Service {
 		Json::Value users;
 		Json::Reader reader1;
 		Json::Reader reader2;
-		std::ifstream ip_posts(filename);
-		std::ifstream ip_users(db_filename);
 		
+		std::ifstream ip_users(db_filename);
+		ip_users>>users;
 		Post p;
 		grpc::string_ref curr_ref = context->client_metadata().find("user_name")->second;
    		std::string user(curr_ref.begin(), curr_ref.end());
@@ -239,7 +239,8 @@ class TscImpl final : public TscService::Service {
 
 		// std::cout<<name_streams[user]<<std::endl;
         while(stream->Read(&p)) {
-        	ip_users>>users;
+        	std::ifstream ip_posts(filename);
+        	std::cout<<"Loop begins"<<std::endl;
         	ip_posts>>posts;
             std::string msg = p.content();
             msg.erase(std::remove(msg.begin(), msg.end(), '\n'), msg.end());
@@ -251,10 +252,10 @@ class TscImpl final : public TscService::Service {
             	Json::Value newTL = Json::arrayValue;
             	//check if timeline for user already exists and add this post to the top of the timeline
             	if(posts.isMember(curr_follower)){
-            		std::cout<<"Inside the posts check";
+            		std::cout<<"Inside the posts check"<<std::endl;
             		newTL.append(msg);
-            		for(int j =0;j<posts[curr_follower].size(); j++){
-            			newTL.append(posts[curr_follower][j].asString());
+            		for(int j =0;j<posts[curr_follower]["posts"].size(); j++){
+            			newTL.append(posts[curr_follower]["posts"][j].asString());
             		}
             	}
             	std::cout<<"Outside the posts check";
