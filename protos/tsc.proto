@@ -35,7 +35,7 @@ message ConnectRequest{
 }
 
 message FollowReply{
-  string message = 1;
+  int32 message = 1;
 }
 
 message ListReply{

@@ -58,7 +58,7 @@ class TscImpl final : public TscService::Service {
 
 	Status AddNewUser(ServerContext* context, const ConnectRequest* cRequest,
 	                  FollowReply* fReply) override {
-		fReply->set_message("Connection to server is successful.");
+		fReply->set_message(1);
 		std::string filename = "db.json";
 		std::string timeline_name = "timeline.json";
 		std::cout<<cRequest->user1()<<std::endl;
@@ -111,8 +111,8 @@ class TscImpl final : public TscService::Service {
 		if(users.isMember(user1) && users.isMember(user2)){
 			for(int i = 0; i < users[user1]["Following"].size(); i++){
 				if(users[user1]["Following"][i] == user2){
-					fReply->set_message("Failed");
-					return Status(StatusCode::ALREADY_EXISTS, "User exists!");
+					fReply->set_message(2);
+					return Status::OK;
 				}
 			}
 			users[user1]["Following"].append(user2);
@@ -123,7 +123,8 @@ class TscImpl final : public TscService::Service {
 			return Status::OK;		
 		} else{
 			std::cout<<"The user to be followed does'nt exist."<<std::endl;
-			return Status(StatusCode::NOT_FOUND, "User does not exist!");
+			fReply->set_message(3);
+			return Status::OK;
 		}
 
 		return Status::OK;		
@@ -131,7 +132,7 @@ class TscImpl final : public TscService::Service {
 
 	Status RemoveFromUsersDB(ServerContext* context, const UnfollowRequest* uRequest,
 	                  FollowReply* fReply) override {
-		fReply->set_message("Success");
+		fReply->set_message(1);
 		std::string filename = "db.json";
 		std::string user1 = uRequest->user1();
 		std::string user2 = uRequest->user2();
