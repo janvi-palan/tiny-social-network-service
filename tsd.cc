@@ -242,6 +242,7 @@ class TscImpl final : public TscService::Service {
         	ip_users>>users;
         	ip_posts>>posts;
             std::string msg = p.content();
+            msg.erase(std::remove(msg.begin(), msg.end(), '\n'), msg.end());
             Post new_post;
             new_post.set_content(msg);
             std::cout << "got a message from client: " << msg << std::endl;
@@ -256,7 +257,7 @@ class TscImpl final : public TscService::Service {
             		}
             	}
             	posts[curr_follower]["posts"] = newTL;
-
+            	std::cout<<newTL[0];
             	if(name_streams.find(curr_follower) == name_streams.end()){
             		std::cout<<"No stream for follower yet."<<std::endl;
             	} else{
