@@ -240,10 +240,11 @@ class TscImpl final : public TscService::Service {
             	} else{
 
             		std::cout << "returning messages to follower: " << curr_follower << std::endl;
-            		for(int j = 0; j<20; j++){
+            		for(int j = 0; j<newTL.size(); j++){
             			Post new_post;
             			new_post.set_content(newTL[j].asString());
             			name_streams[curr_follower]->Write(new_post);
+            			if(j == 20) break;
             		}
             		for(int j =0; j<newTL.size(); j++){
             			posts[curr_follower]["posts"][j] = newTL[j];
