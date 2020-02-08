@@ -240,10 +240,11 @@ class TscImpl final : public TscService::Service {
 		std::ifstream timeline_curr(filename);
         // std::cout<<"Loop begins"<<std::endl;
         timeline_curr>>posts;
-		for(int i = 0; i< posts[user]["posts"].size(); i++){
+		for(int i = 0; i< posts[user]["posts"].size() ; i++){
 			Post p;
 			p.set_content(posts[user]["posts"][i].asString());
 			stream->Write(p);
+			if(i==20) break;
 		}
 		// std::cout<<name_streams[user]<<std::endl;
         while(stream->Read(&p)) {
@@ -262,7 +263,7 @@ class TscImpl final : public TscService::Service {
             	if(posts.isMember(curr_follower)){
             		std::cout<<"Inside the posts check"<<std::endl;
             		newTL.append(msg);
-            		for(int j =0;j<posts[curr_follower]["posts"].size(); j++){
+            		for(int j =0;j<posts[curr_follower]["posts"].size() && j <20; j++){
             			newTL.append(posts[curr_follower]["posts"][j].asString());
             		}
             	}
@@ -275,12 +276,15 @@ class TscImpl final : public TscService::Service {
             	} else{
             		if(curr_follower.compare(user) !=0){
             			std::cout << "Returning messages to follower: " << curr_follower << std::endl;
-            			for(int j = 0; j<posts[curr_follower]["posts"].size() ; j++){
-	            			Post new_post;
-	            			new_post.set_content(posts[curr_follower]["posts"][j].asString());
-	            			name_streams[curr_follower]->Write(new_post);
-	            			if(j == 20) break;
-            			}
+            			// for(int j = 0; j<posts[curr_follower]["posts"].size() ; j++){
+	            		// 	Post new_post;
+	            		// 	new_post.set_content(posts[curr_follower]["posts"][j].asString());
+	            		// 	name_streams[curr_follower]->Write(new_post);
+	            		// 	if(j == 20) break;
+            			// }
+            			Post new_post;
+            			new_post.set_content(msg);
+            			name_streams[curr_follower]->Write(new_post);
             		}
             	}
             }
