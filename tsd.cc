@@ -8,6 +8,7 @@
 //#include <memory>
 #include <thread>
 #include <unordered_map>
+#include <unordered_set>
 //#include <vector>
 #include <string>
 #include <unistd.h>
@@ -51,8 +52,9 @@ using tsc::Post;
 class TscImpl final : public TscService::Service {
 	public:
 		
-
+		std::unordered_set<std::string> currSessions;
 		std::unordered_map<std::string, ServerReaderWriter<Post, Post>* > name_streams;
+
 	// explicit TscImpl() {
 	//     // tsc::ParseDb(db, &feature_list_);
 	// }
@@ -72,12 +74,13 @@ class TscImpl final : public TscService::Service {
 		std::ifstream ip_posts(timeline_name);
 		ip_users >> users;
 		ip_posts >> posts;
-		// user["Name"] = 
-		if(users.isMember(curr_user)){
-			std::cout<<"This user already exists. Connection done!"<<std::endl;
+		// auto search = currSessions.find(curr_user);
+		if(users.isMember(curr_user) && currSessions.contains(curr_user)){
+			std::cout<<"This user already exists and is active right now."<<std::endl;
 			return Status(StatusCode::ALREADY_EXISTS, "User exists!");		
 		} 
 		//finished checking for user
+		currSessions.insert(curr_user);
 		Json::Value user;
 		Json::Value post_user; 
 		user["Followers"] = Json::Value(Json::arrayValue);
