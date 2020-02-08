@@ -133,7 +133,7 @@ class TscImpl final : public TscService::Service {
 
 	Status RemoveFromUsersDB(ServerContext* context, const UnfollowRequest* uRequest,
 	                  FollowReply* fReply) override {
-		fReply->set_message(1);
+		f
 		std::string filename = "db.json";
 		std::string user1 = uRequest->user1();
 		std::string user2 = uRequest->user2();
@@ -145,6 +145,8 @@ class TscImpl final : public TscService::Service {
 		ip_users >> users;
 		if(user1.compare(user2) == 0){
 			fReply->set_message(4);
+			std::cout<<user1<<" unfollowing "<<user2<<std::endl;
+
 			return Status::OK;
 		}
 		// users.removeMember("default", &user2);
@@ -180,6 +182,7 @@ class TscImpl final : public TscService::Service {
 			std::cout<<"Finished unfollowing users db."<<std::endl;
 			std::ofstream of_obj(filename);
 			of_obj<<std::setw(4)<<users<<std::endl;
+			Reply->set_message(1);
 			return Status::OK;		
 		} else{
 			std::cout<<"Either of the users don't exist."<<std::endl;
