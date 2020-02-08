@@ -210,8 +210,6 @@ class TscImpl final : public TscService::Service {
 		Json::Reader reader;
 		std::ifstream ip_posts(filename);
 		std::ifstream ip_users(db_filename);
-		ip_posts >> posts;
-		ip_users >> users;
 		
 		Post p;
 		grpc::string_ref curr_ref = context->client_metadata().find("user_name")->second;
@@ -231,7 +229,7 @@ class TscImpl final : public TscService::Service {
             	//check if timeline for user already exists and add this post to the top of the timeline
             	if(posts.isMember(curr_follower)){
             		newTL.append(msg);
-            		for(int j =0;j<posts[curr_follower].size(); j++){
+            		for(int j =1;j<posts[curr_follower].size(); j++){
             			newTL.append(posts[curr_follower][j].asString());
             		}
             	}
@@ -239,16 +237,14 @@ class TscImpl final : public TscService::Service {
             		std::cout<<"No stream for follower yet."<<std::endl;
             	} else{
 
-            		std::cout << "returning messages to follower: " << curr_follower << std::endl;
-            		for(int j = 0; j<newTL.size(); j++){
+            		std::cout << "Returning messages to follower: " << curr_follower << std::endl;
+            		for(int j = 0; j<newTL.size() ; j++){
             			Post new_post;
             			new_post.set_content(newTL[j].asString());
             			name_streams[curr_follower]->Write(new_post);
             			if(j == 20) break;
             		}
-            		for(int j =0; j<newTL.size(); j++){
-            			posts[curr_follower]["posts"][j] = newTL[j];
-            		}
+            		posts[curr_follower]["posts"] = newTL;
             		
             		
             	}
