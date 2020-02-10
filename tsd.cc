@@ -252,7 +252,6 @@ class TscImpl final : public TscService::Service {
 			Post p;
 			p.set_content(posts[user]["posts"][i].asString());
 			p.set_auth(user);
-			p.set_allocated_time(timestamp);
 			stream->Write(p);
 			if(i==20) break;
 		}
@@ -269,6 +268,7 @@ class TscImpl final : public TscService::Service {
             msg.erase(std::remove(msg.begin(), msg.end(), '\n'), msg.end());
             Post new_post;
             new_post.set_content(msg);
+            new_post.set_auth(user);
             std::cout << "got a message from client: " << msg << std::endl;
             std::cout<<users[user]["Followers"]<<std::endl;
             for(int i =0; i< users[user]["Followers"].size(); i++){
