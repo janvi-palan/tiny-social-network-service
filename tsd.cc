@@ -97,7 +97,6 @@ class TscImpl final : public TscService::Service {
 			of_obj<<std::setw(4)<<users<<std::endl;
 			of_post<<std::setw(4)<<posts<<std::endl;
 			return Status::OK;
-
 		}
 		auto search = currSessions.find(curr_user);
 		if(users.isMember(curr_user) && currSessions.find(curr_user) != currSessions.end()){
@@ -140,7 +139,7 @@ class TscImpl final : public TscService::Service {
 			return Status::OK;		
 		} else{
 			std::cout<<"The user to be followed does'nt exist."<<std::endl;
-			fReply->set_message(3);
+			fReply->set_message(4);
 			return Status::OK;
 		}
 
@@ -349,13 +348,13 @@ int main(int argc, char** argv) {
 	// file.open("test.txt",std::fstream::out);
 	std::ifstream file1("db.json");
 	std::ofstream o("db.json");
-	std::ifstream file2("timeline.json");
-	std::ofstream o2("timeline.json");
 	Json::Value users;
 	if(is_empty(file1)){
+		std::ifstream file2("timeline.json");
 		o<<std::setw(4)<<users<<std::endl;
 	}
 	if(is_empty(file2)){
+		std::ofstream o2("timeline.json");
 		o2<<std::setw(4)<<users<<std::endl;
 	}
 	
