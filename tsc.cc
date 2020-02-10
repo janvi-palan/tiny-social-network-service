@@ -10,6 +10,7 @@
 #include "tsc.grpc.pb.h"
 #include "tsc.pb.h"
 #include <google/protobuf/util/time_util.h>
+#include <time.h>
 // namespace google::protobuf::util
 using grpc::Channel;
 using grpc::ClientContext;
@@ -306,10 +307,11 @@ void Client::processTimeline()
     });
 
     std::thread reader([stream]() {
+            time_t result = time(NULL);
             Post p;
             while(stream->Read(&p)){
                 // std::cout << p.content() << std::endl;
-                displayPostMessage(p.auth(), p.content(), google::protobuf::util.TimestampToTimeT(p.time()));
+                displayPostMessage(p.auth(), p.content(), asctime(gmtime(&result)));
             }
     });
 
