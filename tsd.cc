@@ -151,7 +151,7 @@ class TscImpl final : public TscService::Service {
 		ip_users >> users;
 		if(user1.compare(user2) == 0){
 			fReply->set_message(4);
-			std::cout<<user1<<" unfollowing "<<user2<<std::endl;
+			
 
 			return Status::OK;
 		}

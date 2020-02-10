@@ -145,7 +145,7 @@ IReply Client::processCommand(std::string& input)
     if(input.substr(0,6).compare("FOLLOW")==0){
         std::string user2 = input.substr(7,input.length());
         // std::cout<<user2<<std::endl;
-        std::cout<<"Follow request!"<<std::endl;
+        // std::cout<<"Follow request!"<<std::endl;
         User u1, u2;
         // std::string user1 = "User2";
         // std::string user2 = "User3";
@@ -178,7 +178,7 @@ IReply Client::processCommand(std::string& input)
     if(input.substr(0,8).compare("UNFOLLOW")==0){
         std::string user2 = input.substr(9,input.length());
         // std::cout<<user2<<std::endl;
-        std::cout<<"Unfollow request!"<<std::endl;
+        // std::cout<<"Unfollow request!"<<std::endl;
         User u1, u2;
         // std::string user1 = "User2";
         // std::string user2 = "User3";
@@ -189,17 +189,19 @@ IReply Client::processCommand(std::string& input)
         uf1.set_user2(user2);
 
         Status status = stub_->RemoveFromUsersDB(&context, uf1, &r1);
-
+        if (status.ok()) {
+            if(r1.message() == 1){
+                ire.comm_status = SUCCESS;
+            } else{
+                ire.comm_status = FAILURE_INVALID_USERNAME;
+            }
+        } 
         if(!status.ok()){
             std::cout<<"Something went wrong!"<<std::endl;
         }
-        std::cout<<"Finished Unfollow!"<<std::endl;
+        // std::cout<<"Finished Unfollow!"<<std::endl;
         ire.grpc_status = status;
-        if (status.ok()) {
-            ire.comm_status = SUCCESS;
-        } else {
-            ire.comm_status = FAILURE_NOT_EXISTS;
-        }
+        
 
     }
 
@@ -311,7 +313,6 @@ void Client::processTimeline()
             time_t &t = result;
             Post p;
             while(stream->Read(&p)){
-                std::cout << p.auth() << std::endl;
                 displayPostMessage(p.auth(), p.content(), t);
             }
     });
