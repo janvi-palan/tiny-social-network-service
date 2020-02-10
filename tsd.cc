@@ -74,6 +74,26 @@ class TscImpl final : public TscService::Service {
 		std::ifstream ip_posts(timeline_name);
 		ip_users >> users;
 		ip_posts >> posts;
+
+		if(!users.isMember(curr_user)){
+			Json::Value user;
+			Json::Value post_user; 
+			user["Followers"] = Json::Value(Json::arrayValue);
+			user["Following"] = Json::Value(Json::arrayValue);
+			post_user["posts"] = Json::Value(Json::arrayValue);
+			post_user["auth"] = Json::Value(Json::arrayValue);
+			std::cout<<"Adding new user to the database."<<std::endl;
+			user["Following"].append(curr_user);
+			user["Followers"].append(curr_user);
+			users[curr_user] = user;
+			posts[curr_user] = post_user;
+			std::ofstream of_obj(filename);
+			std::ofstream of_post(timeline_name);
+			of_obj<<std::setw(4)<<users<<std::endl;
+			of_post<<std::setw(4)<<posts<<std::endl;
+			return Status::OK;
+
+		}
 		auto search = currSessions.find(curr_user);
 		if(users.isMember(curr_user) && currSessions.find(curr_user) != currSessions.end()){
 			std::cout<<"This user already exists and is active right now."<<std::endl;
@@ -81,23 +101,8 @@ class TscImpl final : public TscService::Service {
 		} 
 		//finished checking for user
 		currSessions.insert(curr_user);
-		Json::Value user;
-		Json::Value post_user; 
-		user["Followers"] = Json::Value(Json::arrayValue);
-		user["Following"] = Json::Value(Json::arrayValue);
-		post_user["posts"] = Json::Value(Json::arrayValue);
-		post_user["auth"] = Json::Value(Json::arrayValue);
-		std::cout<<"Adding new user to the database."<<std::endl;
-		user["Following"].append(curr_user);
-		user["Followers"].append(curr_user);
-		users[curr_user] = user;
-		posts[curr_user] = post_user;
-		std::ofstream of_obj(filename);
-		std::ofstream of_post(timeline_name);
-
-		of_obj<<std::setw(4)<<users<<std::endl;
-		of_post<<std::setw(4)<<posts<<std::endl;
 		return Status::OK;
+		
 	}
 
 	Status AddToUsersDB(ServerContext* context, const FollowRequest* fRequest,
@@ -156,6 +161,7 @@ class TscImpl final : public TscService::Service {
 			return Status::OK;
 		}
 		// users.removeMember("default", &user2);
+
 		if(users.isMember(user1) && users.isMember(user2)){
 
 			Json::Value new_items = Json::arrayValue;
@@ -166,11 +172,11 @@ class TscImpl final : public TscService::Service {
 				if(users[user1]["Following"][i].compare(user2) != 0){
 					new_items[c] = users[user1]["Following"][i];
 					c++;
-					
 				}
 
 			}
 			users[user1]["Following"] = new_items;
+			std::cout<<new_items<<std::endl;
 
 			int d = 0;
 			for(int i = 0; i<users[user2]["Followers"].size(); i++){
@@ -181,10 +187,9 @@ class TscImpl final : public TscService::Service {
 				}
 
 			}
-			users[user1]["Followers"] = new_followers;
+			std::cout<<new_followers<<std::endl;
 
-			// users[user1]["Following"].removeIndex()
-			
+			users[user1]["Followers"] = new_followers;
 			std::cout<<"Finished unfollowing users db."<<std::endl;
 			std::ofstream of_obj(filename);
 			of_obj<<std::setw(4)<<users<<std::endl;
@@ -195,9 +200,6 @@ class TscImpl final : public TscService::Service {
 			fReply->set_message(4);
 			return Status::OK;
 		}
-
-		
-
 		return Status::OK;		
 	}
 	Status GetAllFollowers(ServerContext* context, const ConnectRequest* c1,
@@ -313,8 +315,6 @@ class TscImpl final : public TscService::Service {
 			of_obj<<std::setw(4)<<posts<<std::endl;
             
             // std::cout << "returning a message to client: " << new_post.content() << std::endl;
-            
-            
         }
 
         return Status::OK;
@@ -324,10 +324,7 @@ class TscImpl final : public TscService::Service {
 
 void RunServer() {
   std::string server_address("0.0.0.0:50051");
-
   TscImpl service;
-
-
   ServerBuilder builder;
   builder.AddListeningPort(server_address, grpc::InsecureServerCredentials());
   builder.RegisterService(&service);
@@ -338,23 +335,6 @@ void RunServer() {
 }
 
 int main(int argc, char** argv) {
-  // std::ofstream u_fs;
-  // std::ofstream p_fs;
-  // std::string filename = "db.json";
-  // std::string timeline_name = "timeline.json";
-  // u_fs.open(filename,  fstream::in | fstream::out | fstream::trunc);
-  // p_fs.open(filename,  fstream::in | fstream::out | fstream::trunc);
-  // u_fs<<"{}";
-  // p_fs<<"{}";
-
-
-  // fs.open(filename, std::fstream::in | std::fstream::out | std::fstream::app);
-  // if(!fs){
-  // 	std::cout<<"Creating db as first time used. ";
-  // 	fs.open(filename,  fstream::in | fstream::out | fstream::trunc);
-  // }
-  // Expect only arg: --db_path=path/to/route_guide_db.json.
-  // std::string db = tsc::GetDbFileContent(argc, argv);
   RunServer();
   return 0;
 }
