@@ -5,7 +5,6 @@
 #include <iostream>
 #include <memory>
 #include <string>
-#include <filesystem>
 
 //#include <memory>
 #include <thread>
@@ -70,9 +69,7 @@ class TscImpl final : public TscService::Service {
 		std::filesystem::path db_path = "db.json";
 		std::filesystem::path timeline_path = "timeline.json";
 		
-		if(std::filesystem::exists(p)){
-			std::cout<<"Hello"<<std::endl;
-		}
+
 		// std::cout<<cRequest->user1()<<std::endl;
 		std::string curr_user = cRequest->user1();
 		//read from users db and check if present
@@ -342,7 +339,21 @@ void RunServer() {
 
 }
 
+bool is_empty(std::ifstream& pFile)
+{
+    return pFile.peek() == std::ifstream::traits_type::eof();
+}
+
 int main(int argc, char** argv) {
-  RunServer();
-  return 0;
+	std::fstream file;
+	file.open("test.txt",fstream::out);
+	std::ifstream file1("filename");
+
+	if(is_empty(file1)){
+		fstream<<"{}";
+	}
+	fstream.close();
+	ifstream.close();
+    RunServer();
+    return 0;
 }
