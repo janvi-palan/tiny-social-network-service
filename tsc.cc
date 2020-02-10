@@ -311,7 +311,7 @@ void Client::processTimeline()
             Post p;
             while(stream->Read(&p)){
                 // std::cout << p.content() << std::endl;
-                displayPostMessage(p.auth(), p.content(), asctime(gmtime(&result)));
+                displayPostMessage(p.auth(), p.content(), result + 1000);
             }
     });
 
