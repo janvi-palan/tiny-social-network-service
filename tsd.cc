@@ -74,8 +74,8 @@ class TscImpl final : public TscService::Service {
 		std::ifstream ip_posts(timeline_name);
 		ip_users >> users;
 		ip_posts >> posts;
-		// auto search = currSessions.find(curr_user);
-		if(users.isMember(curr_user) && currSessions.contains(curr_user)){
+		auto search = currSessions.find(curr_user);
+		if(users.isMember(curr_user) && currSessions.find(curr_user) != currSessions.end()){
 			std::cout<<"This user already exists and is active right now."<<std::endl;
 			return Status(StatusCode::ALREADY_EXISTS, "User exists!");		
 		} 
