@@ -5,6 +5,8 @@
 #include <iostream>
 #include <memory>
 #include <string>
+#include <filesystem>
+
 //#include <memory>
 #include <thread>
 #include <unordered_map>
@@ -65,7 +67,13 @@ class TscImpl final : public TscService::Service {
 		fReply->set_message(1);
 		std::string filename = "db.json";
 		std::string timeline_name = "timeline.json";
-		std::cout<<cRequest->user1()<<std::endl;
+		std::filesystem::path db_path = "db.json";
+		std::filesystem::path timeline_path = "timeline.json";
+		
+		if(std::filesystem::exists(p)){
+			std::cout<<"Hello"<<std::endl;
+		}
+		// std::cout<<cRequest->user1()<<std::endl;
 		std::string curr_user = cRequest->user1();
 		//read from users db and check if present
 		Json::Value users, posts;
