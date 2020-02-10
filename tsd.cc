@@ -86,6 +86,7 @@ class TscImpl final : public TscService::Service {
 		user["Followers"] = Json::Value(Json::arrayValue);
 		user["Following"] = Json::Value(Json::arrayValue);
 		post_user["posts"] = Json::Value(Json::arrayValue);
+		post_user["auth"] = Json::Value(Json::arrayValue);
 		std::cout<<"Adding new user to the database."<<std::endl;
 		user["Following"].append(curr_user);
 		user["Followers"].append(curr_user);
@@ -251,7 +252,7 @@ class TscImpl final : public TscService::Service {
 		for(int i = 0; i< posts[user]["posts"].size() ; i++){
 			Post p;
 			p.set_content(posts[user]["posts"][i].asString());
-			p.set_auth(user);
+			p.set_auth(posts[user]["auth"][i].asString());
 			stream->Write(p);
 			if(i==20) break;
 		}
@@ -274,17 +275,21 @@ class TscImpl final : public TscService::Service {
             for(int i =0; i< users[user]["Followers"].size(); i++){
             	std::string curr_follower = users[user]["Followers"][i].asString();
             	Json::Value newTL = Json::arrayValue;
+            	Json::Value newAuth = Json::arrayValue;
             	//check if timeline for user already exists and add this post to the top of the timeline
             	if(posts.isMember(curr_follower)){
             		
             		newTL.append(msg);
+            		newAuth.append(user);
             		for(int j =0;j<posts[curr_follower]["posts"].size() && j <20; j++){
             			newTL.append(posts[curr_follower]["posts"][j].asString());
+            			newAuth.append(posts[curr_follower]["auth"][j].asString());
             		}
             	}
             	
 
             	posts[curr_follower]["posts"] = newTL;
+            	posts[curr_follower]["auth"] = newAuth;
             	std::cout<<newTL[0];
             	if(name_streams.find(curr_follower) == name_streams.end()){
             		std::cout<<"No stream for follower yet."<<std::endl;
@@ -299,6 +304,7 @@ class TscImpl final : public TscService::Service {
             			// }
             			Post new_post;
             			new_post.set_content(msg);
+            			new_post.set_auth(user);
             			name_streams[curr_follower]->Write(new_post);
             		}
             	}
