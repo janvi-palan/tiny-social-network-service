@@ -243,7 +243,7 @@ class TscImpl final : public TscService::Service {
 		std::ifstream timeline_curr(filename);
         // std::cout<<"Loop begins"<<std::endl;
         timeline_curr>>posts;
-        
+
         auto timestamp = new google::protobuf::Timestamp{}; 
         timestamp->set_seconds(time(NULL)); 
         timestamp->set_nanos(0); 
@@ -252,7 +252,7 @@ class TscImpl final : public TscService::Service {
 			Post p;
 			p.set_content(posts[user]["posts"][i].asString());
 			p.set_auth(user);
-			p.set_allocated_timestamp(timestamp);
+			p.set_allocated_time(timestamp);
 			stream->Write(p);
 			if(i==20) break;
 		}
