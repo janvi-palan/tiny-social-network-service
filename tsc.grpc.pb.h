@@ -25,7 +25,6 @@ class ServerContext;
 
 namespace tsc {
 
-// Interface exported by the server.
 class TscService final {
  public:
   static constexpr char const* service_full_name() {
@@ -55,12 +54,21 @@ class TscService final {
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tsc::FollowReply>> PrepareAsyncRemoveFromUsersDB(::grpc::ClientContext* context, const ::tsc::UnfollowRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tsc::FollowReply>>(PrepareAsyncRemoveFromUsersDBRaw(context, request, cq));
     }
-    virtual ::grpc::Status GetAllFollowers(::grpc::ClientContext* context, const ::tsc::User& request, ::tsc::ListReply* response) = 0;
-    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tsc::ListReply>> AsyncGetAllFollowers(::grpc::ClientContext* context, const ::tsc::User& request, ::grpc::CompletionQueue* cq) {
+    virtual ::grpc::Status GetAllFollowers(::grpc::ClientContext* context, const ::tsc::ConnectRequest& request, ::tsc::ListReply* response) = 0;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tsc::ListReply>> AsyncGetAllFollowers(::grpc::ClientContext* context, const ::tsc::ConnectRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tsc::ListReply>>(AsyncGetAllFollowersRaw(context, request, cq));
     }
-    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tsc::ListReply>> PrepareAsyncGetAllFollowers(::grpc::ClientContext* context, const ::tsc::User& request, ::grpc::CompletionQueue* cq) {
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tsc::ListReply>> PrepareAsyncGetAllFollowers(::grpc::ClientContext* context, const ::tsc::ConnectRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tsc::ListReply>>(PrepareAsyncGetAllFollowersRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientReaderWriterInterface< ::tsc::Post, ::tsc::Post>> TimeLine(::grpc::ClientContext* context) {
+      return std::unique_ptr< ::grpc::ClientReaderWriterInterface< ::tsc::Post, ::tsc::Post>>(TimeLineRaw(context));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncReaderWriterInterface< ::tsc::Post, ::tsc::Post>> AsyncTimeLine(::grpc::ClientContext* context, ::grpc::CompletionQueue* cq, void* tag) {
+      return std::unique_ptr< ::grpc::ClientAsyncReaderWriterInterface< ::tsc::Post, ::tsc::Post>>(AsyncTimeLineRaw(context, cq, tag));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncReaderWriterInterface< ::tsc::Post, ::tsc::Post>> PrepareAsyncTimeLine(::grpc::ClientContext* context, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncReaderWriterInterface< ::tsc::Post, ::tsc::Post>>(PrepareAsyncTimeLineRaw(context, cq));
     }
   private:
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::tsc::FollowReply>* AsyncAddNewUserRaw(::grpc::ClientContext* context, const ::tsc::ConnectRequest& request, ::grpc::CompletionQueue* cq) = 0;
@@ -69,8 +77,11 @@ class TscService final {
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::tsc::FollowReply>* PrepareAsyncAddToUsersDBRaw(::grpc::ClientContext* context, const ::tsc::FollowRequest& request, ::grpc::CompletionQueue* cq) = 0;
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::tsc::FollowReply>* AsyncRemoveFromUsersDBRaw(::grpc::ClientContext* context, const ::tsc::UnfollowRequest& request, ::grpc::CompletionQueue* cq) = 0;
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::tsc::FollowReply>* PrepareAsyncRemoveFromUsersDBRaw(::grpc::ClientContext* context, const ::tsc::UnfollowRequest& request, ::grpc::CompletionQueue* cq) = 0;
-    virtual ::grpc::ClientAsyncResponseReaderInterface< ::tsc::ListReply>* AsyncGetAllFollowersRaw(::grpc::ClientContext* context, const ::tsc::User& request, ::grpc::CompletionQueue* cq) = 0;
-    virtual ::grpc::ClientAsyncResponseReaderInterface< ::tsc::ListReply>* PrepareAsyncGetAllFollowersRaw(::grpc::ClientContext* context, const ::tsc::User& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::tsc::ListReply>* AsyncGetAllFollowersRaw(::grpc::ClientContext* context, const ::tsc::ConnectRequest& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::tsc::ListReply>* PrepareAsyncGetAllFollowersRaw(::grpc::ClientContext* context, const ::tsc::ConnectRequest& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientReaderWriterInterface< ::tsc::Post, ::tsc::Post>* TimeLineRaw(::grpc::ClientContext* context) = 0;
+    virtual ::grpc::ClientAsyncReaderWriterInterface< ::tsc::Post, ::tsc::Post>* AsyncTimeLineRaw(::grpc::ClientContext* context, ::grpc::CompletionQueue* cq, void* tag) = 0;
+    virtual ::grpc::ClientAsyncReaderWriterInterface< ::tsc::Post, ::tsc::Post>* PrepareAsyncTimeLineRaw(::grpc::ClientContext* context, ::grpc::CompletionQueue* cq) = 0;
   };
   class Stub final : public StubInterface {
    public:
@@ -96,12 +107,21 @@ class TscService final {
     std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::tsc::FollowReply>> PrepareAsyncRemoveFromUsersDB(::grpc::ClientContext* context, const ::tsc::UnfollowRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::tsc::FollowReply>>(PrepareAsyncRemoveFromUsersDBRaw(context, request, cq));
     }
-    ::grpc::Status GetAllFollowers(::grpc::ClientContext* context, const ::tsc::User& request, ::tsc::ListReply* response) override;
-    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::tsc::ListReply>> AsyncGetAllFollowers(::grpc::ClientContext* context, const ::tsc::User& request, ::grpc::CompletionQueue* cq) {
+    ::grpc::Status GetAllFollowers(::grpc::ClientContext* context, const ::tsc::ConnectRequest& request, ::tsc::ListReply* response) override;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::tsc::ListReply>> AsyncGetAllFollowers(::grpc::ClientContext* context, const ::tsc::ConnectRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::tsc::ListReply>>(AsyncGetAllFollowersRaw(context, request, cq));
     }
-    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::tsc::ListReply>> PrepareAsyncGetAllFollowers(::grpc::ClientContext* context, const ::tsc::User& request, ::grpc::CompletionQueue* cq) {
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::tsc::ListReply>> PrepareAsyncGetAllFollowers(::grpc::ClientContext* context, const ::tsc::ConnectRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::tsc::ListReply>>(PrepareAsyncGetAllFollowersRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientReaderWriter< ::tsc::Post, ::tsc::Post>> TimeLine(::grpc::ClientContext* context) {
+      return std::unique_ptr< ::grpc::ClientReaderWriter< ::tsc::Post, ::tsc::Post>>(TimeLineRaw(context));
+    }
+    std::unique_ptr<  ::grpc::ClientAsyncReaderWriter< ::tsc::Post, ::tsc::Post>> AsyncTimeLine(::grpc::ClientContext* context, ::grpc::CompletionQueue* cq, void* tag) {
+      return std::unique_ptr< ::grpc::ClientAsyncReaderWriter< ::tsc::Post, ::tsc::Post>>(AsyncTimeLineRaw(context, cq, tag));
+    }
+    std::unique_ptr<  ::grpc::ClientAsyncReaderWriter< ::tsc::Post, ::tsc::Post>> PrepareAsyncTimeLine(::grpc::ClientContext* context, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncReaderWriter< ::tsc::Post, ::tsc::Post>>(PrepareAsyncTimeLineRaw(context, cq));
     }
 
    private:
@@ -112,12 +132,16 @@ class TscService final {
     ::grpc::ClientAsyncResponseReader< ::tsc::FollowReply>* PrepareAsyncAddToUsersDBRaw(::grpc::ClientContext* context, const ::tsc::FollowRequest& request, ::grpc::CompletionQueue* cq) override;
     ::grpc::ClientAsyncResponseReader< ::tsc::FollowReply>* AsyncRemoveFromUsersDBRaw(::grpc::ClientContext* context, const ::tsc::UnfollowRequest& request, ::grpc::CompletionQueue* cq) override;
     ::grpc::ClientAsyncResponseReader< ::tsc::FollowReply>* PrepareAsyncRemoveFromUsersDBRaw(::grpc::ClientContext* context, const ::tsc::UnfollowRequest& request, ::grpc::CompletionQueue* cq) override;
-    ::grpc::ClientAsyncResponseReader< ::tsc::ListReply>* AsyncGetAllFollowersRaw(::grpc::ClientContext* context, const ::tsc::User& request, ::grpc::CompletionQueue* cq) override;
-    ::grpc::ClientAsyncResponseReader< ::tsc::ListReply>* PrepareAsyncGetAllFollowersRaw(::grpc::ClientContext* context, const ::tsc::User& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::tsc::ListReply>* AsyncGetAllFollowersRaw(::grpc::ClientContext* context, const ::tsc::ConnectRequest& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::tsc::ListReply>* PrepareAsyncGetAllFollowersRaw(::grpc::ClientContext* context, const ::tsc::ConnectRequest& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientReaderWriter< ::tsc::Post, ::tsc::Post>* TimeLineRaw(::grpc::ClientContext* context) override;
+    ::grpc::ClientAsyncReaderWriter< ::tsc::Post, ::tsc::Post>* AsyncTimeLineRaw(::grpc::ClientContext* context, ::grpc::CompletionQueue* cq, void* tag) override;
+    ::grpc::ClientAsyncReaderWriter< ::tsc::Post, ::tsc::Post>* PrepareAsyncTimeLineRaw(::grpc::ClientContext* context, ::grpc::CompletionQueue* cq) override;
     const ::grpc::internal::RpcMethod rpcmethod_AddNewUser_;
     const ::grpc::internal::RpcMethod rpcmethod_AddToUsersDB_;
     const ::grpc::internal::RpcMethod rpcmethod_RemoveFromUsersDB_;
     const ::grpc::internal::RpcMethod rpcmethod_GetAllFollowers_;
+    const ::grpc::internal::RpcMethod rpcmethod_TimeLine_;
   };
   static std::unique_ptr<Stub> NewStub(const std::shared_ptr< ::grpc::ChannelInterface>& channel, const ::grpc::StubOptions& options = ::grpc::StubOptions());
 
@@ -128,7 +152,8 @@ class TscService final {
     virtual ::grpc::Status AddNewUser(::grpc::ServerContext* context, const ::tsc::ConnectRequest* request, ::tsc::FollowReply* response);
     virtual ::grpc::Status AddToUsersDB(::grpc::ServerContext* context, const ::tsc::FollowRequest* request, ::tsc::FollowReply* response);
     virtual ::grpc::Status RemoveFromUsersDB(::grpc::ServerContext* context, const ::tsc::UnfollowRequest* request, ::tsc::FollowReply* response);
-    virtual ::grpc::Status GetAllFollowers(::grpc::ServerContext* context, const ::tsc::User* request, ::tsc::ListReply* response);
+    virtual ::grpc::Status GetAllFollowers(::grpc::ServerContext* context, const ::tsc::ConnectRequest* request, ::tsc::ListReply* response);
+    virtual ::grpc::Status TimeLine(::grpc::ServerContext* context, ::grpc::ServerReaderWriter< ::tsc::Post, ::tsc::Post>* stream);
   };
   template <class BaseClass>
   class WithAsyncMethod_AddNewUser : public BaseClass {
@@ -202,15 +227,35 @@ class TscService final {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status GetAllFollowers(::grpc::ServerContext* context, const ::tsc::User* request, ::tsc::ListReply* response) final override {
+    ::grpc::Status GetAllFollowers(::grpc::ServerContext* context, const ::tsc::ConnectRequest* request, ::tsc::ListReply* response) final override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    void RequestGetAllFollowers(::grpc::ServerContext* context, ::tsc::User* request, ::grpc::ServerAsyncResponseWriter< ::tsc::ListReply>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+    void RequestGetAllFollowers(::grpc::ServerContext* context, ::tsc::ConnectRequest* request, ::grpc::ServerAsyncResponseWriter< ::tsc::ListReply>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
       ::grpc::Service::RequestAsyncUnary(3, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
-  typedef WithAsyncMethod_AddNewUser<WithAsyncMethod_AddToUsersDB<WithAsyncMethod_RemoveFromUsersDB<WithAsyncMethod_GetAllFollowers<Service > > > > AsyncService;
+  template <class BaseClass>
+  class WithAsyncMethod_TimeLine : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service *service) {}
+   public:
+    WithAsyncMethod_TimeLine() {
+      ::grpc::Service::MarkMethodAsync(4);
+    }
+    ~WithAsyncMethod_TimeLine() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status TimeLine(::grpc::ServerContext* context, ::grpc::ServerReaderWriter< ::tsc::Post, ::tsc::Post>* stream) final override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestTimeLine(::grpc::ServerContext* context, ::grpc::ServerAsyncReaderWriter< ::tsc::Post, ::tsc::Post>* stream, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncBidiStreaming(4, context, stream, new_call_cq, notification_cq, tag);
+    }
+  };
+  typedef WithAsyncMethod_AddNewUser<WithAsyncMethod_AddToUsersDB<WithAsyncMethod_RemoveFromUsersDB<WithAsyncMethod_GetAllFollowers<WithAsyncMethod_TimeLine<Service > > > > > AsyncService;
   template <class BaseClass>
   class WithGenericMethod_AddNewUser : public BaseClass {
    private:
@@ -274,7 +319,24 @@ class TscService final {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status GetAllFollowers(::grpc::ServerContext* context, const ::tsc::User* request, ::tsc::ListReply* response) final override {
+    ::grpc::Status GetAllFollowers(::grpc::ServerContext* context, const ::tsc::ConnectRequest* request, ::tsc::ListReply* response) final override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+  };
+  template <class BaseClass>
+  class WithGenericMethod_TimeLine : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service *service) {}
+   public:
+    WithGenericMethod_TimeLine() {
+      ::grpc::Service::MarkMethodGeneric(4);
+    }
+    ~WithGenericMethod_TimeLine() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status TimeLine(::grpc::ServerContext* context, ::grpc::ServerReaderWriter< ::tsc::Post, ::tsc::Post>* stream) final override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
@@ -346,18 +408,18 @@ class TscService final {
    public:
     WithStreamedUnaryMethod_GetAllFollowers() {
       ::grpc::Service::MarkMethodStreamed(3,
-        new ::grpc::internal::StreamedUnaryHandler< ::tsc::User, ::tsc::ListReply>(std::bind(&WithStreamedUnaryMethod_GetAllFollowers<BaseClass>::StreamedGetAllFollowers, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::StreamedUnaryHandler< ::tsc::ConnectRequest, ::tsc::ListReply>(std::bind(&WithStreamedUnaryMethod_GetAllFollowers<BaseClass>::StreamedGetAllFollowers, this, std::placeholders::_1, std::placeholders::_2)));
     }
     ~WithStreamedUnaryMethod_GetAllFollowers() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable regular version of this method
-    ::grpc::Status GetAllFollowers(::grpc::ServerContext* context, const ::tsc::User* request, ::tsc::ListReply* response) final override {
+    ::grpc::Status GetAllFollowers(::grpc::ServerContext* context, const ::tsc::ConnectRequest* request, ::tsc::ListReply* response) final override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     // replace default version of method with streamed unary
-    virtual ::grpc::Status StreamedGetAllFollowers(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::tsc::User,::tsc::ListReply>* server_unary_streamer) = 0;
+    virtual ::grpc::Status StreamedGetAllFollowers(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::tsc::ConnectRequest,::tsc::ListReply>* server_unary_streamer) = 0;
   };
   typedef WithStreamedUnaryMethod_AddNewUser<WithStreamedUnaryMethod_AddToUsersDB<WithStreamedUnaryMethod_RemoveFromUsersDB<WithStreamedUnaryMethod_GetAllFollowers<Service > > > > StreamedUnaryService;
   typedef Service SplitStreamedService;

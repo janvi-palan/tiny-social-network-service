@@ -29,6 +29,7 @@
 #include <google/protobuf/repeated_field.h>  // IWYU pragma: export
 #include <google/protobuf/extension_set.h>  // IWYU pragma: export
 #include <google/protobuf/unknown_field_set.h>
+#include <google/protobuf/timestamp.pb.h>
 // @@protoc_insertion_point(includes)
 
 namespace protobuf_tsc_2eproto {
@@ -36,7 +37,7 @@ namespace protobuf_tsc_2eproto {
 struct TableStruct {
   static const ::google::protobuf::internal::ParseTableField entries[];
   static const ::google::protobuf::internal::AuxillaryParseTableField aux[];
-  static const ::google::protobuf::internal::ParseTable schema[6];
+  static const ::google::protobuf::internal::ParseTable schema[7];
   static const ::google::protobuf::internal::FieldMetadata field_metadata[];
   static const ::google::protobuf::internal::SerializationTable serialization_table[];
   static const ::google::protobuf::uint32 offsets[];
@@ -54,6 +55,8 @@ void InitDefaultsFollowReplyImpl();
 void InitDefaultsFollowReply();
 void InitDefaultsListReplyImpl();
 void InitDefaultsListReply();
+void InitDefaultsPostImpl();
+void InitDefaultsPost();
 inline void InitDefaults() {
   InitDefaultsUser();
   InitDefaultsFollowRequest();
@@ -61,6 +64,7 @@ inline void InitDefaults() {
   InitDefaultsConnectRequest();
   InitDefaultsFollowReply();
   InitDefaultsListReply();
+  InitDefaultsPost();
 }
 }  // namespace protobuf_tsc_2eproto
 namespace tsc {
@@ -76,6 +80,9 @@ extern FollowRequestDefaultTypeInternal _FollowRequest_default_instance_;
 class ListReply;
 class ListReplyDefaultTypeInternal;
 extern ListReplyDefaultTypeInternal _ListReply_default_instance_;
+class Post;
+class PostDefaultTypeInternal;
+extern PostDefaultTypeInternal _Post_default_instance_;
 class UnfollowRequest;
 class UnfollowRequestDefaultTypeInternal;
 extern UnfollowRequestDefaultTypeInternal _UnfollowRequest_default_instance_;
@@ -627,25 +634,17 @@ class FollowReply : public ::google::protobuf::Message /* @@protoc_insertion_poi
 
   // accessors -------------------------------------------------------
 
-  // string message = 1;
+  // int32 message = 1;
   void clear_message();
   static const int kMessageFieldNumber = 1;
-  const ::std::string& message() const;
-  void set_message(const ::std::string& value);
-  #if LANG_CXX11
-  void set_message(::std::string&& value);
-  #endif
-  void set_message(const char* value);
-  void set_message(const char* value, size_t size);
-  ::std::string* mutable_message();
-  ::std::string* release_message();
-  void set_allocated_message(::std::string* message);
+  ::google::protobuf::int32 message() const;
+  void set_message(::google::protobuf::int32 value);
 
   // @@protoc_insertion_point(class_scope:tsc.FollowReply)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
-  ::google::protobuf::internal::ArenaStringPtr message_;
+  ::google::protobuf::int32 message_;
   mutable int _cached_size_;
   friend struct ::protobuf_tsc_2eproto::TableStruct;
   friend void ::protobuf_tsc_2eproto::InitDefaultsFollowReplyImpl();
@@ -756,14 +755,169 @@ class ListReply : public ::google::protobuf::Message /* @@protoc_insertion_point
   const ::google::protobuf::RepeatedPtrField< ::std::string>& users() const;
   ::google::protobuf::RepeatedPtrField< ::std::string>* mutable_users();
 
+  // repeated string allusers = 2;
+  int allusers_size() const;
+  void clear_allusers();
+  static const int kAllusersFieldNumber = 2;
+  const ::std::string& allusers(int index) const;
+  ::std::string* mutable_allusers(int index);
+  void set_allusers(int index, const ::std::string& value);
+  #if LANG_CXX11
+  void set_allusers(int index, ::std::string&& value);
+  #endif
+  void set_allusers(int index, const char* value);
+  void set_allusers(int index, const char* value, size_t size);
+  ::std::string* add_allusers();
+  void add_allusers(const ::std::string& value);
+  #if LANG_CXX11
+  void add_allusers(::std::string&& value);
+  #endif
+  void add_allusers(const char* value);
+  void add_allusers(const char* value, size_t size);
+  const ::google::protobuf::RepeatedPtrField< ::std::string>& allusers() const;
+  ::google::protobuf::RepeatedPtrField< ::std::string>* mutable_allusers();
+
   // @@protoc_insertion_point(class_scope:tsc.ListReply)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   ::google::protobuf::RepeatedPtrField< ::std::string> users_;
+  ::google::protobuf::RepeatedPtrField< ::std::string> allusers_;
   mutable int _cached_size_;
   friend struct ::protobuf_tsc_2eproto::TableStruct;
   friend void ::protobuf_tsc_2eproto::InitDefaultsListReplyImpl();
+};
+// -------------------------------------------------------------------
+
+class Post : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:tsc.Post) */ {
+ public:
+  Post();
+  virtual ~Post();
+
+  Post(const Post& from);
+
+  inline Post& operator=(const Post& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  Post(Post&& from) noexcept
+    : Post() {
+    *this = ::std::move(from);
+  }
+
+  inline Post& operator=(Post&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const Post& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const Post* internal_default_instance() {
+    return reinterpret_cast<const Post*>(
+               &_Post_default_instance_);
+  }
+  static PROTOBUF_CONSTEXPR int const kIndexInFileMessages =
+    6;
+
+  void Swap(Post* other);
+  friend void swap(Post& a, Post& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline Post* New() const PROTOBUF_FINAL { return New(NULL); }
+
+  Post* New(::google::protobuf::Arena* arena) const PROTOBUF_FINAL;
+  void CopyFrom(const ::google::protobuf::Message& from) PROTOBUF_FINAL;
+  void MergeFrom(const ::google::protobuf::Message& from) PROTOBUF_FINAL;
+  void CopyFrom(const Post& from);
+  void MergeFrom(const Post& from);
+  void Clear() PROTOBUF_FINAL;
+  bool IsInitialized() const PROTOBUF_FINAL;
+
+  size_t ByteSizeLong() const PROTOBUF_FINAL;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) PROTOBUF_FINAL;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const PROTOBUF_FINAL;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const PROTOBUF_FINAL;
+  int GetCachedSize() const PROTOBUF_FINAL { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const PROTOBUF_FINAL;
+  void InternalSwap(Post* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const PROTOBUF_FINAL;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // string content = 1;
+  void clear_content();
+  static const int kContentFieldNumber = 1;
+  const ::std::string& content() const;
+  void set_content(const ::std::string& value);
+  #if LANG_CXX11
+  void set_content(::std::string&& value);
+  #endif
+  void set_content(const char* value);
+  void set_content(const char* value, size_t size);
+  ::std::string* mutable_content();
+  ::std::string* release_content();
+  void set_allocated_content(::std::string* content);
+
+  // string auth = 2;
+  void clear_auth();
+  static const int kAuthFieldNumber = 2;
+  const ::std::string& auth() const;
+  void set_auth(const ::std::string& value);
+  #if LANG_CXX11
+  void set_auth(::std::string&& value);
+  #endif
+  void set_auth(const char* value);
+  void set_auth(const char* value, size_t size);
+  ::std::string* mutable_auth();
+  ::std::string* release_auth();
+  void set_allocated_auth(::std::string* auth);
+
+  // .google.protobuf.Timestamp time = 3;
+  bool has_time() const;
+  void clear_time();
+  static const int kTimeFieldNumber = 3;
+  const ::google::protobuf::Timestamp& time() const;
+  ::google::protobuf::Timestamp* release_time();
+  ::google::protobuf::Timestamp* mutable_time();
+  void set_allocated_time(::google::protobuf::Timestamp* time);
+
+  // @@protoc_insertion_point(class_scope:tsc.Post)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::internal::ArenaStringPtr content_;
+  ::google::protobuf::internal::ArenaStringPtr auth_;
+  ::google::protobuf::Timestamp* time_;
+  mutable int _cached_size_;
+  friend struct ::protobuf_tsc_2eproto::TableStruct;
+  friend void ::protobuf_tsc_2eproto::InitDefaultsPostImpl();
 };
 // ===================================================================
 
@@ -1110,57 +1264,18 @@ inline void ConnectRequest::set_allocated_user1(::std::string* user1) {
 
 // FollowReply
 
-// string message = 1;
+// int32 message = 1;
 inline void FollowReply::clear_message() {
-  message_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  message_ = 0;
 }
-inline const ::std::string& FollowReply::message() const {
+inline ::google::protobuf::int32 FollowReply::message() const {
   // @@protoc_insertion_point(field_get:tsc.FollowReply.message)
-  return message_.GetNoArena();
+  return message_;
 }
-inline void FollowReply::set_message(const ::std::string& value) {
+inline void FollowReply::set_message(::google::protobuf::int32 value) {
   
-  message_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  message_ = value;
   // @@protoc_insertion_point(field_set:tsc.FollowReply.message)
-}
-#if LANG_CXX11
-inline void FollowReply::set_message(::std::string&& value) {
-  
-  message_.SetNoArena(
-    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:tsc.FollowReply.message)
-}
-#endif
-inline void FollowReply::set_message(const char* value) {
-  GOOGLE_DCHECK(value != NULL);
-  
-  message_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:tsc.FollowReply.message)
-}
-inline void FollowReply::set_message(const char* value, size_t size) {
-  
-  message_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
-      ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:tsc.FollowReply.message)
-}
-inline ::std::string* FollowReply::mutable_message() {
-  
-  // @@protoc_insertion_point(field_mutable:tsc.FollowReply.message)
-  return message_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-}
-inline ::std::string* FollowReply::release_message() {
-  // @@protoc_insertion_point(field_release:tsc.FollowReply.message)
-  
-  return message_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-}
-inline void FollowReply::set_allocated_message(::std::string* message) {
-  if (message != NULL) {
-    
-  } else {
-    
-  }
-  message_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), message);
-  // @@protoc_insertion_point(field_set_allocated:tsc.FollowReply.message)
 }
 
 // -------------------------------------------------------------------
@@ -1236,9 +1351,235 @@ ListReply::mutable_users() {
   return &users_;
 }
 
+// repeated string allusers = 2;
+inline int ListReply::allusers_size() const {
+  return allusers_.size();
+}
+inline void ListReply::clear_allusers() {
+  allusers_.Clear();
+}
+inline const ::std::string& ListReply::allusers(int index) const {
+  // @@protoc_insertion_point(field_get:tsc.ListReply.allusers)
+  return allusers_.Get(index);
+}
+inline ::std::string* ListReply::mutable_allusers(int index) {
+  // @@protoc_insertion_point(field_mutable:tsc.ListReply.allusers)
+  return allusers_.Mutable(index);
+}
+inline void ListReply::set_allusers(int index, const ::std::string& value) {
+  // @@protoc_insertion_point(field_set:tsc.ListReply.allusers)
+  allusers_.Mutable(index)->assign(value);
+}
+#if LANG_CXX11
+inline void ListReply::set_allusers(int index, ::std::string&& value) {
+  // @@protoc_insertion_point(field_set:tsc.ListReply.allusers)
+  allusers_.Mutable(index)->assign(std::move(value));
+}
+#endif
+inline void ListReply::set_allusers(int index, const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  allusers_.Mutable(index)->assign(value);
+  // @@protoc_insertion_point(field_set_char:tsc.ListReply.allusers)
+}
+inline void ListReply::set_allusers(int index, const char* value, size_t size) {
+  allusers_.Mutable(index)->assign(
+    reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_set_pointer:tsc.ListReply.allusers)
+}
+inline ::std::string* ListReply::add_allusers() {
+  // @@protoc_insertion_point(field_add_mutable:tsc.ListReply.allusers)
+  return allusers_.Add();
+}
+inline void ListReply::add_allusers(const ::std::string& value) {
+  allusers_.Add()->assign(value);
+  // @@protoc_insertion_point(field_add:tsc.ListReply.allusers)
+}
+#if LANG_CXX11
+inline void ListReply::add_allusers(::std::string&& value) {
+  allusers_.Add(std::move(value));
+  // @@protoc_insertion_point(field_add:tsc.ListReply.allusers)
+}
+#endif
+inline void ListReply::add_allusers(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  allusers_.Add()->assign(value);
+  // @@protoc_insertion_point(field_add_char:tsc.ListReply.allusers)
+}
+inline void ListReply::add_allusers(const char* value, size_t size) {
+  allusers_.Add()->assign(reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_add_pointer:tsc.ListReply.allusers)
+}
+inline const ::google::protobuf::RepeatedPtrField< ::std::string>&
+ListReply::allusers() const {
+  // @@protoc_insertion_point(field_list:tsc.ListReply.allusers)
+  return allusers_;
+}
+inline ::google::protobuf::RepeatedPtrField< ::std::string>*
+ListReply::mutable_allusers() {
+  // @@protoc_insertion_point(field_mutable_list:tsc.ListReply.allusers)
+  return &allusers_;
+}
+
+// -------------------------------------------------------------------
+
+// Post
+
+// string content = 1;
+inline void Post::clear_content() {
+  content_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& Post::content() const {
+  // @@protoc_insertion_point(field_get:tsc.Post.content)
+  return content_.GetNoArena();
+}
+inline void Post::set_content(const ::std::string& value) {
+  
+  content_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:tsc.Post.content)
+}
+#if LANG_CXX11
+inline void Post::set_content(::std::string&& value) {
+  
+  content_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:tsc.Post.content)
+}
+#endif
+inline void Post::set_content(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  
+  content_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:tsc.Post.content)
+}
+inline void Post::set_content(const char* value, size_t size) {
+  
+  content_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:tsc.Post.content)
+}
+inline ::std::string* Post::mutable_content() {
+  
+  // @@protoc_insertion_point(field_mutable:tsc.Post.content)
+  return content_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* Post::release_content() {
+  // @@protoc_insertion_point(field_release:tsc.Post.content)
+  
+  return content_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void Post::set_allocated_content(::std::string* content) {
+  if (content != NULL) {
+    
+  } else {
+    
+  }
+  content_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), content);
+  // @@protoc_insertion_point(field_set_allocated:tsc.Post.content)
+}
+
+// string auth = 2;
+inline void Post::clear_auth() {
+  auth_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& Post::auth() const {
+  // @@protoc_insertion_point(field_get:tsc.Post.auth)
+  return auth_.GetNoArena();
+}
+inline void Post::set_auth(const ::std::string& value) {
+  
+  auth_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:tsc.Post.auth)
+}
+#if LANG_CXX11
+inline void Post::set_auth(::std::string&& value) {
+  
+  auth_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:tsc.Post.auth)
+}
+#endif
+inline void Post::set_auth(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  
+  auth_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:tsc.Post.auth)
+}
+inline void Post::set_auth(const char* value, size_t size) {
+  
+  auth_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:tsc.Post.auth)
+}
+inline ::std::string* Post::mutable_auth() {
+  
+  // @@protoc_insertion_point(field_mutable:tsc.Post.auth)
+  return auth_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* Post::release_auth() {
+  // @@protoc_insertion_point(field_release:tsc.Post.auth)
+  
+  return auth_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void Post::set_allocated_auth(::std::string* auth) {
+  if (auth != NULL) {
+    
+  } else {
+    
+  }
+  auth_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), auth);
+  // @@protoc_insertion_point(field_set_allocated:tsc.Post.auth)
+}
+
+// .google.protobuf.Timestamp time = 3;
+inline bool Post::has_time() const {
+  return this != internal_default_instance() && time_ != NULL;
+}
+inline const ::google::protobuf::Timestamp& Post::time() const {
+  const ::google::protobuf::Timestamp* p = time_;
+  // @@protoc_insertion_point(field_get:tsc.Post.time)
+  return p != NULL ? *p : *reinterpret_cast<const ::google::protobuf::Timestamp*>(
+      &::google::protobuf::_Timestamp_default_instance_);
+}
+inline ::google::protobuf::Timestamp* Post::release_time() {
+  // @@protoc_insertion_point(field_release:tsc.Post.time)
+  
+  ::google::protobuf::Timestamp* temp = time_;
+  time_ = NULL;
+  return temp;
+}
+inline ::google::protobuf::Timestamp* Post::mutable_time() {
+  
+  if (time_ == NULL) {
+    time_ = new ::google::protobuf::Timestamp;
+  }
+  // @@protoc_insertion_point(field_mutable:tsc.Post.time)
+  return time_;
+}
+inline void Post::set_allocated_time(::google::protobuf::Timestamp* time) {
+  ::google::protobuf::Arena* message_arena = GetArenaNoVirtual();
+  if (message_arena == NULL) {
+    delete reinterpret_cast< ::google::protobuf::MessageLite*>(time_);
+  }
+  if (time) {
+    ::google::protobuf::Arena* submessage_arena =
+      reinterpret_cast< ::google::protobuf::MessageLite*>(time)->GetArena();
+    if (message_arena != submessage_arena) {
+      time = ::google::protobuf::internal::GetOwnedMessage(
+          message_arena, time, submessage_arena);
+    }
+    
+  } else {
+    
+  }
+  time_ = time;
+  // @@protoc_insertion_point(field_set_allocated:tsc.Post.time)
+}
+
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------
