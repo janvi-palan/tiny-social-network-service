@@ -349,9 +349,14 @@ int main(int argc, char** argv) {
 	// file.open("test.txt",std::fstream::out);
 	std::ifstream file1("db.json");
 	std::ofstream o("db.json");
+	std::ifstream file2("timeline.json");
+	std::ofstream o2("timeline.json");
 	Json::Value users;
 	if(is_empty(file1)){
 		o<<std::setw(4)<<users<<std::endl;
+	}
+	if(is_empty(file2)){
+		o2<<std::setw(4)<<users<<std::endl;
 	}
 	
     RunServer();
