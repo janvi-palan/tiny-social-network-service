@@ -308,10 +308,11 @@ void Client::processTimeline()
 
     std::thread reader([stream]() {
             time_t result = time(NULL);
+            time_t &t = result;
             Post p;
             while(stream->Read(&p)){
                 // std::cout << p.content() << std::endl;
-                displayPostMessage(p.auth(), p.content(), result + 1000);
+                displayPostMessage(p.auth(), p.content(), t);
             }
     });
 
