@@ -346,14 +346,13 @@ bool is_empty(std::ifstream& pFile)
 
 int main(int argc, char** argv) {
 	std::fstream file;
-	file.open("test.txt",fstream::out);
-	std::ifstream file1("filename");
-
+	file.open("test.txt",std::fstream::out);
+	std::ifstream file1("test.txt");
+	std::ofstream o("test.txt");
 	if(is_empty(file1)){
-		fstream<<"{}";
+		o<<"{}";
 	}
-	fstream.close();
-	ifstream.close();
+	
     RunServer();
     return 0;
 }
