@@ -306,7 +306,8 @@ void Client::processTimeline()
     std::thread reader([stream]() {
             Post p;
             while(stream->Read(&p)){
-                std::cout << p.content() << std::endl;
+                // std::cout << p.content() << std::endl;
+                displayPostMessage(p.auth(), p.content(), p.time())
             }
     });
 
