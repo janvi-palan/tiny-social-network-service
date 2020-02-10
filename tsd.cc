@@ -189,7 +189,7 @@ class TscImpl final : public TscService::Service {
 			}
 			std::cout<<new_followers<<std::endl;
 
-			users[user1]["Followers"] = new_followers;
+			users[user2]["Followers"] = new_followers;
 			std::cout<<"Finished unfollowing users db."<<std::endl;
 			std::ofstream of_obj(filename);
 			of_obj<<std::setw(4)<<users<<std::endl;
