@@ -8,6 +8,9 @@ option objc_class_prefix = "TP";
 package tsc;
 
 // Interface exported by the server.
+
+import "google/protobuf/timestamp.proto";
+
 service TscService {
   rpc AddNewUser(ConnectRequest) returns (FollowReply){}
   rpc AddToUsersDB(FollowRequest) returns (FollowReply) {}
@@ -46,7 +49,7 @@ message ListReply{
 message Post{
   string content = 1;
   string auth = 2;
-  Timestamp time = 3;
+  google.protobuf.Timestamp time = 3;
 }
 
 
