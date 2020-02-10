@@ -66,8 +66,8 @@ class TscImpl final : public TscService::Service {
 		fReply->set_message(1);
 		std::string filename = "db.json";
 		std::string timeline_name = "timeline.json";
-		std::filesystem::path db_path = "db.json";
-		std::filesystem::path timeline_path = "timeline.json";
+		// std::filesystem::path db_path = "db.json";
+		// std::filesystem::path timeline_path = "timeline.json";
 		
 
 		// std::cout<<cRequest->user1()<<std::endl;
@@ -345,12 +345,13 @@ bool is_empty(std::ifstream& pFile)
 }
 
 int main(int argc, char** argv) {
-	std::fstream file;
-	file.open("test.txt",std::fstream::out);
-	std::ifstream file1("test.txt");
-	std::ofstream o("test.txt");
+	// std::fstream file;
+	// file.open("test.txt",std::fstream::out);
+	std::ifstream file1("db.json");
+	std::ofstream o("db.json");
+	Json::Value users;
 	if(is_empty(file1)){
-		o<<"{}";
+		o<<std::setw(4)<<users<<std::endl;
 	}
 	
     RunServer();
