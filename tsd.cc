@@ -20,10 +20,11 @@
 #include <fstream>
 #include <grpc++/support/string_ref.h>
 
-#include "/home/csce438/grpc/third_party/protobuf/conformance/third_party/jsoncpp/jsoncpp.cpp"
-#include "/home/csce438/grpc/third_party/protobuf/conformance/third_party/jsoncpp/json.h"
+//#include "/home/csce438/grpc/third_party/protobuf/conformance/third_party/jsoncpp/jsoncpp.cpp"
+//#include "/home/csce438/grpc/third_party/protobuf/conformance/third_party/jsoncpp/json.h"
 
-
+#include "jsoncpp.cpp"
+#include "json.h"
 
 using grpc::Server;
 using grpc::ServerBuilder;
