@@ -94,7 +94,7 @@ int Client::connectTo()
     // ------------------------------------------------------------
     // create a channel
     std::string channelName = hostname + ":" + port;
-    std::cout<<"connecting to : "<<channelName;
+    // std::cout<<"connecting to : "<<channelName;
     stub_ = TscService::NewStub(grpc::CreateChannel(channelName,
                             grpc::InsecureChannelCredentials()));
     User u1;
@@ -107,19 +107,11 @@ int Client::connectTo()
     ClientContext context;
     FollowReply r1;
     Status status = stub_->AddNewUser(&context, c1, &r1);
-    if (!status.ok())
-        {
-            std::cout<<"Connection failed."<<std::endl;
+    if (!status.ok()){
+            // std::cout<<"Connection failed."<<std::endl;
             return -1;
             //return false;
         }
-        else
-        { 
-            std::cout << "Connection worked! "<<std::endl;
-        //return true;
-        }
-    std::cout<<r1.message()<<std::endl;
-    std::cout<<"Finished connect method!"<<std::endl;
     return 1; // return 1 if success, otherwise return -1
 }
 
@@ -196,9 +188,7 @@ IReply Client::processCommand(std::string& input)
                 ire.comm_status = FAILURE_INVALID_USERNAME;
             }
         } 
-        if(!status.ok()){
-            std::cout<<"Something went wrong!"<<std::endl;
-        }
+       
         // std::cout<<"Finished Unfollow!"<<std::endl;
         ire.grpc_status = status;
         
@@ -209,7 +199,7 @@ IReply Client::processCommand(std::string& input)
         // std::string user2 = input.substr(9,input.length());
         // std::cout<<user2<<std::endl;
         ListReply l1;
-        std::cout<<"List request!"<<std::endl;
+        // std::cout<<"List request!"<<std::endl;
         User u1;
         // std::string user1 = "User2";
         // std::string user2 = "User3";
@@ -220,17 +210,15 @@ IReply Client::processCommand(std::string& input)
         // uf1.set_user2(user2);
 
         Status status = stub_->GetAllFollowers(&context, c1, &l1);
-        // for(int i = 0; l1->users_size(); i++){
-        //     std::cout<<l1->users(i)<<std::end;
-        // }
+        
         std::vector<std::string> following(l1.users().begin(), l1.users().end());
         std::vector<std::string> allUsers(l1.allusers().begin(), l1.allusers().end());
         ire.following_users = following;
         ire.all_users = allUsers;
-        if(!status.ok()){
-            std::cout<<"Something went wrong!"<<std::endl;
-        }
-        std::cout<<"Finished List!"<<std::endl;
+        // if(!status.ok()){
+        //     std::cout<<"Something went wrong!"<<std::endl;
+        // }
+        // std::cout<<"Finished List!"<<std::endl;
         ire.grpc_status = status;
         if (status.ok()) {
             ire.comm_status = SUCCESS;
@@ -241,7 +229,8 @@ IReply Client::processCommand(std::string& input)
     }
 
     if(input.substr(0,8).compare("TIMELINE") == 0){
-        processTimeline();
+        ire.grpc_status = Status::OK;
+        ire.comm_status = SUCCESS;
     }
     // ------------------------------------------------------------
     // GUIDE 2:
@@ -290,7 +279,7 @@ void Client::processTimeline()
     // ------------------------------------------------------------
 
     ClientContext context;
-    std::cout<<"You are in the timeline mode!"<<std::endl;
+    // std::cout<<"You are in the timeline mode!"<<std::endl;
     context.AddMetadata("user_name", username.c_str());
 
     std::shared_ptr<ClientReaderWriter<Post, Post>> stream(
@@ -309,10 +298,10 @@ void Client::processTimeline()
     });
 
     std::thread reader([stream]() {
-            time_t result = time(NULL);
-            time_t &t = result;
             Post p;
             while(stream->Read(&p)){
+                time_t result = time(NULL);
+                time_t &t = result;
                 displayPostMessage(p.auth(), p.content(), t);
             }
     });

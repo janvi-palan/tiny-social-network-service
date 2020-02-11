@@ -87,7 +87,6 @@ class TscImpl final : public TscService::Service {
 			user["Following"] = Json::Value(Json::arrayValue);
 			post_user["posts"] = Json::Value(Json::arrayValue);
 			post_user["auth"] = Json::Value(Json::arrayValue);
-			std::cout<<"Adding new user to the database."<<std::endl;
 			user["Following"].append(curr_user);
 			user["Followers"].append(curr_user);
 			users[curr_user] = user;
@@ -100,7 +99,7 @@ class TscImpl final : public TscService::Service {
 		}
 		auto search = currSessions.find(curr_user);
 		if(users.isMember(curr_user) && currSessions.find(curr_user) != currSessions.end()){
-			std::cout<<"This user already exists and is active right now."<<std::endl;
+			// std::cout<<"This user already exists and is active right now."<<std::endl;
 			return Status(StatusCode::ALREADY_EXISTS, "User exists!");		
 		} 
 		//finished checking for user
@@ -132,13 +131,13 @@ class TscImpl final : public TscService::Service {
 			}
 			users[user1]["Following"].append(user2);
 			users[user2]["Followers"].append(user1);
-			std::cout<<"Finished appending to users db."<<std::endl;
+			// std::cout<<"Finished appending to users db."<<std::endl;
 			std::ofstream of_obj(filename);
 			of_obj<<std::setw(4)<<users<<std::endl;
 			fReply->set_message(1);
 			return Status::OK;		
 		} else{
-			std::cout<<"The user to be followed does'nt exist."<<std::endl;
+			// std::cout<<"The user to be followed does'nt exist."<<std::endl;
 			fReply->set_message(4);
 			return Status::OK;
 		}
@@ -180,7 +179,7 @@ class TscImpl final : public TscService::Service {
 
 			}
 			users[user1]["Following"] = new_items;
-			std::cout<<new_items<<std::endl;
+			// std::cout<<new_items<<std::endl;
 
 			int d = 0;
 			for(int i = 0; i<users[user2]["Followers"].size(); i++){
@@ -191,16 +190,16 @@ class TscImpl final : public TscService::Service {
 				}
 
 			}
-			std::cout<<new_followers<<std::endl;
+			// std::cout<<new_followers<<std::endl;
 
 			users[user2]["Followers"] = new_followers;
-			std::cout<<"Finished unfollowing users db."<<std::endl;
+			// std::cout<<"Finished unfollowing users db."<<std::endl;
 			std::ofstream of_obj(filename);
 			of_obj<<std::setw(4)<<users<<std::endl;
 			fReply->set_message(1);
 			return Status::OK;		
 		} else{
-			std::cout<<"Either of the users don't exist."<<std::endl;
+			// std::cout<<"Either of the users don't exist."<<std::endl;
 			fReply->set_message(4);
 			return Status::OK;
 		}
@@ -222,7 +221,7 @@ class TscImpl final : public TscService::Service {
 			}
 			
 		}else{
-			std::cout<<"Member does not exist in the database"<<std::endl;
+			// std::cout<<"Member does not exist in the database"<<std::endl;
 		}
 
 		// Json::Value::members allUsers = users.getMemberNames();
@@ -268,7 +267,7 @@ class TscImpl final : public TscService::Service {
 			ip_users>>users;
 
         	std::ifstream ip_posts(filename);
-        	std::cout<<"Loop begins"<<std::endl;
+   
         	ip_posts>>posts;
 
             std::string msg = p.content();
@@ -276,8 +275,7 @@ class TscImpl final : public TscService::Service {
             Post new_post;
             new_post.set_content(msg);
             new_post.set_auth(user);
-            std::cout << "got a message from client: " << msg << std::endl;
-            std::cout<<users[user]["Followers"]<<std::endl;
+            
             for(int i =0; i< users[user]["Followers"].size(); i++){
             	std::string curr_follower = users[user]["Followers"][i].asString();
             	Json::Value newTL = Json::arrayValue;
@@ -296,12 +294,12 @@ class TscImpl final : public TscService::Service {
 
             	posts[curr_follower]["posts"] = newTL;
             	posts[curr_follower]["auth"] = newAuth;
-            	std::cout<<newTL[0];
+            	
             	if(name_streams.find(curr_follower) == name_streams.end()){
-            		std::cout<<"No stream for follower yet."<<std::endl;
+            		// std::cout<<"No stream for follower yet."<<std::endl;
             	} else{
             		if(curr_follower.compare(user) !=0){
-            			std::cout << "Returning messages to follower: " << curr_follower << std::endl;
+            			//std::cout << "Returning messages to follower: " << curr_follower << std::endl;
             			// for(int j = 0; j<posts[curr_follower]["posts"].size() ; j++){
 	            		// 	Post new_post;
 	            		// 	new_post.set_content(posts[curr_follower]["posts"][j].asString());
@@ -338,8 +336,7 @@ void RunServer() {
 
 }
 
-bool is_empty(std::ifstream& pFile)
-{
+bool is_empty(std::ifstream& pFile){
     return pFile.peek() == std::ifstream::traits_type::eof();
 }
 
@@ -348,7 +345,6 @@ int main(int argc, char** argv) {
 	// file.open("test.txt",std::fstream::out);
 	std::ifstream file1("db.json");
 	std::ifstream file2("timeline.json");
-
 	Json::Value users;
 	if(is_empty(file1)){
 		std::ofstream o("db.json");
