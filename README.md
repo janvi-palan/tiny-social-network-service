@@ -1,1 +1,0 @@
-# tiny-social-network-service
