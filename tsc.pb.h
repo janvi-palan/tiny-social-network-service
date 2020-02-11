@@ -899,22 +899,12 @@ class Post : public ::google::protobuf::Message /* @@protoc_insertion_point(clas
   ::std::string* release_auth();
   void set_allocated_auth(::std::string* auth);
 
-  // .google.protobuf.Timestamp time = 3;
-  bool has_time() const;
-  void clear_time();
-  static const int kTimeFieldNumber = 3;
-  const ::google::protobuf::Timestamp& time() const;
-  ::google::protobuf::Timestamp* release_time();
-  ::google::protobuf::Timestamp* mutable_time();
-  void set_allocated_time(::google::protobuf::Timestamp* time);
-
   // @@protoc_insertion_point(class_scope:tsc.Post)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   ::google::protobuf::internal::ArenaStringPtr content_;
   ::google::protobuf::internal::ArenaStringPtr auth_;
-  ::google::protobuf::Timestamp* time_;
   mutable int _cached_size_;
   friend struct ::protobuf_tsc_2eproto::TableStruct;
   friend void ::protobuf_tsc_2eproto::InitDefaultsPostImpl();
@@ -1528,51 +1518,6 @@ inline void Post::set_allocated_auth(::std::string* auth) {
   }
   auth_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), auth);
   // @@protoc_insertion_point(field_set_allocated:tsc.Post.auth)
-}
-
-// .google.protobuf.Timestamp time = 3;
-inline bool Post::has_time() const {
-  return this != internal_default_instance() && time_ != NULL;
-}
-inline const ::google::protobuf::Timestamp& Post::time() const {
-  const ::google::protobuf::Timestamp* p = time_;
-  // @@protoc_insertion_point(field_get:tsc.Post.time)
-  return p != NULL ? *p : *reinterpret_cast<const ::google::protobuf::Timestamp*>(
-      &::google::protobuf::_Timestamp_default_instance_);
-}
-inline ::google::protobuf::Timestamp* Post::release_time() {
-  // @@protoc_insertion_point(field_release:tsc.Post.time)
-  
-  ::google::protobuf::Timestamp* temp = time_;
-  time_ = NULL;
-  return temp;
-}
-inline ::google::protobuf::Timestamp* Post::mutable_time() {
-  
-  if (time_ == NULL) {
-    time_ = new ::google::protobuf::Timestamp;
-  }
-  // @@protoc_insertion_point(field_mutable:tsc.Post.time)
-  return time_;
-}
-inline void Post::set_allocated_time(::google::protobuf::Timestamp* time) {
-  ::google::protobuf::Arena* message_arena = GetArenaNoVirtual();
-  if (message_arena == NULL) {
-    delete reinterpret_cast< ::google::protobuf::MessageLite*>(time_);
-  }
-  if (time) {
-    ::google::protobuf::Arena* submessage_arena =
-      reinterpret_cast< ::google::protobuf::MessageLite*>(time)->GetArena();
-    if (message_arena != submessage_arena) {
-      time = ::google::protobuf::internal::GetOwnedMessage(
-          message_arena, time, submessage_arena);
-    }
-    
-  } else {
-    
-  }
-  time_ = time;
-  // @@protoc_insertion_point(field_set_allocated:tsc.Post.time)
 }
 
 #ifdef __GNUC__

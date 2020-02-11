@@ -313,6 +313,7 @@ bool is_empty(std::ifstream& pFile){
 int main(int argc, char** argv) {
 	std::string hostname = "0.0.0.0";
 	std::string port = "50051";
+	int opt = 0;
 	while ((opt = getopt(argc, argv, "h:p:")) != -1){
         switch(opt) {
             case 'h':
