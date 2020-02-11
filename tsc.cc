@@ -47,9 +47,7 @@ class Client : public IClient
         std::string username;
         std::string port;
         std::unique_ptr<TscService::Stub> stub_;
-        // You can have an instance of the client stub
-        // as a member variable.
-        // std::unique_ptr<NameOfYourStubClass::Stub> stub_;
+        
 };
 
 int main(int argc, char** argv) {
@@ -94,7 +92,6 @@ int Client::connectTo()
     // ------------------------------------------------------------
     // create a channel
     std::string channelName = hostname + ":" + port;
-    // std::cout<<"connecting to : "<<channelName;
     stub_ = TscService::NewStub(grpc::CreateChannel(channelName,
                             grpc::InsecureChannelCredentials()));
     User u1;
@@ -102,15 +99,11 @@ int Client::connectTo()
     
     ConnectRequest c1;
     c1.set_user1(username);
-    // f1.set_allocated_user2(&u2);
-
     ClientContext context;
     FollowReply r1;
     Status status = stub_->AddNewUser(&context, c1, &r1);
     if (!status.ok()){
-            // std::cout<<"Connection failed."<<std::endl;
             return -1;
-            //return false;
         }
     return 1; // return 1 if success, otherwise return -1
 }
@@ -148,10 +141,6 @@ IReply Client::processCommand(std::string& input)
         f1.set_user2(user2);
 
         Status status = stub_->AddToUsersDB(&context, f1, &r1);
-
-        // if(!status.ok()){
-        //     ire.comm_status = FAILURE_INVALID;
-        // }
         ire.grpc_status = status;
         if (status.ok()) {
             if(r1.message() == 1){
@@ -169,11 +158,9 @@ IReply Client::processCommand(std::string& input)
 
     if(input.substr(0,8).compare("UNFOLLOW")==0){
         std::string user2 = input.substr(9,input.length());
-        // std::cout<<user2<<std::endl;
-        // std::cout<<"Unfollow request!"<<std::endl;
+        
         User u1, u2;
-        // std::string user1 = "User2";
-        // std::string user2 = "User3";
+
         u1.set_name(username);
         u2.set_name(user2);
         UnfollowRequest uf1;
@@ -189,25 +176,19 @@ IReply Client::processCommand(std::string& input)
             }
         } 
        
-        // std::cout<<"Finished Unfollow!"<<std::endl;
         ire.grpc_status = status;
         
 
     }
 
     if(input.substr(0,4).compare("LIST")==0){
-        // std::string user2 = input.substr(9,input.length());
-        // std::cout<<user2<<std::endl;
+        
         ListReply l1;
-        // std::cout<<"List request!"<<std::endl;
         User u1;
-        // std::string user1 = "User2";
-        // std::string user2 = "User3";
+        
         u1.set_name(username);
-        // u2.set_name(user2);
         ConnectRequest c1;
         c1.set_user1(username);
-        // uf1.set_user2(user2);
 
         Status status = stub_->GetAllFollowers(&context, c1, &l1);
         
@@ -215,10 +196,7 @@ IReply Client::processCommand(std::string& input)
         std::vector<std::string> allUsers(l1.allusers().begin(), l1.allusers().end());
         ire.following_users = following;
         ire.all_users = allUsers;
-        // if(!status.ok()){
-        //     std::cout<<"Something went wrong!"<<std::endl;
-        // }
-        // std::cout<<"Finished List!"<<std::endl;
+        
         ire.grpc_status = status;
         if (status.ok()) {
             ire.comm_status = SUCCESS;

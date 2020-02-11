@@ -42,44 +42,31 @@ using tsc::ListReply;
 using tsc::ConnectRequest;
 using tsc::Post;
 
-// bool isUserExists(std::string curr_user, Json::Value users){
-// 	if(users::isMember(curr_user)){
-// 		std::cout<<"This user already exists. Connection done!"<<std::endl;
-// 		return true;
-// 	} 
-// 	return false;
-
-// }
 class TscImpl final : public TscService::Service {
 	public:
-		
+		//Storing active sessions to prevent duplicates
 		std::unordered_set<std::string> currSessions;
+		//vector with user-stream mapping
 		std::unordered_map<std::string, ServerReaderWriter<Post, Post>* > name_streams;
-
-	// explicit TscImpl() {
-	//     // tsc::ParseDb(db, &feature_list_);
-	// }
-//create user function
 
 	Status AddNewUser(ServerContext* context, const ConnectRequest* cRequest,
 	                  FollowReply* fReply) override {
+
 		fReply->set_message(1);
 		std::string filename = "db.json";
 		std::string timeline_name = "timeline.json";
-		// std::filesystem::path db_path = "db.json";
-		// std::filesystem::path timeline_path = "timeline.json";
 		
-
-		// std::cout<<cRequest->user1()<<std::endl;
 		std::string curr_user = cRequest->user1();
 		//read from users db and check if present
 		Json::Value users, posts;
 		Json::Reader reader;
+
 		std::ifstream ip_users(filename);
 		std::ifstream ip_posts(timeline_name);
 		ip_users >> users;
 		ip_posts >> posts;
 
+		//First time user registration
 		if(!users.isMember(curr_user)){
 			Json::Value user;
 			Json::Value post_user; 
@@ -114,14 +101,13 @@ class TscImpl final : public TscService::Service {
 		std::string filename = "db.json";
 		std::string user1 = fRequest->user1();
 		std::string user2 = fRequest->user2();
-		// std::cout<<user1<<" Following "<<user2<<std::endl;
-
 		Json::Value users;
 		Json::Reader reader;
+
 		std::ifstream ip_users(filename);
 		ip_users >> users;
 
-
+		//Already following this user - check
 		if(users.isMember(user1) && users.isMember(user2)){
 			for(int i = 0; i < users[user1]["Following"].size(); i++){
 				if(users[user1]["Following"][i] == user2){
@@ -131,13 +117,13 @@ class TscImpl final : public TscService::Service {
 			}
 			users[user1]["Following"].append(user2);
 			users[user2]["Followers"].append(user1);
-			// std::cout<<"Finished appending to users db."<<std::endl;
+
+			//Dumping new users json obj to db.json
 			std::ofstream of_obj(filename);
 			of_obj<<std::setw(4)<<users<<std::endl;
 			fReply->set_message(1);
 			return Status::OK;		
 		} else{
-			// std::cout<<"The user to be followed does'nt exist."<<std::endl;
 			fReply->set_message(4);
 			return Status::OK;
 		}
@@ -151,55 +137,45 @@ class TscImpl final : public TscService::Service {
 		std::string filename = "db.json";
 		std::string user1 = uRequest->user1();
 		std::string user2 = uRequest->user2();
-		// std::cout<<user1<<" unfollowing "<<user2<<std::endl;
-
 		Json::Value users;
 		Json::Reader reader;
+
 		std::ifstream ip_users(filename);
 		ip_users >> users;
+
+		//user cannot unfollow itself
 		if(user1.compare(user2) == 0){
 			fReply->set_message(4);
-			
-
 			return Status::OK;
 		}
-		// users.removeMember("default", &user2);
 
 		if(users.isMember(user1) && users.isMember(user2)){
-
 			Json::Value new_items = Json::arrayValue;
-			// Json::arrayValue new_items;
 			Json::Value new_followers = Json::arrayValue;
+			//updating the users db with new followers and followers for current user 
 			int c = 0;
 			for(int i = 0; i<users[user1]["Following"].size(); i++){
 				if(users[user1]["Following"][i].compare(user2) != 0){
 					new_items[c] = users[user1]["Following"][i];
 					c++;
 				}
-
 			}
 			users[user1]["Following"] = new_items;
-			// std::cout<<new_items<<std::endl;
 
 			int d = 0;
 			for(int i = 0; i<users[user2]["Followers"].size(); i++){
 				if(users[user2]["Followers"][i].compare(user1) != 0){
 					new_followers[d] = users[user2]["Followers"][i];
-					d++;
-					
+					d++;	
 				}
-
 			}
-			// std::cout<<new_followers<<std::endl;
-
 			users[user2]["Followers"] = new_followers;
-			// std::cout<<"Finished unfollowing users db."<<std::endl;
 			std::ofstream of_obj(filename);
 			of_obj<<std::setw(4)<<users<<std::endl;
 			fReply->set_message(1);
 			return Status::OK;		
 		} else{
-			// std::cout<<"Either of the users don't exist."<<std::endl;
+			//neither of the users exist in system
 			fReply->set_message(4);
 			return Status::OK;
 		}
@@ -207,8 +183,7 @@ class TscImpl final : public TscService::Service {
 	}
 	Status GetAllFollowers(ServerContext* context, const ConnectRequest* c1,
 	                  ListReply* listReply) override {
-		// listReply->
-		// listReply->set_message("Success");
+		
 		std::string filename = "db.json";
 		std::string user = c1->user1();
 		Json::Value users;
@@ -224,7 +199,7 @@ class TscImpl final : public TscService::Service {
 			// std::cout<<"Member does not exist in the database"<<std::endl;
 		}
 
-		// Json::Value::members allUsers = users.getMemberNames();
+		
 		for(auto const& id : users.getMemberNames()){
 			listReply->add_allusers(id);
 		}
@@ -245,15 +220,15 @@ class TscImpl final : public TscService::Service {
 		grpc::string_ref curr_ref = context->client_metadata().find("user_name")->second;
    		std::string user(curr_ref.begin(), curr_ref.end());
 		name_streams[user] = stream;
-		//display timeline
-		std::ifstream timeline_curr(filename);
-        // std::cout<<"Loop begins"<<std::endl;
-        timeline_curr>>posts;
 
+		//display current timeline on logon
+		std::ifstream timeline_curr(filename);
+        timeline_curr>>posts;
         auto timestamp = new google::protobuf::Timestamp{}; 
         timestamp->set_seconds(time(NULL)); 
         timestamp->set_nanos(0); 
 
+        // Check for posts already stored in timeline db before user logged on to the timeline and send
 		for(int i = 0; i< posts[user]["posts"].size() ; i++){
 			Post p;
 			p.set_content(posts[user]["posts"][i].asString());
@@ -261,28 +236,31 @@ class TscImpl final : public TscService::Service {
 			stream->Write(p);
 			if(i==20) break;
 		}
-		// std::cout<<name_streams[user]<<std::endl;
+		
+		//check for posts from user currenty posting in timeline mode
+
         while(stream->Read(&p)) {
+        	//read users db
         	std::ifstream ip_users(db_filename);
 			ip_users>>users;
-
+			//read timeline db
         	std::ifstream ip_posts(filename);
-   
         	ip_posts>>posts;
 
             std::string msg = p.content();
             msg.erase(std::remove(msg.begin(), msg.end(), '\n'), msg.end());
+            
             Post new_post;
             new_post.set_content(msg);
             new_post.set_auth(user);
             
+            //Send all followers of current 'user' the message that was just received
             for(int i =0; i< users[user]["Followers"].size(); i++){
             	std::string curr_follower = users[user]["Followers"][i].asString();
             	Json::Value newTL = Json::arrayValue;
             	Json::Value newAuth = Json::arrayValue;
-            	//check if timeline for user already exists and add this post to the top of the timeline
+            	//check if timeline for user already exists and update it with this post
             	if(posts.isMember(curr_follower)){
-            		
             		newTL.append(msg);
             		newAuth.append(user);
             		for(int j =0;j<posts[curr_follower]["posts"].size() && j <20; j++){
@@ -291,7 +269,7 @@ class TscImpl final : public TscService::Service {
             		}
             	}
             	
-
+            	//updating timeline db
             	posts[curr_follower]["posts"] = newTL;
             	posts[curr_follower]["auth"] = newAuth;
             	
@@ -299,13 +277,6 @@ class TscImpl final : public TscService::Service {
             		// std::cout<<"No stream for follower yet."<<std::endl;
             	} else{
             		if(curr_follower.compare(user) !=0){
-            			//std::cout << "Returning messages to follower: " << curr_follower << std::endl;
-            			// for(int j = 0; j<posts[curr_follower]["posts"].size() ; j++){
-	            		// 	Post new_post;
-	            		// 	new_post.set_content(posts[curr_follower]["posts"][j].asString());
-	            		// 	name_streams[curr_follower]->Write(new_post);
-	            		// 	if(j == 20) break;
-            			// }
             			Post new_post;
             			new_post.set_content(msg);
             			new_post.set_auth(user);
@@ -313,10 +284,9 @@ class TscImpl final : public TscService::Service {
             		}
             	}
             }
+            //dumping new timeline object into db
             std::ofstream of_obj(filename);
 			of_obj<<std::setw(4)<<posts<<std::endl;
-            
-            // std::cout << "returning a message to client: " << new_post.content() << std::endl;
         }
 
         return Status::OK;
@@ -324,8 +294,9 @@ class TscImpl final : public TscService::Service {
 
 };
 
-void RunServer() {
-  std::string server_address("0.0.0.0:50051");
+void RunServer(std::string& server_address) {
+  // std::string server_address("0.0.0.0:50051");
+
   TscImpl service;
   ServerBuilder builder;
   builder.AddListeningPort(server_address, grpc::InsecureServerCredentials());
@@ -333,7 +304,6 @@ void RunServer() {
   std::unique_ptr<Server> server(builder.BuildAndStart());
   std::cout << "Server listening on " << server_address << std::endl;
   server->Wait();
-
 }
 
 bool is_empty(std::ifstream& pFile){
@@ -341,8 +311,20 @@ bool is_empty(std::ifstream& pFile){
 }
 
 int main(int argc, char** argv) {
-	// std::fstream file;
-	// file.open("test.txt",std::fstream::out);
+	std::string hostname = "0.0.0.0";
+	std::string port = "50051";
+	while ((opt = getopt(argc, argv, "h:p:")) != -1){
+        switch(opt) {
+            case 'h':
+                hostname = optarg;break;
+            case 'p':
+                port = optarg;break;
+            default:
+                std::cerr << "Invalid Command Line Argument\n";
+        }
+    }
+    std::string server_address = hostname +":"+port;
+
 	std::ifstream file1("db.json");
 	std::ifstream file2("timeline.json");
 	Json::Value users;
@@ -354,7 +336,6 @@ int main(int argc, char** argv) {
 		std::ofstream o2("timeline.json");
 		o2<<std::setw(4)<<users<<std::endl;
 	}
-	
-    RunServer();
+    RunServer(server_address);
     return 0;
 }
